@@ -8,7 +8,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "node --watch src/app.mjs",
         "start": "node src/app.mjs",
-        "commit": "cz"
+        "commit": "cz",
+        "prepare": "husky install"
     },
     "keywords": [
         "Personal financial management",
@@ -64,7 +65,12 @@
         "zod": "3.22.2"
     },
     "devDependencies": {
+        "@commitlint/cli": "17.7.1",
+        "@commitlint/config-conventional": "17.7.0",
         "commitizen": "4.3.0",
+        "eslint": "^8.49.0",
+        "husky": "8.0.3",
+        "lint-staged": "14.0.1",
         "semistandard": "17.0.0"
     }
 }
