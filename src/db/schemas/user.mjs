@@ -34,7 +34,7 @@ const userSchema = Schema({
         type: String,
         required: true,
     },
-    numerphone: {
+    numerPhone: {
         type: Number,
         required: true
     },
@@ -45,7 +45,7 @@ const userSchema = Schema({
     imgProfile: {
         type: String,
     },
-    changeHistoryUser:[changeHistoryUser],
+    changeHistoryUser: [changeHistoryUser],
     created_at: {
         type: Date,
         default: today
@@ -54,10 +54,14 @@ const userSchema = Schema({
         type: Date,
         default: today
     },
+    state: {
+        type: Boolean,
+        default: true
+    },
     last_conect: {
         type: Date,
         default: today
     },
 }, { versionKey: false });
 
-export default model('User', userSchema);
+export default model('user', userSchema);

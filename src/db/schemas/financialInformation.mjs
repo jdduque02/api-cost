@@ -20,7 +20,7 @@ const changeHistory = Schema({
     }
 });
 
-const financialInformation = Schema({
+const financialInformationSchema = Schema({
     userId: {
         type : String,
         required : true
@@ -56,4 +56,4 @@ const financialInformation = Schema({
     },
 }, { versionKey: false });
 
-export default model('financialInformation', financialInformation);
+export default model('financialInformation', financialInformationSchema);

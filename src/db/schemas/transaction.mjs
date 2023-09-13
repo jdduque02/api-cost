@@ -12,7 +12,7 @@ const transactionSchema = Schema({
         type: String,
         required: true,
     },
-    Subcategory: {
+    subcategoryId: {
         type: String,
         required: true,
     },
@@ -27,16 +27,6 @@ const transactionSchema = Schema({
     annotation: {
         type: String,
         default: ' '
-    },
-    dateIngress: {
-        type: Date,
-    },
-    datePayment: {
-        type: Date,
-    },
-    monthly: {
-        type: Boolean,
-        default: false,
     },
     created_at: {
         type: Date,

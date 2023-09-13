@@ -1,5 +1,5 @@
 import User from '../schemas/user'
-import { bcrypt, HASH_KEY_USER, dateFns, TIMEZONE } from '../modules.mjs'
+import { bcrypt, HASH_KEY_USER, dateFns, jwt, TIMEZONE } from '../modules.mjs'
 export class userModel {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
     static async getAllUsers({ parameters }) {
@@ -82,5 +82,38 @@ export class userModel {
             return error;
         }
         return saveUpdateUser;
+    }
+    //La función `loginUser` es responsable de autenticar a un usuario verificando su nombre de usuario y contraseña.
+    static async loginUser({ input }) {
+        if (!input.username | !input.password) return false;
+        let userFindDB;
+        try {
+            userFindDB = await User.findOne({ username: input.userName });
+        } catch (error) {
+            return false;
+        }
+        if (!userFindDB || !userFindDB.state) return false;
+        try {
+            await bcrypt.compare(input.password, userFindDB.password)
+                .catch(err => err)
+                .then((search) => {
+                    if (!search) return false;
+                    let { username, role, email, numerPhone } = userFindDB;
+                    let charge = {
+                        username,
+                        role,
+                        email,
+                        numerPhone
+                    };
+                    jwt.sing(charge, HASH_KEY_USER, {
+                        expiresIn: 5400,
+                    }, (error, token) => {
+                        if (error) return error;
+                        return token;
+                    })
+                });
+        } catch (error) {
+            return error;
+        }
     }
 }
