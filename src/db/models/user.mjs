@@ -4,27 +4,27 @@ export class userModel {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
     static async getAllUsers({ parameters }) {
         if (!parameters) return false;
-        let usersDBFind;
+        let findUser;
         try {
-            usersDBFind = await User.find(parameters);
+            findUser = await User.find(parameters);
         } catch (error) {
             throw new Error(error.message);
         }
-        return usersDBFind
+        return findUser
     }
     //es una función asincrónica que recupera un usuario de la base de datos según el `id` proporcionado.
     static async getByIdUser({ id }) {
         if (!id) return false;
-        let usersDBFindOne;
+        let findOneUser;
         try {
-            usersDBFindOne = await User.findOne(id);
+            findOneUser = await User.findOne(id);
         } catch (error) {
             return error;
         }
-        return usersDBFindOne;
+        return findOneUser;
     }
     //La función es responsable de crear un nuevo usuario en la base de datos.
-    static async createUser(body) {
+    static async createUser({input}) {
         let salt;
         try {
             salt = await bcrypt.genSalt(15, HASH_KEY_USER);
@@ -33,14 +33,14 @@ export class userModel {
         }
         let hash;
         try {
-            hash = await bcrypt.hash(body.password, salt);
+            hash = await bcrypt.hash(input.password, salt);
         } catch (error) {
             return error;
         }
-        body.password = hash;
+        input.password = hash;
         let newUser;
         try {
-            newUser = new User(body);
+            newUser = new User(input);
         } catch (error) {
             return error;
         }
@@ -52,27 +52,27 @@ export class userModel {
         }
         return saveNewUser;
     }
-    //La función `deleteUser` es una función asíncrona estática que elimina un usuario de la base de datos según el `userDB` proporcionado.
-    static async deleteUser({ userDB }) {
-        if (!userDB) return false;
-        let userId = userDB._id;
-        let userDBDelete;
+    //La función `deleteUser` es una función asíncrona estática que elimina un usuario de la base de datos según el `user` proporcionado.
+    static async deleteUser({ user }) {
+        if (!user) return false;
+        let {_id} = user;
+        let userDelete;
         try {
             // eslint-disable-next-line no-unused-vars
-            userDBDelete = await User.deleteOne({ _id: userId })
+            userDelete = await User.deleteOne({ _id })
         } catch (error) {
             return error;
         }
         return true;
     }
-    //La función `updateUser` es responsable de actualizar un usuario en la base de datos según los parámetros `userDB` y `input` proporcionados.
-    static async updateUser({ userDB, input }) {
-        if (!userDB) return false;
+    //La función `updateUser` es responsable de actualizar un usuario en la base de datos según los parámetros `user` y `input` proporcionados.
+    static async updateUser({ user, input }) {
+        if (!user) return false;
         const today = new Date();
         dateFns.setZone(today, TIMEZONE);
         input.update_at = today;
         const updateUser = {
-            ...userDB,
+            ...user,
             ...input,
         };
         let saveUpdateUser;
@@ -86,19 +86,19 @@ export class userModel {
     //La función `loginUser` es responsable de autenticar a un usuario verificando su nombre de usuario y contraseña.
     static async loginUser({ input }) {
         if (!input.username | !input.password) return false;
-        let userFindDB;
+        let findUser;
         try {
-            userFindDB = await User.findOne({ username: input.userName });
+            findUser = await User.findOne({ username: input.userName });
         } catch (error) {
             return false;
         }
-        if (!userFindDB || !userFindDB.state) return false;
+        if (!findUser || !findUser.state) return false;
         try {
-            await bcrypt.compare(input.password, userFindDB.password)
+            await bcrypt.compare(input.password, findUser.password)
                 .catch(err => err)
                 .then((search) => {
                     if (!search) return false;
-                    let { username, role, email, numerPhone } = userFindDB;
+                    let { username, role, email, numerPhone } = findUser;
                     let charge = {
                         username,
                         role,

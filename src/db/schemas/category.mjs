@@ -19,7 +19,15 @@ const categorySchema = Schema({
     percentageOptimum: {
         type: Number,
         default: 0,
-    }
+    },
+    created_at: {
+        type: Date,
+        default: today
+    },
+    update_at: {
+        type: Date,
+        default: today
+    },
 }, { versionKey: false });
 
 export default model('category', categorySchema);
