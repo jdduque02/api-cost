@@ -33,7 +33,6 @@ const financialObjectiveSchema = Schema({
     currentBalance: {
         type: Number,
     },
-
     dueDate: {
         type: String,
         required: true,
@@ -54,6 +53,18 @@ const financialObjectiveSchema = Schema({
         type: String,
         default: "monthly",
         enum: ["daily", "weekly", 'year', 'quarter']
+    },
+    interest: {
+        type: Number,
+        default: 0,
+    },
+    fees: {
+        type: Number,
+        default: 0,
+    },
+    valueMonthlyFee: {
+        type: Number,
+        default: 0,
     },
     created_at: {
         type: Date,
