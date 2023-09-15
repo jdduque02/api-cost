@@ -1,14 +1,14 @@
-import category from './schemas/category.mjs';
-import financialInformation from './schemas/financialInformation.mjs';
-import subCategory from './schemas/subCategory.mjs';
-import user from './schemas/user.mjs';
-import transaction from './schemas/transaction.mjs';
+import schemaCategory from './schemas/category.mjs';
+import schemaFinancialInformation from './schemas/financialInformation.mjs';
+import schemaSubCategory from './schemas/subCategory.mjs';
+import schemaUser from './schemas/user.mjs';
+import schemaTransaction from './schemas/transaction.mjs';
 
 
 export default {
-    category,
-    financialInformation,
-    subCategory,
-    user,
-    transaction
+    schemaCategory,
+    schemaFinancialInformation,
+    schemaSubCategory,
+    schemaUser,
+    schemaTransaction
 }

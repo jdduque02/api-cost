@@ -1,4 +1,4 @@
-import Category from '../schemas/Category';
+import {schemaCategory} from '../schemas.mjs';
 import {TIMEZONE, dateFns} from '../modules.mjs';
 
 export class categoryModel {
@@ -7,7 +7,7 @@ export class categoryModel {
         if (!parameters) return false;
         let findCategory;
         try {
-            findCategory = await Category.find(parameters);
+            findCategory = await schemaCategory.find(parameters);
         } catch (error) {
             return error;
         }
@@ -19,7 +19,7 @@ export class categoryModel {
         if (!id) return false;
         let findOneCategory;
         try{
-            findOneCategory = await Category.findOne(id);
+            findOneCategory = await schemaCategory.findOne(id);
         }catch(error){
             return error;
         }
@@ -44,7 +44,8 @@ export class categoryModel {
         let {_id} = category;
         let deletedCategory;
         try {
-            deletedCategory = await Category.deleteOne({_id});
+            // eslint-disable-next-line no-unused-vars
+            deletedCategory = await schemaCategory.deleteOne({_id});
         } catch (error) {
             return error;            
         }

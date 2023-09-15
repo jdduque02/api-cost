@@ -1,4 +1,4 @@
-import User from '../schemas/user'
+import {schemaUser} from '../schemas.mjs';
 import { bcrypt, HASH_KEY_USER, dateFns, jwt, TIMEZONE } from '../modules.mjs'
 export class userModel {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
@@ -6,7 +6,7 @@ export class userModel {
         if (!parameters) return false;
         let findUser;
         try {
-            findUser = await User.find(parameters);
+            findUser = await schemaUser.find(parameters);
         } catch (error) {
             throw new Error(error.message);
         }
@@ -17,7 +17,7 @@ export class userModel {
         if (!id) return false;
         let findOneUser;
         try {
-            findOneUser = await User.findOne(id);
+            findOneUser = await schemaUser.findOne(id);
         } catch (error) {
             return error;
         }
@@ -40,7 +40,7 @@ export class userModel {
         input.password = hash;
         let newUser;
         try {
-            newUser = new User(input);
+            newUser = new schemaUser(input);
         } catch (error) {
             return error;
         }
@@ -59,7 +59,7 @@ export class userModel {
         let userDelete;
         try {
             // eslint-disable-next-line no-unused-vars
-            userDelete = await User.deleteOne({ _id })
+            userDelete = await schemaUser.deleteOne({ _id })
         } catch (error) {
             return error;
         }
@@ -88,7 +88,7 @@ export class userModel {
         if (!input.username | !input.password) return false;
         let findUser;
         try {
-            findUser = await User.findOne({ username: input.userName });
+            findUser = await schemaUser.findOne({ username: input.userName });
         } catch (error) {
             return false;
         }

@@ -1,6 +1,6 @@
 {
     "name": "api-rest-asistent",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "The project will be developed in phases, starting with building a robust API-REST using Node.js and Express.js for the server logic and MongoDB for the database. API documentation will be managed using Swagger. In addition, extensive testing will be applied to ensure the quality and security of the system.",
     "main": "app.mjs",
     "type": "module",
