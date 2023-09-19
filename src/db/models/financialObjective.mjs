@@ -1,59 +1,62 @@
-import {schemaFinancialObjective} from '../schemas.mjs';
-import {TIMEZONE, dateFns} from '../modules.mjs';
+import * as schemaFinancialObjective  from '../schemas.mjs';
+import * as modules from '../modules.mjs';
+const { TIMEZONE, dateFns, QueryErrors, ValidationError } = modules;
 
-export class financialObjectiveModel {
+export class modelFinancialObjective {
     //El método `getAllFinancialObjective` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
-    static async getAllFinancialObjective({parameters}){
-        if (!parameters) return false;
+    static async getAllFinancialObjective({ parameters }) {
+        if (!parameters) throw new ValidationError('the information query parameters were not sent.');
         let findFinancialObjective;
         try {
             findFinancialObjective = await schemaFinancialObjective.find(parameters);
         } catch (error) {
-            return error;
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return findFinancialObjective;
     }
 
     //El método `getByIdFinancialObjective` es una función asincrónica estática que recupera una categoría por su ID.
-    static async getByIdFinancialObjective({id}){
-        if (!id) return false;
+    static async getByIdFinancialObjective({ id }) {
+        if (!id) throw new ValidationError('the information query parameters were not sent.');
         let findOneFinancialObjective;
-        try{
+        try {
             findOneFinancialObjective = await schemaFinancialObjective.findOne(id);
-        }catch(error){
-            return error;
+        } catch (error) {
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return findOneFinancialObjective;
     }
     //El método `createFinancialObjective` es una función estática asincrónica que crea una nueva categoría.
-    static async createFinancialObjective({input}){
+    static async createFinancialObjective({ input }) {
+        if (!input) throw new ValidationError('the information query parameters were not sent.');
         const today = new Date();
         dateFns.setZone(today, TIMEZONE);
         input.created_at = today;
         let newFinancialObjective;
-        try{
+        try {
             newFinancialObjective = await newFinancialObjective.save();
-        }catch(error){
-            return error;
+        } catch (error) {
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return newFinancialObjective;
     }
-    //El método `deleteFinancialObjective` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad "categoría". Si no se proporciona la propiedad "categoría", devuelve "falso".
-    static async deleteFinancialObjective({financialObjective}){
-        if(!financialObjective) return false;
-        let {_id} = financialObjective;
+    //El método `deleteFinancialObjective` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad 'categoría'. Si no se proporciona la propiedad 'categoría', devuelve 'falso'.
+    static async deleteFinancialObjective({ financialObjective }) {
+        if (!financialObjective) throw new ValidationError('the information query parameters were not sent.');
+        let { _id } = financialObjective;
+        if (!_id) throw new ValidationError('the information query parameters were not sent.');
         let deletedFinancialObjective;
         try {
             // eslint-disable-next-line no-unused-vars
-            deletedFinancialObjective = await schemaFinancialObjective.deleteOne({_id});
+            deletedFinancialObjective = await schemaFinancialObjective.deleteOne({ _id });
         } catch (error) {
-            return error;            
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return true;
     }
-    //El método `updateFinancialObjective` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: "categoría" y "entrada".
-    static async updateFinancialObjective({financialObjective, input}){
-        if(!financialObjective) return false;
+    //El método `updateFinancialObjective` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: 'categoría' y 'entrada'.
+    static async updateFinancialObjective({ financialObjective, input }) {
+        if (!financialObjective) throw new ValidationError('the information query parameters were not sent.');
         const today = new Date();
         dateFns.setZone(today, TIMEZONE);
         input.update_at = today;
@@ -65,7 +68,7 @@ export class financialObjectiveModel {
         try {
             saveUpdateFinancialObjective = updateFinancialObjective.save();
         } catch (error) {
-            return error;
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return saveUpdateFinancialObjective;
     }

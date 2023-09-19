@@ -1,9 +1,8 @@
-import { Schema, model, dateFns, TIMEZONE } from '../modules.mjs';
+import { Schema, model } from 'mongoose';
 
 const today = new Date();
-dateFns.setZone(today, TIMEZONE);
 
-const categorySchema = Schema({
+const categorySchema = new Schema({
     name: {
         type: String,
         required: true,

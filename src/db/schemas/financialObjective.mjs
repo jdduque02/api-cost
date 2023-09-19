@@ -1,6 +1,5 @@
-import { Schema, model, dateFns, TIMEZONE } from '../modules.mjs';
+import { Schema, model } from 'mongoose';
 const today = new Date();
-dateFns.setZone(today, TIMEZONE);
 const financialObjectiveSchema = Schema({
     groupId: {
         type: String,
@@ -51,8 +50,8 @@ const financialObjectiveSchema = Schema({
     },
     frequency: {
         type: String,
-        default: "monthly",
-        enum: ["daily", "weekly", 'year', 'quarter']
+        default: 'monthly',
+        enum: ['daily', 'weekly', 'year', 'quarter']
     },
     interest: {
         type: Number,

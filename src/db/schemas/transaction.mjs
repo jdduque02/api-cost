@@ -1,8 +1,7 @@
-import { Schema, model, dateFns, TIMEZONE } from '../modules.mjs';
+import { Schema, model } from 'mongoose';
+
 
 const today = new Date();
-dateFns.setZone(today, TIMEZONE);
-
 const transactionSchema = Schema({
     groupId: {
         type: String,

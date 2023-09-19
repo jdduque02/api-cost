@@ -1,6 +1,6 @@
 {
     "name": "api-rest-asistent",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "The project will be developed in phases, starting with building a robust API-REST using Node.js and Express.js for the server logic and MongoDB for the database. API documentation will be managed using Swagger. In addition, extensive testing will be applied to ensure the quality and security of the system.",
     "main": "app.mjs",
     "type": "module",
@@ -58,6 +58,7 @@
         "morgan": "1.10.0",
         "nodemailer": "6.9.5",
         "passport": "0.6.0",
+        "picocolors": "1.0.0",
         "semantic-release": "21.1.1",
         "superagent": "8.1.2",
         "supertest": "6.3.3",

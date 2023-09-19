@@ -1,59 +1,60 @@
-import {schemaTransaction} from '../schemas.mjs';
-import {TIMEZONE, dateFns} from '../modules.mjs';
+import * as schemaTransaction from '../schemas.mjs';
+import * as modules from '../modules.mjs';
+const { TIMEZONE, dateFns, QueryErrors, ValidationError } = modules;
 
-export class transactionModel {
+export class modelTransaction {
     //El método `getAllTransaction` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
-    static async getAllTransaction({parameters}){
-        if (!parameters) return false;
+    static async getAllTransaction({ parameters }) {
+        if (!parameters) throw new ValidationError('the information query parameters were not sent.');
         let findTransaction;
         try {
             findTransaction = await schemaTransaction.find(parameters);
         } catch (error) {
-            return error;
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return findTransaction;
     }
 
     //El método `getByIdTransaction` es una función asincrónica estática que recupera una categoría por su ID.
-    static async getByIdTransaction({id}){
-        if (!id) return false;
+    static async getByIdTransaction({ id }) {
+        if (!id) throw new ValidationError('the information query parameters were not sent.');
         let findOneTransaction;
-        try{
+        try {
             findOneTransaction = await schemaTransaction.findOne(id);
-        }catch(error){
-            return error;
+        } catch (error) {
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return findOneTransaction;
     }
     //El método `createTransaction` es una función estática asincrónica que crea una nueva categoría.
-    static async createTransaction({input}){
+    static async createTransaction({ input }) {
         const today = new Date();
         dateFns.setZone(today, TIMEZONE);
         input.created_at = today;
         let newTransaction;
-        try{
+        try {
             newTransaction = await newTransaction.save();
-        }catch(error){
-            return error;
+        } catch (error) {
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return newTransaction;
     }
-    //El método `deleteTransaction` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad "categoría". Si no se proporciona la propiedad "categoría", devuelve "falso".
-    static async deleteTransaction({transaction}){
-        if(!transaction) return false;
-        let {_id} = transaction;
+    //El método `deleteTransaction` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad 'categoría'. Si no se proporciona la propiedad 'categoría', devuelve 'falso'.
+    static async deleteTransaction({ transaction }) {
+        if (!transaction) throw new ValidationError('the information query parameters were not sent.');
+        let { _id } = transaction;
         let deletedTransaction;
         try {
             // eslint-disable-next-line no-unused-vars
-            deletedTransaction = await schemaTransaction.deleteOne({_id});
+            deletedTransaction = await schemaTransaction.deleteOne({ _id });
         } catch (error) {
-            return error;            
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return true;
     }
-    //El método `updateTransaction` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: "categoría" y "entrada".
-    static async updateTransaction({transaction, input}){
-        if(!transaction) return false;
+    //El método `updateTransaction` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: 'categoría' y 'entrada'.
+    static async updateTransaction({ transaction, input }) {
+        if (!transaction) throw new ValidationError('the information query parameters were not sent.');
         const today = new Date();
         dateFns.setZone(today, TIMEZONE);
         input.update_at = today;
@@ -65,7 +66,7 @@ export class transactionModel {
         try {
             saveUpdateTransaction = updateTransaction.save();
         } catch (error) {
-            return error;
+            throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return saveUpdateTransaction;
     }
