@@ -1,7 +1,6 @@
 import { response } from 'express';
 import * as dateFns from 'date-fns';
 import dotenv from 'dotenv';
-
 import * as model from '../../db/models.mjs';
 const { modelCategory } = model;
 import * as validateData from '../../dataValidations/controllers.mjs';
@@ -12,7 +11,6 @@ import { Responses } from '../../helpers/response.mjs';
 import { pathEnv } from '../../middleware/dontenv.mjs';
 let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
-
 const { TIMEZONE } = env;
 
 

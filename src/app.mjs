@@ -23,9 +23,9 @@ env = env.parsed;
 const { NAMEDB, USERDB, PASSDB, NAMECLUSTER, VERSION, PORT, TIMEZONE } = env;
 const BASEURL = `/api/v${VERSION}`;
 //routes Category
-/* import routesCategory from './routes/category.mjs';
+import routesCategory from './routes/category.mjs';
+app.use(BASEURL, routesCategory);
 
-app.use(BASEURL, routesCategory); */
 app.set('timezone', TIMEZONE);
 mongoose.Promise = global.Promise;
 const URLDB = `mongodb+srv://${USERDB}:${PASSDB}${NAMECLUSTER}/?retryWrites=true&w=majority`;
@@ -37,13 +37,6 @@ mongoose.connect(URLDB, {
 // uso de la BD
 //const db = mongoose.connection;
 // BD error de conexion
-
-
-mongoose.connect(URLDB, {
-    dbName: NAMEDB,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
 mongoose.set('strictQuery', false);
 // uso de la BD
 const db = mongoose.connection;

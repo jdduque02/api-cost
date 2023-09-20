@@ -1,10 +1,13 @@
 import * as mdCategory from './models/category.mjs';
-const {modelCategory} = mdCategory;
-import {modelFinancialInformation} from './models/financialInformation.mjs';
-import {modelSubCategory} from './models/subCategory.mjs';
-import {modelUser} from './models/user.mjs';
-import {modelTransaction} from './models/transaction.mjs';
-
+const { modelCategory } = mdCategory;
+import * as mdFinancialInformation from './models/financialInformation.mjs';
+const { modelFinancialInformation } = mdFinancialInformation;
+import * as mdSubCategory from './models/subCategory.mjs';
+const { modelSubCategory } = mdSubCategory;
+import * as mdUser from './models/user.mjs';
+const { modelUser } = mdUser;
+import * as mdTransaction from './models/transaction.mjs';
+const { modelTransaction } = mdTransaction;
 
 export default {
     modelCategory,

@@ -1,6 +1,6 @@
 import * as modules from '../modules.mjs';
-const { ValidationError, response, validateSchema, TIMEZONE, dateFns } = modules;
-//Category, CustomLogger,Responses
+const { /* Category, CustomLogger, Responses, */ ValidationError, response, validateSchema, TIMEZONE, dateFns } = modules;
+
 /**
  * Crea una nueva alerta en la base de datos
  * @param {Object} req - Objeto de solicitud HTTP

@@ -1,4 +1,3 @@
-import * as mongoose from 'moongose';
 import * as dateFns from 'date-fns';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
@@ -12,7 +11,6 @@ export const { HASH_KEY_USER } = env;
 
 export default {
     HASH_KEY_USER,
-    mongoose,
     bcrypt,
     df,
     QueryErrors,
