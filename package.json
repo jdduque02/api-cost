@@ -27,8 +27,11 @@
     },
     "description": "The project will be developed in phases, starting with building a robust API-REST using Node.js and Express.js for the server logic and MongoDB for the database. API documentation will be managed using Swagger. In addition, extensive testing will be applied to ensure the quality and security of the system.",
     "devDependencies": {
+        "@babel/core": "7.22.20",
+        "@babel/preset-env": "7.22.20",
         "@commitlint/cli": "17.7.1",
         "@commitlint/config-conventional": "17.7.0",
+        "babel-jest": "29.7.0",
         "commitizen": "4.3.0",
         "eslint": "^8.49.0",
         "husky": "8.0.3",
@@ -72,7 +75,7 @@
         "dev": "cross-env NODE_ENV=developed node --watch src/app.mjs",
         "prepare": "husky install",
         "start": "cross-env NODE_ENV=product node src/app.mjs",
-        "test": "cross-env NODE_ENV=test npx jest --verbose --detectOpenHandles"
+        "test": "cross-env NODE_ENV=test npx jest  --config=jest.config.cjs --detectOpenHandles"
     },
     "type": "module",
     "version": "0.3.0"
