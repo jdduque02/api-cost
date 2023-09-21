@@ -7,7 +7,7 @@ const categorySchema = new Schema({
         type: String,
         required: true,
     },
-    group: {
+    groupId: {
         type: String,
         required: true,
     },

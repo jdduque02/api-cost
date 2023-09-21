@@ -33,7 +33,7 @@ const userSchema = Schema({
         type: String,
         required: true,
     },
-    numerPhone: {
+    numberPhone: {
         type: Number,
         required: true
     },
