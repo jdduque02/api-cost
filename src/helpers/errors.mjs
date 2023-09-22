@@ -54,11 +54,11 @@ export class RateLimitingError extends Error {
     }
 }
 
-//La clase `ResponseFormatErrors` es una clase de error personalizada que extiende la clase incorporada `Error`. Se utiliza para representar errores relacionados con problemas de formato de respuesta.
-export class ResponseFormatErrors extends Error {
+//La clase `RequestFormatErrors` es una clase de error personalizada que extiende la clase incorporada `Error`. Se utiliza para representar errores relacionados con problemas de formato de respuesta.
+export class RequestFormatErrors extends Error {
     constructor(message) {
         super(message);
-        this.name = 'ResponseFormatErrors';
+        this.name = 'RequestFormatErrors';
     }
 }
 

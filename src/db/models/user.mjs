@@ -1,7 +1,10 @@
 import * as schemaUser from '../schemas.mjs';
 import * as modules from '../modules.mjs';
-const { bcrypt, HASH_KEY_USER, dateFns, jwt, TIMEZONE, QueryErrors, ValidationError } = modules;
-export class modelUser {
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
+const { HASH_KEY_USER } = modules;
+export class ModelUser {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
     static async getAllUsers({ parameters }) {
         if (!parameters) throw new ValidationError('the information query parameters were not sent.');
@@ -27,6 +30,7 @@ export class modelUser {
     //La función es responsable de crear un nuevo usuario en la base de datos.
     static async createUser({ input }) {
         let salt;
+        console.log(HASH_KEY_USER)
         try {
             salt = await bcrypt.genSalt(15, HASH_KEY_USER);
         } catch (error) {
@@ -68,7 +72,6 @@ export class modelUser {
     static async updateUser({ user, input }) {
         if (!user) throw new ValidationError('the information query parameters were not sent.');
         const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
         input.update_at = today;
         const updateUser = {
             ...user,

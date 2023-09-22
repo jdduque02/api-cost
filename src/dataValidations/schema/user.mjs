@@ -39,7 +39,7 @@ const schemaUser = zod.object({
         required_error: 'email is required',
     }).toLowerCase().email(),
 
-    numerPhone: zod.number({
+    numbwerPhone: zod.number({
         invalid_type_error: 'numerPhone must be a number',
     }).positive(),
 

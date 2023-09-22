@@ -6,7 +6,7 @@ const { modelCategory } = model;
 import * as validateData from '../../dataValidations/controllers.mjs';
 const { validateSchemaCategory, validatePartialSchemaCategory } = validateData;
 import { CustomLogger } from '../../helpers/console.mjs';
-import { ValidationError, ServerError, ResponseFormatErrors, ResourceNotFoundError, AuthenticationError, AuthorizationError } from '../../helpers/errors.mjs';
+import { ValidationError, ServerError, RequestFormatErrors, ResourceNotFoundError, AuthenticationError, AuthorizationError } from '../../helpers/errors.mjs';
 import { Responses } from '../../helpers/response.mjs';
 import { pathEnv } from '../../middleware/dontenv.mjs';
 let env = dotenv.config({ path: pathEnv });
@@ -21,7 +21,7 @@ export default {
     CustomLogger,
     ValidationError,
     ServerError,
-    ResponseFormatErrors,
+    RequestFormatErrors,
     ResourceNotFoundError,
     AuthenticationError,
     AuthorizationError,
