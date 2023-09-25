@@ -20,7 +20,7 @@ const changeHistoryUser = zod.object({
         invalid_type_error: 'dateModification must be a date',
         required_error: 'dateModification is required',
     }),
-}, { message: 'changeHistoryUser must be an object with the required attributes' });
+}, { message: 'changeHistoryUser must be an object with the required attributes' }).optional();
 
 //El código define un esquema de usuario utilizando la biblioteca Zod. El esquema de usuario especifica la estructura y las reglas de validación para un objeto de usuario.
 const schemaUser = zod.object({
@@ -39,7 +39,7 @@ const schemaUser = zod.object({
         required_error: 'email is required',
     }).toLowerCase().email(),
 
-    numbwerPhone: zod.number({
+    numberPhone: zod.number({
         invalid_type_error: 'numerPhone must be a number',
     }).positive(),
 
@@ -49,9 +49,7 @@ const schemaUser = zod.object({
 
     imgProfile: zod.string({
         invalid_type_error: 'imgProfile must be a string',
-    }).url({
-        message: 'Invalid url'
-    }),
+    }).optional(),
 
     changeHistoryUser,
 

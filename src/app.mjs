@@ -26,7 +26,7 @@ const BASEURL = `/api/v${VERSION}`;
 import routesCategory from './routes/category.mjs';
 import routesUser from './routes/user.mjs';
 
-app.use(BASEURL, routesCategory, routesUser);
+app.use(BASEURL, routesUser, routesCategory);
 
 app.set('timezone', TIMEZONE);
 mongoose.Promise = global.Promise;

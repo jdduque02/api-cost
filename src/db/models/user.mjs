@@ -1,9 +1,12 @@
-import * as schemaUser from '../schemas.mjs';
+import schemaUser from '../schemas/user.mjs';
 import * as modules from '../modules.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
+
+import { QueryErrors, ValidationError, /* RequestFormatErrors */ } from '../../helpers/errors.mjs';
+//import { CustomLogger } from '../../helpers/console.mjs';
 const { HASH_KEY_USER } = modules;
+//El código anterior define una clase llamada "ModelUser" que contiene varios métodos estáticos para interactuar con un modelo de usuario en una base de datos.
 export class ModelUser {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
     static async getAllUsers({ parameters }) {
@@ -28,32 +31,31 @@ export class ModelUser {
         return findOneUser;
     }
     //La función es responsable de crear un nuevo usuario en la base de datos.
-    static async createUser({ input }) {
+    static async createUser(input) {
         let salt;
-        console.log(HASH_KEY_USER)
         try {
-            salt = await bcrypt.genSalt(15, HASH_KEY_USER);
+            salt = bcrypt.genSaltSync(15);
         } catch (error) {
-            return error
+            throw new QueryErrors(`Error in the query detail generate salt: ${error}`);
         }
         let hash;
         try {
-            hash = await bcrypt.hash(input.password, salt);
+            hash = bcrypt.hashSync(input.password, salt, 15, HASH_KEY_USER);
         } catch (error) {
-            throw new QueryErrors(`Error in the query detail: ${error}`);
+            throw new QueryErrors(`Error in the query detail create hash: ${error}`);
         }
         input.password = hash;
         let newUser;
         try {
             newUser = new schemaUser(input);
         } catch (error) {
-            throw new QueryErrors(`Error in the query detail: ${error}`);
+            throw new QueryErrors(`Error in the query detail schema user: ${error}`);
         }
         let saveNewUser;
         try {
             saveNewUser = await newUser.save();
         } catch (error) {
-            throw new QueryErrors(`Error in the query detail: ${error}`);
+            throw new QueryErrors(`Error in the query detail save user: ${error}`);
         }
         return saveNewUser;
     }
@@ -117,5 +119,49 @@ export class ModelUser {
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }
+    }
+}
+
+//La clase `ModelHistoryChangeUser` es responsable de interactuar con el historial de cambios de un usuario en la base de datos. Contiene tres métodos asincrónicos estáticos:
+export class ModelHistoryChangeUser {
+    //La función `createChangeHistoryUser` es responsable de crear un nuevo historial de cambios para un usuario en la base de datos. Se necesita un parámetro de "entrada" que contiene la información necesaria para crear el historial de cambios.
+    static async createChangeHistoryUser({ input }) {
+        if (!input) throw new ValidationError('the information query parameters were not sent.');
+        const today = new Date();
+        input.dateModification = today;
+        const newChange = {
+            $set: {
+                changeHistoryUser: [input.change],
+            },
+        };
+        let newChangeHistoryUser;
+        try {
+            newChangeHistoryUser = await schemaUser.updateOne({ _id: input._id }, newChange, { populate: { changeHistoryUser: true } });
+        } catch (error) {
+            throw new QueryErrors(`Error in the query detail: ${error}`);
+        }
+        return newChangeHistoryUser;
+    }
+    //La función `getAllChangeUsers` es una función asincrónica estática que recupera todos los usuarios de la base de datos junto con su historial de cambios. Toma un objeto "parámetros" como parámetro, que se utiliza para filtrar a los usuarios, si se proporciona.
+    static async getAllChangeUsers({ parameters }) {
+        if (!parameters) throw new ValidationError('the information query parameters were not sent.');
+        let findUser;
+        try {
+            findUser = await schemaUser.find({ populate: { changeHistoryUser: true } });
+        } catch (error) {
+            throw new QueryErrors(`Error in the query detail: ${error}`);
+        }
+        return findUser;
+    }
+    //La función `getAllChangeUser` es una función asincrónica estática que recupera un usuario de la base de datos junto con su historial de cambios. Toma un objeto `parámetros` como parámetro, que se utiliza para filtrar al usuario según su `_id`.
+    static async getAllChangeUser({ parameters }) {
+        if (!parameters) throw new ValidationError('the information query parameters were not sent.');
+        let findUser;
+        try {
+            findUser = await schemaUser.find({ _id: parameters._id }, { populate: { changeHistoryUser: true } });
+        } catch (error) {
+            throw new QueryErrors(`Error in the query detail: ${error}`);
+        }
+        return findUser
     }
 }

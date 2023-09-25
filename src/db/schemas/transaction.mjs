@@ -1,7 +1,9 @@
 import { Schema, model } from 'mongoose';
-
-
-const today = new Date();
+import { zonedTimeToUtc } from 'date-fns-tz';
+import * as modules from '../modules.mjs';
+const { TIMEZONE } = modules;
+let today = new Date();
+today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
 const transactionSchema = Schema({
     groupId: {
         type: String,

@@ -8,6 +8,7 @@
         "cors": "2.8.5",
         "cross-env": "7.0.3",
         "date-fns": "2.30.0",
+        "date-fns-tz": "2.0.0",
         "dotenv": "16.3.1",
         "express": "4.18.2",
         "express-validator": "7.0.1",
@@ -72,10 +73,10 @@
     },
     "scripts": {
         "commit": "cz",
-        "dev": "cross-env NODE_ENV=developed node --watch src/app.mjs",
+        "dev": "cross-env NODE_ENV=DEV node --watch src/app.mjs",
         "prepare": "husky install",
-        "start": "cross-env NODE_ENV=product node src/app.mjs",
-        "test": "cross-env NODE_ENV=test npx jest  --config=jest.config.cjs --detectOpenHandles"
+        "start": "cross-env NODE_ENV=PROD node src/app.mjs",
+        "test": "cross-env NODE_ENV=TEST npx jest  --config=jest.config.cjs --detectOpenHandles"
     },
     "type": "module",
     "version": "0.3.0"
