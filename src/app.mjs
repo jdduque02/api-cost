@@ -4,11 +4,13 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-
+import swaggerUiMiddleware from 'swagger-ui-express';
 import { corsMiddleware } from './middleware/cors.mjs';
 import { pathEnv } from './middleware/dontenv.mjs';
 import { CustomLogger } from './helpers/console.mjs';
 import { ConnectionError } from './helpers/errors.mjs';
+import swagger from './swagger/swagger.mjs';
+
 const app = express();
 //El fragmento de código configura y configura varios middleware para la aplicación Express.
 app.disable('x-powered-by'); // Disable x-powered-by express
@@ -17,7 +19,11 @@ app.use(corsMiddleware()); //está configurando el middleware CORS para solucion
 app.use(morgan('dev')); //está configurando el middleware Morgan para registrar solicitudes HTTP.
 app.use(bodyParser.urlencoded({ extended: false })); // La línea está configurando el middleware del analizador corporal para analizar datos codificados en URL.
 app.use(bodyParser.json());
+// Define una variable SwaggerUiMiddleware y asigna la función swaggerUiMiddleware a la variable
+const SwaggerUiMiddleware = swaggerUiMiddleware(swagger);
 
+// Agrega el middleware de Swagger
+app.use(SwaggerUiMiddleware);
 let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
 const { NAMEDB, USERDB, PASSDB, NAMECLUSTER, VERSION, PORT, TIMEZONE } = env;

@@ -22,7 +22,9 @@
         "picocolors": "1.0.0",
         "semantic-release": "21.1.1",
         "superagent": "8.1.2",
-        "swagger": "^0.0.1",
+        "swagger": "0.0.1",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.0",
         "winston": "3.10.0",
         "zod": "3.22.2"
     },
@@ -79,5 +81,5 @@
         "test": "cross-env NODE_ENV=TEST npx jest  --config=jest.config.cjs --detectOpenHandles"
     },
     "type": "module",
-    "version": "0.3.0"
+    "version": "0.6.0"
 }
