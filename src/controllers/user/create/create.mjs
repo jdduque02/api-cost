@@ -19,7 +19,7 @@ export const createUser = async (req, res = response) => {
         return res.status(400).send(Responses.Error(err.name, 'empty petition body'));
     }
     //La declaración "if" verifica si el número de claves en el objeto "cuerpo" es mayor que 1000. Si es así, significa que el cuerpo de la solicitud es demasiado grande. En este caso, devuelve inmediatamente una respuesta con un código de estado de 413 (Entidad de solicitud demasiado grande) y un mensaje de error que indica que el cuerpo de la solicitud es demasiado grande.
-    if (Object.keys(body).length > 1000) return res.status(413).send(Responses.Error('El cuerpo de la solicitud es demasiado grande'));
+    if (Object.keys(body).length > 1000) return res.status(413).send(Responses.Error('The body of the request is too large'));
     body.created_at = today;
     body.update_at = today;
     body.last_conect = today;

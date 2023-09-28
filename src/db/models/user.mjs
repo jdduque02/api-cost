@@ -9,22 +9,24 @@ const { HASH_KEY_USER } = modules;
 //El código anterior define una clase llamada "ModelUser" que contiene varios métodos estáticos para interactuar con un modelo de usuario en una base de datos.
 export class ModelUser {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
-    static async getAllUsers({ parameters }) {
+    static async getUser(parameters, projection = {}) {
         if (!parameters) throw new ValidationError('the information query parameters were not sent.');
         let findUser;
         try {
             findUser = await schemaUser.find(parameters);
+            findUser = findUser.projection(projection);
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return findUser
     }
     //es una función asincrónica que recupera un usuario de la base de datos según el `id` proporcionado.
-    static async getByIdUser({ id }) {
-        if (!id) throw new ValidationError('the information query parameters were not sent.');
+    static async getOneUser(parameters , projection = {}) {
+        if (!parameters) throw new ValidationError('the information query parameters were not sent.');
         let findOneUser;
         try {
-            findOneUser = await schemaUser.findOne(id);
+            findOneUser = await schemaUser.findOne(parameters);
+            findOneUser = findOneUser.projection(projection);
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }

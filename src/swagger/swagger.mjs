@@ -10,5 +10,5 @@ export default {
             email: '',
         },
     },
-    apis: [` ${path.join(import.meta.url, './route/*.js')} `],
+    apis: [` ${path.join(import.meta.url, './route/*.mjs')} `],
 };

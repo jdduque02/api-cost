@@ -11,7 +11,7 @@ import { Responses } from '../../helpers/response.mjs';
 import { pathEnv } from '../../middleware/dontenv.mjs';
 let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
-const { TIMEZONE } = env;
+const { TIMEZONE, HASH_KEY_USER } = env;
 
 
 export default {
@@ -28,4 +28,5 @@ export default {
     dateFns,
     Responses,
     TIMEZONE,
+    HASH_KEY_USER
 }
