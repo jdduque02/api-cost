@@ -23,10 +23,6 @@ This project is a web application that allows you to efficiently manage and trac
 - Expense analysis and recommendations for cost reduction.
 - Financial information analytics integration.
 
-## Screenshots
-
-![Screenshot 1](/screenshots/screenshot1.png)
-![Screenshot 2](/screenshots/screenshot2.png)
 
 ## Installation
 
