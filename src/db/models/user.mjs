@@ -1,35 +1,37 @@
 import schemaUser from '../schemas/user.mjs';
-import * as modules from '../modules.mjs';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import { QueryErrors, ValidationError, ResourceNotFoundError } from '../../helpers/errors.mjs';
+import { pathEnv } from '../../middleware/dontenv.mjs';
+let env = dotenv.config({ path: pathEnv });
+env = env.parsed;
 
-import { QueryErrors, ValidationError, /* RequestFormatErrors */ } from '../../helpers/errors.mjs';
-//import { CustomLogger } from '../../helpers/console.mjs';
-const { HASH_KEY_USER } = modules;
+const { TIMEZONE, HASH_KEY_USER } = env;
+import { zonedTimeToUtc } from 'date-fns-tz';
 //El código anterior define una clase llamada "ModelUser" que contiene varios métodos estáticos para interactuar con un modelo de usuario en una base de datos.
 export class ModelUser {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
-    static async getUser(parameters, projection = {}) {
+    static async getUser(parameters) {
         if (!parameters) throw new ValidationError('the information query parameters were not sent.');
         let findUser;
         try {
             findUser = await schemaUser.find(parameters);
-            findUser = findUser.projection(projection);
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }
         return findUser
     }
     //es una función asincrónica que recupera un usuario de la base de datos según el `id` proporcionado.
-    static async getOneUser(parameters , projection = {}) {
+    static async getOneUser(parameters) {
         if (!parameters) throw new ValidationError('the information query parameters were not sent.');
         let findOneUser;
         try {
             findOneUser = await schemaUser.findOne(parameters);
-            findOneUser = findOneUser.projection(projection);
+            ///findOneUser = findOneUser.projection(projection);
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }
+        if (findOneUser === null) throw new ResourceNotFoundError('not found user.');
         return findOneUser;
     }
     //La función es responsable de crear un nuevo usuario en la base de datos.
@@ -73,54 +75,19 @@ export class ModelUser {
         return true;
     }
     //La función `updateUser` es responsable de actualizar un usuario en la base de datos según los parámetros `user` y `input` proporcionados.
-    static async updateUser({ user, input }) {
+    static async updateUser(user, input) {
         if (!user) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
-        input.update_at = today;
-        const updateUser = {
-            ...user,
-            ...input,
-        };
+        const updateUser = Object.assign(user, input);
+        let today = new Date();
+        today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
+        updateUser.update_at = today;
         let saveUpdateUser;
         try {
             saveUpdateUser = await updateUser.save();
         } catch (error) {
-            throw new QueryErrors(`Error in the query detail: ${error}`);
+            throw new QueryErrors(error, `Error in the query detail: ${error}`);
         }
         return saveUpdateUser;
-    }
-    //La función `loginUser` es responsable de autenticar a un usuario verificando su nombre de usuario y contraseña.
-    static async loginUser({ input }) {
-        if (!input.username | !input.password) throw new ValidationError('the information query parameters were not sent.');
-        let findUser;
-        try {
-            findUser = await schemaUser.findOne({ username: input.userName });
-        } catch (error) {
-            throw new ValidationError('the information query parameters were not sent.');
-        }
-        if (!findUser || !findUser.state) throw new ValidationError('the information query parameters were not sent.');
-        try {
-            await bcrypt.compare(input.password, findUser.password)
-                .catch(err => err)
-                .then((search) => {
-                    if (!search) throw new ValidationError('the information query parameters were not sent.');
-                    let { username, role, email, numerPhone } = findUser;
-                    let charge = {
-                        username,
-                        role,
-                        email,
-                        numerPhone
-                    };
-                    jwt.sing(charge, HASH_KEY_USER, {
-                        expiresIn: 5400,
-                    }, (error, token) => {
-                        if (error) throw new QueryErrors(`Error in the query detail: ${error}`);
-                        return token;
-                    })
-                });
-        } catch (error) {
-            throw new QueryErrors(`Error in the query detail: ${error}`);
-        }
     }
 }
 
@@ -129,7 +96,8 @@ export class ModelHistoryChangeUser {
     //La función `createChangeHistoryUser` es responsable de crear un nuevo historial de cambios para un usuario en la base de datos. Se necesita un parámetro de "entrada" que contiene la información necesaria para crear el historial de cambios.
     static async createChangeHistoryUser({ input }) {
         if (!input) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
+        let today = new Date();
+        today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
         input.dateModification = today;
         const newChange = {
             $set: {

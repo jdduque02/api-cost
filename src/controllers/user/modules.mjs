@@ -1,5 +1,4 @@
-
-import { response } from 'express';
+import express, { response } from 'express';
 import * as dateFns from 'date-fns';
 import dotenv from 'dotenv';
 
@@ -11,11 +10,13 @@ import { Responses } from '../../helpers/response.mjs';
 import { pathEnv } from '../../middleware/dontenv.mjs';
 let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
-const { TIMEZONE, HASH_KEY_USER } = env;
 
+const { TIMEZONE, HASH_KEY_USER, HASH_KEY_JWT } = env;
 
 export default {
     validateSchemaUser,
+    env,
+    express,
     validatePartialSchemaUser,
     CustomLogger,
     ValidationError,
@@ -28,5 +29,6 @@ export default {
     dateFns,
     Responses,
     TIMEZONE,
-    HASH_KEY_USER
+    HASH_KEY_USER,
+    HASH_KEY_JWT
 }
