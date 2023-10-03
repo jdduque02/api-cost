@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { createUser } from '../controllers/user/create/create.mjs';
-import { loginUser } from '../controllers/user/get/get.mjs';
+import { loginUser, getAllUser, validateUser } from '../controllers/user/get/get.mjs';
+import { updateUser } from '../controllers/user/update/update.mjs';
+import validateToken from '../middleware/jwt.mjs';
 export const userRouter = Router();
 userRouter.post('/user/create', createUser);
 userRouter.post('/user/login', loginUser);
+userRouter.post('/user/all', validateToken, getAllUser);
+userRouter.patch('/user/update/:key?/:value?', validateToken, validateUser, updateUser);
 export default userRouter;

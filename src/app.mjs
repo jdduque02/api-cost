@@ -10,7 +10,7 @@ import { pathEnv } from './middleware/dontenv.mjs';
 import { CustomLogger } from './helpers/console.mjs';
 import { ConnectionError } from './helpers/errors.mjs';
 //import swagger from './swagger/swagger.mjs';
-
+import validateToken from './middleware/jwt.mjs';
 const app = express();
 //El fragmento de código configura y configura varios middleware para la aplicación Express.
 app.disable('x-powered-by'); // Disable x-powered-by express
@@ -31,7 +31,7 @@ const BASEURL = `/api/v${VERSION}`;
 //routes Category
 import routesCategory from './routes/category.mjs';
 import routesUser from './routes/user.mjs';
-
+app.use(`${BASEURL}/category/*`, validateToken);
 app.use(BASEURL, routesUser, routesCategory);
 
 app.set('timezone', TIMEZONE);
