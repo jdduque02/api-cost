@@ -1,25 +1,29 @@
 import { Schema, model } from 'mongoose';
 import { zonedTimeToUtc } from 'date-fns-tz';
 import * as modules from '../modules.mjs';
+import { ObjectId } from 'mongodb';
 const { TIMEZONE } = modules;
 let today = new Date();
 today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
 const changeHistoryUser = Schema({
+    _id:{
+        type:ObjectId
+    },
     modifiedVariable: {
         type: String,
-        required: true,
+        //required: true,
     },
     dateModification: {
         type: Date,
-        required: true,
+        //required: true,
     },
     valuePrevious: {
         type: String,
-        required: true,
+        //required: true,
     },
     valueNew: {
         type: String,
-        required: true
+        //required: true
     }
 });
 const userSchema = Schema({

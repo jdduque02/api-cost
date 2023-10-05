@@ -13,11 +13,12 @@ const { HASH_KEY_JWT, TIMEZONE } = env;
 const validateToken = (req, res = response, next) => {
     const { headers } = req;
     const TOKEN = headers['x-access-token'];
+    let tokenWeb =HASH_KEY_JWT ?? 'ProvicinalToken';
     const ValidationErrorTokenExists = new ResourceNotFoundError('token does not exist in the header');
     if (!TOKEN) return res.status(400).send(Responses.Error(ValidationErrorTokenExists, 'token does not exist in the header'));
     let verfyToken
     try {
-        verfyToken = jwt.verify(TOKEN, HASH_KEY_JWT);
+        verfyToken = jwt.verify(TOKEN, tokenWeb);
     } catch (error) {
         const ValidationError = new ServerError(error.message);
         return res.status(500).send(Responses.Error(ValidationError.message, ValidationError.name));
@@ -35,9 +36,10 @@ const validateToken = (req, res = response, next) => {
         expiresIn,
         iat
     };
+   
     let newToken;
     try {
-        newToken = jwt.sign(charge, HASH_KEY_JWT);
+        newToken = jwt.sign(charge, tokenWeb);
     } catch (error) {
         const err = new ServerError(error);
         return res.status(500).send(Responses.Error(err.name, err.message));

@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { zonedTimeToUtc } from 'date-fns-tz';
+import { randomUUID } from 'node:crypto'
 /* import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; */
 
@@ -7,7 +8,7 @@ import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { pathEnv } from '../../../middleware/dontenv.mjs';
 import { ValidationError, ServerError, /* ResourceNotFoundError, AuthenticationError, AuthorizationError */ } from '../../../helpers/errors.mjs';
-import { /* ModelUser */ } from '../../../db/models/user.mjs';
+import { ModelUser } from '../../../db/models/user.mjs';
 import { Responses } from '../../../helpers/response.mjs';
 let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
@@ -21,13 +22,6 @@ export const updateUser = async (req, res = response) => {
     let { user } = body;
     delete body.user;
     let validateDataUser;
-    /* for (let index = 0; index < Object.keys(body).length; index++) {
-        let name = Object.keys(body)[index];
-        if (typeof user[name] !== 'string') {
-            const err = new ValidationError('attribute does not exist');
-            return res.status(500).send(Responses.Error(err.name, err.message));
-        }
-    } */
     try {
         validateDataUser = validateSchemaPartialUser(body);
     } catch (error) {
@@ -43,11 +37,18 @@ export const updateUser = async (req, res = response) => {
     }
     let { data } = validateDataUser;
     body.update_at = today;
-    //changeHistoryUser
     let change = [];
     Object.entries(data).forEach(([key, value]) => {
-        console.log({ key, value }, user[key])
-        /* change.push({modifiedVariable:}) */
+        change.push({_id:randomUUID(),modifiedVariable:key, dateModification:today, valuePrevious:user[key], valueNew:value});
     });
-    return res.send({ body, change, data });
+    data.changeData = change;
+    let updateUser;
+    try {
+        updateUser = await ModelUser.updateUser(user, data);
+    } catch (error) {
+        const err = new ServerError(error);
+        CustomLogger.error(`error validate schema data:\n ${err}`);
+        return res.status(500).send(Responses.Error(err.name, err.message));
+    }
+    return res.send({ body, change, data, updateUser });
 };

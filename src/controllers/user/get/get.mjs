@@ -86,9 +86,10 @@ export const loginUser = async (req, res = response) => {
         expiresIn,
         iat: today.getTime()
     };
-    let generateToken;
+    let tokenWeb =HASH_KEY_JWT ?? 'ProvicinalToken';
+    let generateToken ;
     try {
-        generateToken = jwt.sign(charge, HASH_KEY_JWT);
+        generateToken = jwt.sign(charge, tokenWeb);
     } catch (error) {
         const err = new ServerError(error);
         CustomLogger.error(`error:\n ${err.stack}`);

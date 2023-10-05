@@ -1,5 +1,6 @@
 import schemaUser from '../schemas/user.mjs';
 import bcrypt from 'bcrypt';
+
 import dotenv from 'dotenv';
 import { QueryErrors, ValidationError, ResourceNotFoundError } from '../../helpers/errors.mjs';
 import { pathEnv } from '../../middleware/dontenv.mjs';
@@ -80,6 +81,7 @@ export class ModelUser {
         const updateUser = Object.assign(user, input);
         let today = new Date();
         today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
+        let {changeData} = input;
         updateUser.update_at = today;
         let saveUpdateUser;
         try {
@@ -87,7 +89,18 @@ export class ModelUser {
         } catch (error) {
             throw new QueryErrors(error, `Error in the query detail: ${error}`);
         }
-        return saveUpdateUser;
+        let updateChangeHisory;
+        const update = {
+            $set: {
+                changeHistoryUser: [changeData],
+            },
+          };
+        try {
+            updateChangeHisory= await schemaUser.updateOne({ _id: saveUpdateUser._id }, update, { populate: { changeHistoryUser: true } });
+        } catch (error) {
+            throw new QueryErrors(error, `Error in the query detail: ${error}`);
+        }
+        return [saveUpdateUser,updateChangeHisory];
     }
 }
 
