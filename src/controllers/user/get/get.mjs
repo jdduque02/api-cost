@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { pathEnv } from '../../../middleware/dontenv.mjs';
-import { ValidationError, ServerError, ResourceNotFoundError, AuthenticationError, AuthorizationError } from '../../../helpers/errors.mjs';
+import { ValidationError, ServerError, ResourceNotFoundError, AuthenticationError, AuthorizationError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelUser } from '../../../db/models/user.mjs';
 import { Responses } from '../../../helpers/response.mjs';
 let env = dotenv.config({ path: pathEnv });
@@ -18,6 +18,7 @@ import { validateSchemaPartialUser } from '../../../dataValidations/schema/user.
 export const loginUser = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
+    today.setUTCHours(today.getUTCHours() - 5);
     const { body } = req;
     //La declaración `if` verifica si el objeto `body` está vacío. Si está vacío, significa que el cuerpo de la solicitud no contiene ningún dato. En este caso, genera un `ResourceNotFoundError` con el mensaje 'cuerpo de petición vacío', registra el error usando `CustomLogger.error` y envía una respuesta con un código de estado de 400 y un mensaje de error usando `Responses.Error`.
     if (Object.keys(body).length === 0) {
@@ -35,7 +36,7 @@ export const loginUser = async (req, res = response) => {
     try {
         validateData = validateSchemaPartialUser(body);
     } catch (error) {
-        const err = new ServerError(error);
+        const err = new ValidationError(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
@@ -50,7 +51,7 @@ export const loginUser = async (req, res = response) => {
     try {
         searchUser = await ModelUser.getOneUser({ username });
     } catch (error) {
-        let errorSearchUser = new ServerError(error);
+        let errorSearchUser = new QueryErrors(error);
         CustomLogger.error(`error:\n ${errorSearchUser.stack}`);
         return res.status(400).send(Responses.Error(errorSearchUser.name, errorSearchUser.message));
     }
@@ -70,7 +71,7 @@ export const loginUser = async (req, res = response) => {
     try {
         updateLastConnetUser = await ModelUser.updateUser(searchUser, { last_conect: today });
     } catch (error) {
-        const err = new ServerError(error);
+        const err = new QueryErrors(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
@@ -86,16 +87,15 @@ export const loginUser = async (req, res = response) => {
         expiresIn,
         iat: today.getTime()
     };
-    let tokenWeb =HASH_KEY_JWT ?? 'ProvicinalToken';
     let generateToken ;
     try {
-        generateToken = jwt.sign(charge, tokenWeb);
+        generateToken = jwt.sign(charge, HASH_KEY_JWT);
     } catch (error) {
         const err = new ServerError(error);
         CustomLogger.error(`error:\n ${err.stack}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.send(Responses.Successful(generateToken, 'sucess'));
+    return res.send(Responses.Successful(generateToken, 'login success'));
 
 }
 //La función `getAllUser` es una función asincrónica que maneja la lógica para recuperar a todos los usuarios. Se necesitan dos parámetros, `req` y `res`, que representan los objetos de solicitud y respuesta respectivamente.
@@ -109,7 +109,7 @@ export const getAllUser = async (req, res = response) => {
     try {
         getAllUser = await ModelUser.getUser({});
     } catch (error) {
-        let errorSearchUser = new ServerError(error);
+        let errorSearchUser = new QueryErrors(error);
         CustomLogger.error(`error:\n ${errorSearchUser.stack}`);
         return res.status(400).send(Responses.Error(errorSearchUser.name, errorSearchUser.message));
     }
@@ -117,9 +117,8 @@ export const getAllUser = async (req, res = response) => {
         let errorSearchUser = new ResourceNotFoundError('users not found');
         return res.status(400).send(Responses.Error(errorSearchUser.name, errorSearchUser.message));
     }
-    return res.status(200).send(Responses.Successful(getAllUser, 'success'));
+    return res.status(200).send(Responses.Successful(getAllUser, 'get all user success'));
 }
-
 //La función `validateUser` es una función de middleware que se utiliza para validar a un usuario en función de ciertos parámetros. Se necesitan tres parámetros: `req` (objeto de solicitud), `res` (objeto de respuesta) y `next` (una función de devolución de llamada para pasar el control a la siguiente función de middleware).
 export const validateUser = async (req, res = response, next) => {
     if (!req.params.key || !req.params.value) {
@@ -141,7 +140,7 @@ export const validateUser = async (req, res = response, next) => {
     try {
         findUser = await ModelUser.getOneUser(searchParams);
     } catch (error) {
-        let errorSearchUser = new ServerError(error);
+        let errorSearchUser = new QueryErrors(error);
         CustomLogger.error(`error:\n ${errorSearchUser.stack}`);
         return res.status(400).send(Responses.Error(errorSearchUser.name, errorSearchUser.message));
     }

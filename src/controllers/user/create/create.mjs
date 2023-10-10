@@ -1,6 +1,6 @@
 import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
-import { ValidationError, ServerError, ResourceNotFoundError } from '../../../helpers/errors.mjs';
+import { ValidationError, ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelUser } from '../../../db/models/user.mjs';
 import { Responses } from '../../../helpers/response.mjs';
 const { response, TIMEZONE } = modules;
@@ -11,6 +11,7 @@ import { zonedTimeToUtc } from 'date-fns-tz';
 export const createUser = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
+    today.setUTCHours(today.getUTCHours() - 5);
     const { body } = req;
     //La declaración `if` verifica si el objeto `body` está vacío. Si está vacío, significa que el cuerpo de la solicitud no contiene ningún dato. En este caso, genera un `ResourceNotFoundError` con el mensaje 'cuerpo de petición vacío', registra el error usando `CustomLogger.error` y envía una respuesta con un código de estado de 400 y un mensaje de error usando `Responses.Error`.
     if (Object.keys(body).length === 0) {
@@ -30,7 +31,7 @@ export const createUser = async (req, res = response) => {
     try {
         validateData = validateSchemaUser(body);
     } catch (error) {
-        const err = new ServerError(error);
+        const err = new ValidationError(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name,err.message));
     }
@@ -45,9 +46,9 @@ export const createUser = async (req, res = response) => {
     try {
         newUser = await ModelUser.createUser(validateData.data);
     } catch (error) {
-        const err = new ServerError(error);
+        const err = new QueryErrors(error);
         CustomLogger.error(`error create user:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name,err.message));
     }
-    return res.status(201).send(Responses.Successful(newUser,'success'));
+    return res.status(201).send(Responses.Successful(newUser,'create user success'));
 }

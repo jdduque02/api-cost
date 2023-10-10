@@ -78,10 +78,25 @@ export class ModelUser {
     //La función `updateUser` es responsable de actualizar un usuario en la base de datos según los parámetros `user` y `input` proporcionados.
     static async updateUser(user, input) {
         if (!user) throw new ValidationError('the information query parameters were not sent.');
+        if(input.password){
+            let salt;
+            try {
+                salt = bcrypt.genSaltSync(15);
+            } catch (error) {
+                throw new QueryErrors(`Error in the query detail generate salt: ${error}`);
+            }
+            let hash;
+            try {
+                hash = bcrypt.hashSync(input.password, salt, 15, HASH_KEY_USER);
+            } catch (error) {
+                throw new QueryErrors(`Error in the query detail create hash: ${error}`);
+            }
+            input.password = hash;
+        }
         const updateUser = Object.assign(user, input);
         let today = new Date();
         today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
-        let {changeData} = input;
+        today.setUTCHours(today.getUTCHours() - 5);
         updateUser.update_at = today;
         let saveUpdateUser;
         try {
@@ -89,18 +104,22 @@ export class ModelUser {
         } catch (error) {
             throw new QueryErrors(error, `Error in the query detail: ${error}`);
         }
-        let updateChangeHisory;
-        const update = {
-            $set: {
-                changeHistoryUser: [changeData],
-            },
-          };
-        try {
-            updateChangeHisory= await schemaUser.updateOne({ _id: saveUpdateUser._id }, update, { populate: { changeHistoryUser: true } });
-        } catch (error) {
-            throw new QueryErrors(error, `Error in the query detail: ${error}`);
+        if (input.changeData) {
+            let { changeData } = input;
+            let updateChangeHisory;
+            const update = {
+                $push: {
+                    changeHistoryUser: changeData,
+                },
+            };
+            try {
+                updateChangeHisory = await schemaUser.updateOne({ _id: saveUpdateUser._id }, update).populate('changeHistoryUser');
+            } catch (error) {
+                throw new QueryErrors(error, `Error in update change history: ${error}`);
+            }
+            return [updateChangeHisory, saveUpdateUser._id];
         }
-        return [saveUpdateUser,updateChangeHisory];
+        return saveUpdateUser;
     }
 }
 
@@ -111,6 +130,7 @@ export class ModelHistoryChangeUser {
         if (!input) throw new ValidationError('the information query parameters were not sent.');
         let today = new Date();
         today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
+        today.setUTCHours(today.getUTCHours() - 5);
         input.dateModification = today;
         const newChange = {
             $set: {
