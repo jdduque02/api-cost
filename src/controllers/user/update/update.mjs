@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken'; */
 import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { pathEnv } from '../../../middleware/dontenv.mjs';
-import { ValidationError, ServerError, /* ResourceNotFoundError, AuthenticationError, AuthorizationError */ } from '../../../helpers/errors.mjs';
+import { ValidationError, ServerError, QueryErrors, /* ResourceNotFoundError, AuthenticationError, AuthorizationError */ } from '../../../helpers/errors.mjs';
 import { ModelUser } from '../../../db/models/user.mjs';
 import { Responses } from '../../../helpers/response.mjs';
 let env = dotenv.config({ path: pathEnv });
@@ -48,7 +48,7 @@ export const updateUser = async (req, res = response) => {
     try {
         await ModelUser.updateUser(user, data);
     } catch (error) {
-        const err = new ServerError(error);
+        const err = new QueryErrors(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }

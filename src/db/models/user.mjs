@@ -65,11 +65,10 @@ export class ModelUser {
         return saveNewUser;
     }
     //La función `deleteUser` es una función asíncrona estática que elimina un usuario de la base de datos según el `user` proporcionado.
-    static async deleteUser({ user }) {
-        if (!user) throw new ValidationError('the information query parameters were not sent.');
-        let { _id } = user;
+    static async deleteUser( username) {
+        if (!username) throw new ValidationError('the information query parameters were not sent.');
         try {
-            await schemaUser.deleteOne({ _id })
+            await schemaUser.deleteOne({ username })
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }
@@ -78,7 +77,7 @@ export class ModelUser {
     //La función `updateUser` es responsable de actualizar un usuario en la base de datos según los parámetros `user` y `input` proporcionados.
     static async updateUser(user, input) {
         if (!user) throw new ValidationError('the information query parameters were not sent.');
-        if(input.password){
+        if (input.password) {
             let salt;
             try {
                 salt = bcrypt.genSaltSync(15);
