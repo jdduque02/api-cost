@@ -1,15 +1,21 @@
-import * as modules from '../modules.mjs';
-const { /* Category, CustomLogger, Responses, */ ValidationError, response, validateSchema, TIMEZONE, dateFns } = modules;
-
+/* import * as modules from '../modules.mjs';
+import { CustomLogger } from '../../../helpers/console.mjs';
+import { ValidationError, ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
+import { ModelCategory } from '../../../db/models/category.mjs';
+import { Responses } from '../../../helpers/response.mjs';
+const { response, TIMEZONE } = modules;
+import { validateSchemaUser } from '../../../dataValidations/schema/category.mjs';
+import { zonedTimeToUtc } from 'date-fns-tz';
+ */
 /**
- * Crea una nueva alerta en la base de datos
+ * Crea una nueva categoria en la base de datos
  * @param {Object} req - Objeto de solicitud HTTP
  * @param {Object} res - Objeto de respuesta HTTP
  * @returns {Object} - Objeto de respuesta HTTP con la alerta creada.
  * 
  * @throws {Error} Error al crear la alerta.
  */
-export const createCategory = async (req, res = response) => {
+/* export const createCategory = async (req, res = response) => {
     const today = new Date();
     dateFns.setZone(today, TIMEZONE);
     const { body } = req;
@@ -23,3 +29,4 @@ export const createCategory = async (req, res = response) => {
     }
     return res.send(validateData)
 };
+ */

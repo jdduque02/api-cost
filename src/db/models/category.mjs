@@ -1,7 +1,7 @@
 import * as schemaCategory from '../schemas.mjs';
 import * as modules from '../modules.mjs';
 const { TIMEZONE, dateFns, QueryErrors, ValidationError } = modules;
-export class modelCategory {
+export class ModelCategory {
     //El método `getAllCategory` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
     static async getAllCategory({ parameters }) {
         if (!parameters) throw new ValidationError('the information query parameters were not sent.');
