@@ -7,7 +7,14 @@ const { response, TIMEZONE } = modules;
 import { validateSchemaUser } from '../../../dataValidations/schema/user.mjs';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
-//La función `createUser` es una función asincrónica que maneja la creación de un usuario. Toma dos parámetros, `req` y `res`, que representan los objetos de solicitud y respuesta respectivamente.
+/**
+ * Crea un nuevo usuario en la base de datos
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @returns {Object} - Objeto de respuesta HTTP con el usuario creada.
+ * 
+ * @throws {ValidationError, ResourceNotFoundError, QueryErrors} Error al crear el usuario.
+ */
 export const createUser = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');

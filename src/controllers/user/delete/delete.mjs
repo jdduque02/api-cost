@@ -6,7 +6,14 @@ import { Responses } from '../../../helpers/response.mjs';
 const { response, TIMEZONE } = modules;
 import { zonedTimeToUtc } from 'date-fns-tz';
 
-//El código define una función asincrónica llamada "deleteUser" que toma dos parámetros: "req" y "res".
+/**
+ * Eliminar un usuario en la base de datos
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @returns {Object} - Objeto de respuesta HTTP con el usuario eliminado.
+ * 
+ * @throws {ValidationError, ResourceNotFoundError, QueryErrors} Error al eliminar el usuario.
+ */
 export const deleteUser = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');

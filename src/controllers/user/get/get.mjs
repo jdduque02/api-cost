@@ -14,7 +14,14 @@ env = env.parsed;
 const { TIMEZONE, HASH_KEY_JWT } = env;
 const { response } = modules;
 import { validateSchemaPartialUser } from '../../../dataValidations/schema/user.mjs';
-//La función `loginUser` es una función asincrónica que maneja la lógica para el inicio de sesión del usuario. Toma dos parámetros, `req` y `res`, que representan los objetos de solicitud y respuesta respectivamente.
+/**
+ * Iniciar sesion del usuario
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @returns {Object} - Objeto de respuesta HTTP con el token del usuario.
+ * 
+ * @throws {ValidationError, ServerError, ResourceNotFoundError, AuthenticationError, AuthorizationError, QueryErrors} Error al iniciar sesion.
+ */
 export const loginUser = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
@@ -87,7 +94,7 @@ export const loginUser = async (req, res = response) => {
         expiresIn,
         iat: today.getTime()
     };
-    let generateToken ;
+    let generateToken;
     try {
         generateToken = jwt.sign(charge, HASH_KEY_JWT);
     } catch (error) {
@@ -98,7 +105,14 @@ export const loginUser = async (req, res = response) => {
     return res.send(Responses.Successful(generateToken, 'login success'));
 
 }
-//La función `getAllUser` es una función asincrónica que maneja la lógica para recuperar a todos los usuarios. Se necesitan dos parámetros, `req` y `res`, que representan los objetos de solicitud y respuesta respectivamente.
+/**
+ * Obtener todos los usuarios
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @returns {Object} - Objeto de respuesta HTTP con todos los usuarios.
+ * 
+ * @throws {ValidationError, ServerError, ResourceNotFoundError, AuthorizationError, QueryErrors} Error al obtener todos los usuarios.
+ */
 export const getAllUser = async (req, res = response) => {
     let { charge: { data } } = req;
     if (data.role !== 1) {
@@ -119,7 +133,15 @@ export const getAllUser = async (req, res = response) => {
     }
     return res.status(200).send(Responses.Successful(getAllUser, 'get all user success'));
 }
-//La función `validateUser` es una función de middleware que se utiliza para validar a un usuario en función de ciertos parámetros. Se necesitan tres parámetros: `req` (objeto de solicitud), `res` (objeto de respuesta) y `next` (una función de devolución de llamada para pasar el control a la siguiente función de middleware).
+/**
+ * Consultar usuarios en base el query
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @param {Object} next - Objeto next HTTP
+ * @returns {Object} - Objeto de respuesta HTTP con el token del usuario.
+ * 
+ * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los usuarios en la base de datos.
+ */
 export const validateUser = async (req, res = response, next) => {
     if (!req.params.key || !req.params.value) {
         const err = new ResourceNotFoundError('empty params');
