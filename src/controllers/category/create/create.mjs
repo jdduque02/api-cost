@@ -4,7 +4,7 @@ import { ValidationError, ResourceNotFoundError, QueryErrors } from '../../../he
 import { ModelCategory } from '../../../db/models/category.mjs';
 import { Responses } from '../../../helpers/response.mjs';
 const { response, TIMEZONE } = modules;
-import { validateSchemaUser } from '../../../dataValidations/schema/category.mjs';
+import { validateSchemaCategory } from '../../../dataValidations/schema/category.mjs';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
 /**
@@ -32,7 +32,7 @@ export const createCategory = async (req, res = response) => {
     body.update_at = today;
     let validateData;
     try {
-        validateData = validateSchemaUser(body);
+        validateData = validateSchemaCategory(body);
     } catch (error) {
         const err = new ValidationError(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);

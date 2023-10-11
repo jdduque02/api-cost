@@ -8,7 +8,7 @@ const schemaCategory = zod.object({
     group: zod.string({
         invalid_type_error: 'group must be a string',
         required_error: 'group is required',
-    }).uuid({ message: 'must be an id of a group' }),
+    }),
 
     description: zod.string({
         invalid_type_error: 'description must be a string',
