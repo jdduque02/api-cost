@@ -138,7 +138,7 @@ export const getAllUser = async (req, res = response) => {
  * @param {Object} req - Objeto de solicitud HTTP
  * @param {Object} res - Objeto de respuesta HTTP
  * @param {Object} next - Objeto next HTTP
- * @returns {Object} - Objeto de respuesta HTTP con el token del usuario.
+ * @returns {Object} - Objeto de respuesta HTTP con los usuarios.
  * 
  * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los usuarios en la base de datos.
  */
