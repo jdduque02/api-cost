@@ -1,12 +1,16 @@
 import * as modules from '../modules.mjs';
+import dotenv from 'dotenv';
+import { pathEnv } from '../../../middleware/dontenv.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ValidationError, ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelUser } from '../../../db/models/user.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-const { response, TIMEZONE } = modules;
+const { response } = modules;
 import { validateSchemaUser } from '../../../dataValidations/schema/user.mjs';
 import { zonedTimeToUtc } from 'date-fns-tz';
-
+let env = dotenv.config({ path: pathEnv });
+env = env.parsed;
+const { TIMEZONE } = env;
 /**
  * Crea un nuevo usuario en la base de datos
  * @param {Object} req - Objeto de solicitud HTTP

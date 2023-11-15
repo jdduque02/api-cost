@@ -1,11 +1,17 @@
 import * as modules from '../modules.mjs';
+import dotenv from 'dotenv';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ValidationError, ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelFinancialInformation } from '../../../db/models/financialInformation.mjs';
 import { validateSchemaFinancialInformation } from '../../../dataValidations/schema/financialInformation.mjs';
 import { Responses } from '../../../helpers/response.mjs';
+import { pathEnv } from '../../../middleware/dontenv.mjs';
+let env = dotenv.config({ path: pathEnv });
+env = env.parsed;
+const { TIMEZONE } = env;
 import { zonedTimeToUtc } from 'date-fns-tz';
-const { response, TIMEZONE } = modules;
+const { response } = modules;
+
 /**
  * Registrar la informacion financiera de un usuario en la base de datos
  * @param {Object} req - Objeto de solicitud HTTP

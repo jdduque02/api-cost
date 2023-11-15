@@ -28,11 +28,12 @@ let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
 const { NAMEDB, USERDB, PASSDB, NAMECLUSTER, VERSION, PORT, TIMEZONE } = env;
 const BASEURL = `/api/v${VERSION}`;
-//routes Category
 import routesCategory from './routes/category.mjs';
 import routesUser from './routes/user.mjs';
+import routesFinancialInformation from './routes/financialInformation.mjs';
 app.use(`${BASEURL}/category/*`, validateToken);
-app.use(BASEURL, routesUser, routesCategory);
+app.use(`${BASEURL}/financialInformation/*`, validateToken);
+app.use(BASEURL, routesUser, routesCategory,routesFinancialInformation);
 
 app.set('timezone', TIMEZONE);
 mongoose.Promise = global.Promise;

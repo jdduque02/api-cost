@@ -70,6 +70,19 @@ export const validateFinancialInformation = async (req, res = response, next) =>
         let errorSearchFinancialInformation = new ResourceNotFoundError('financial Information not found');
         return res.status(400).send(Responses.Error(errorSearchFinancialInformation.name, errorSearchFinancialInformation.message));
     }
-    req.body.user = findFinancialInformation;
+    req.body.financialInformation = findFinancialInformation;
     next();
+}
+/**
+ * Mostrar Informacion Financiera en base el query
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @param {Object} next - Objeto next HTTP
+ * @returns {Object} - Objeto de respuesta HTTP con los Informacion Financiera.
+ * 
+ * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los Informacion Financiera en la base de datos.
+ */
+export const showFinancialInformation = async (req, res = response) => {
+    const { financialInformation } = req.body;
+    return res.status(200).send(Responses.Successful(financialInformation, 'show FinancialInformation success'));
 }
