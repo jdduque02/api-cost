@@ -1,9 +1,14 @@
 import * as modules from '../modules.mjs';
+import dotenv from 'dotenv';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ValidationError, ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelCategory } from '../../../db/models/category.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-const { response, TIMEZONE } = modules;
+const { response } = modules;
+import { pathEnv } from '../../../middleware/dontenv.mjs';
+let env = dotenv.config({ path: pathEnv });
+env = env.parsed;
+const { TIMEZONE } = env;
 import { validateSchemaCategory } from '../../../dataValidations/schema/category.mjs';
 import { zonedTimeToUtc } from 'date-fns-tz';
 

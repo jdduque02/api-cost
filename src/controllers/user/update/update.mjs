@@ -12,7 +12,6 @@ env = env.parsed;
 const { TIMEZONE } = env;
 const { response } = modules;
 import { validateSchemaPartialUser } from '../../../dataValidations/schema/user.mjs';
-
 /**
  * Actualizar el usuario
  * @param {Object} req - Objeto de solicitud HTTP
