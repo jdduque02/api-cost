@@ -3,7 +3,7 @@ import * as modules from '../modules.mjs';
 const { TIMEZONE, dateFns, QueryErrors, ValidationError } = modules;
 export class ModelCategory {
     //El método `getAllCategory` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
-    static async getAllCategory({ parameters }) {
+    static async getAllCategory(parameters) {
         if (!parameters) throw new ValidationError('the information query parameters were not sent.');
         let findCategory;
         try {
@@ -15,7 +15,7 @@ export class ModelCategory {
     }
 
     //El método `getByIdCategory` es una función asincrónica estática que recupera una categoría por su ID.
-    static async getByIdCategory({ id }) {
+    static async getByIdCategory(id) {
         if (!id) throw new ValidationError('the information query parameters were not sent.')
         let findOneCategory;
         try {
@@ -26,7 +26,7 @@ export class ModelCategory {
         return findOneCategory;
     }
     //El método `createCategory` es una función estática asincrónica que crea una nueva categoría.
-    static async createCategory({ input }) {
+    static async createCategory(input) {
         if (!input) throw new ValidationError('the information query parameters were not sent.');
         const today = new Date();
         dateFns.setZone(today, TIMEZONE);
@@ -40,7 +40,7 @@ export class ModelCategory {
         return newCategory;
     }
     //El método `deleteCategory` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad 'categoría'. Si no se proporciona la propiedad 'categoría', devuelve 'falso'.
-    static async deleteCategory({ category }) {
+    static async deleteCategory(category) {
         if (!category) throw new ValidationError('the information query parameters were not sent.');
         let { _id } = category;
         if (!_id) throw new ValidationError('the information query parameters were not sent.');
@@ -54,15 +54,12 @@ export class ModelCategory {
         return true;
     }
     //El método `updateCategory` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: 'categoría' y 'entrada'.
-    static async updateCategory({ category, input }) {
+    static async updateCategory(category, input) {
         if (!category) throw new ValidationError('the information query parameters were not sent.');
         const today = new Date();
         dateFns.setZone(today, TIMEZONE);
         input.update_at = today;
-        const updateCategory = {
-            ...category,
-            ...input,
-        };
+        const updateCategory = Object.assign(category, input);
         let saveUpdateCategory;
         try {
             saveUpdateCategory = updateCategory.save();

@@ -1,5 +1,6 @@
 import * as modules from '../modules.mjs';
 import dotenv from 'dotenv';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ValidationError, ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelFinancialInformation } from '../../../db/models/financialInformation.mjs';
@@ -9,7 +10,6 @@ import { pathEnv } from '../../../middleware/dontenv.mjs';
 let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
 const { TIMEZONE } = env;
-import { zonedTimeToUtc } from 'date-fns-tz';
 const { response } = modules;
 
 /**
@@ -42,13 +42,13 @@ export const createFinancialInformation = async (req, res = response) => {
     } catch (error) {
         const err = new ValidationError(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);
-        return res.status(500).send(Responses.Error(err.name,err.message));
+        return res.status(500).send(Responses.Error(err.name, err.message));
     }
     //La declaración "if" verifica si la propiedad "validateData.success" es "falsa". Si es "falso", significa que la validación de datos falló.
     if (!validateData.success) {
         const err = new ValidationError(validateData.error);
         CustomLogger.error(`error validate response data:\n ${err}`);
-        return res.status(422).send(Responses.Error(err.name,err.message));
+        return res.status(422).send(Responses.Error(err.name, err.message));
     }
     //El bloque de código intenta crear un nuevo usuario utilizando el método `ModelUser.createUser`.
     let newFinancialInformation;
@@ -57,7 +57,7 @@ export const createFinancialInformation = async (req, res = response) => {
     } catch (error) {
         const err = new QueryErrors(error);
         CustomLogger.error(`error create  Financial Information:\n ${err}`);
-        return res.status(500).send(Responses.Error(err.name,err.message));
+        return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(201).send(Responses.Successful(newFinancialInformation,'create Financial Information success'));
+    return res.status(201).send(Responses.Successful(newFinancialInformation, 'create Financial Information success'));
 }

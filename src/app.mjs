@@ -31,9 +31,15 @@ const BASEURL = `/api/v${VERSION}`;
 import routesCategory from './routes/category.mjs';
 import routesUser from './routes/user.mjs';
 import routesFinancialInformation from './routes/financialInformation.mjs';
+import routesFinancialObjective from './routes/financialObjective.mjs';
+import routesSubCategory from './routes/subCategory.mjs';
+import routesTransaction from './routes/transaction.mjs';
 app.use(`${BASEURL}/category/*`, validateToken);
 app.use(`${BASEURL}/financialInformation/*`, validateToken);
-app.use(BASEURL, routesUser, routesCategory,routesFinancialInformation);
+app.use(`${BASEURL}/financialObjective/*`, validateToken);
+app.use(`${BASEURL}/subCategory/*`, validateToken);
+app.use(`${BASEURL}/transaction/*`, validateToken);
+app.use(BASEURL, routesUser, routesCategory, routesFinancialObjective, routesFinancialInformation, routesSubCategory, routesTransaction);
 
 app.set('timezone', TIMEZONE);
 mongoose.Promise = global.Promise;

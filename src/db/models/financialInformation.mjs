@@ -22,11 +22,11 @@ export class ModelFinancialInformation {
     }
 
     //El método `getByIdFinancialInformation` es una función asincrónica estática que recupera una categoría por su ID.
-    static async getByIdFinancialInformation(id) {
-        if (!id) throw new ValidationError('the information query parameters were not sent.');
+    static async getByIdFinancialInformation(parameters) {
+        if (!parameters) throw new ValidationError('the information query parameters were not sent.');
         let findOneFinancialInformation;
         try {
-            findOneFinancialInformation = await schemaFinancialInformation.findOne(id);
+            findOneFinancialInformation = await schemaFinancialInformation.findOne(parameters);
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }

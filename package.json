@@ -81,7 +81,7 @@
         "test": "cross-env NODE_ENV=TEST npx jest  --config=jest.config.cjs --detectOpenHandles"
     },
     "type": "module",
-    "version": "0.8.0",
+    "version": "0.10.0",
     "eslintConfig": {
         "extends": [
             "semistandard"

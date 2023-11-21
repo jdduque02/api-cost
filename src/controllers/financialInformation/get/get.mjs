@@ -1,4 +1,3 @@
-
 import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ResourceNotFoundError, QueryErrors, AuthorizationError } from '../../../helpers/errors.mjs';
@@ -60,7 +59,7 @@ export const validateFinancialInformation = async (req, res = response, next) =>
     searchParams[key] = value;
     let findFinancialInformation;
     try {
-        findFinancialInformation = await ModelFinancialInformation.getOneFinancialInformation(searchParams);
+        findFinancialInformation = await ModelFinancialInformation.getByIdFinancialInformation(searchParams);
     } catch (error) {
         let errorSearchFinancialInformation = new QueryErrors(error);
         CustomLogger.error(`error:\n ${errorSearchFinancialInformation.stack}`);

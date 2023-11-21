@@ -55,5 +55,5 @@ export const updateUser = async (req, res = response) => {
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful(data, 'update user success'));
+    return res.send(Responses.Successful(data, 'update user success'));
 };

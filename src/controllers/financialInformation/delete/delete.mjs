@@ -1,11 +1,15 @@
 import * as modules from '../modules.mjs';
+import dotenv from 'dotenv';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelFinancialInformation } from '../../../db/models/financialInformation.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-const { response, TIMEZONE } = modules;
-import { zonedTimeToUtc } from 'date-fns-tz';
-
+const { response } = modules;
+import { pathEnv } from '../../../middleware/dontenv.mjs';
+let env = dotenv.config({ path: pathEnv });
+env = env.parsed;
+const { TIMEZONE } = env;
 /**
  * Eliminar un usuario en la base de datos
  * @param {Object} req - Objeto de solicitud HTTP
