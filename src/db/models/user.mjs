@@ -7,8 +7,7 @@ import { pathEnv } from '../../middleware/dontenv.mjs';
 let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
 
-const { TIMEZONE, HASH_KEY_USER } = env;
-import { zonedTimeToUtc } from 'date-fns-tz';
+const {  HASH_KEY_USER } = env;
 //El código anterior define una clase llamada "ModelUser" que contiene varios métodos estáticos para interactuar con un modelo de usuario en una base de datos.
 export class ModelUser {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
@@ -94,7 +93,6 @@ export class ModelUser {
         }
         const updateUser = Object.assign(user, input);
         let today = new Date();
-        today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
         today.setUTCHours(today.getUTCHours() - 5);
         updateUser.update_at = today;
         let saveUpdateUser;
@@ -128,7 +126,6 @@ export class ModelHistoryChangeUser {
     static async createChangeHistoryUser({ input }) {
         if (!input) throw new ValidationError('the information query parameters were not sent.');
         let today = new Date();
-        today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
         today.setUTCHours(today.getUTCHours() - 5);
         input.dateModification = today;
         const newChange = {

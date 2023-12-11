@@ -1,6 +1,5 @@
-import * as schemaTransaction from '../schemas.mjs';
-import * as modules from '../modules.mjs';
-const { TIMEZONE, dateFns, QueryErrors, ValidationError } = modules;
+import schemaTransaction from '../schemas/transaction.mjs';
+import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
 
 export class ModelTransaction {
     //El método `getAllTransaction` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
@@ -28,8 +27,8 @@ export class ModelTransaction {
     }
     //El método `createTransaction` es una función estática asincrónica que crea una nueva categoría.
     static async createTransaction(input) {
-        const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
+        let today = new Date();
+        today.setUTCHours(today.getUTCHours() - 5);
         input.created_at = today;
         let newTransaction;
         try {
@@ -55,8 +54,8 @@ export class ModelTransaction {
     //El método `updateTransaction` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: 'categoría' y 'entrada'.
     static async updateTransaction(transaction, input) {
         if (!transaction) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
+        let today = new Date();
+        today.setUTCHours(today.getUTCHours() - 5);
         input.update_at = today;
         const updateTransaction = Object.assign(transaction, input);
         let saveUpdateTransaction;

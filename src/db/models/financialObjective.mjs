@@ -1,7 +1,5 @@
 import * as schemaFinancialObjective from '../schemas.mjs';
-import * as modules from '../modules.mjs';
-const { TIMEZONE, dateFns, QueryErrors, ValidationError } = modules;
-
+import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
 export class ModelFinancialObjective {
     //El método `getAllFinancialObjective` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
     static async getAllFinancialObjective(parameters) {
@@ -29,8 +27,8 @@ export class ModelFinancialObjective {
     //El método `createFinancialObjective` es una función estática asincrónica que crea una nueva categoría.
     static async createFinancialObjective(input) {
         if (!input) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
+        let today = new Date();
+        today.setUTCHours(today.getUTCHours() - 5);
         input.created_at = today;
         let newFinancialObjective;
         try {
@@ -57,8 +55,8 @@ export class ModelFinancialObjective {
     //El método `updateFinancialObjective` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: 'categoría' y 'entrada'.
     static async updateFinancialObjective(financialObjective, input) {
         if (!financialObjective) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
+        let today = new Date();
+        today.setUTCHours(today.getUTCHours() - 5);
         input.update_at = today;
         const updateFinancialObjective = Object.assign(financialObjective, input);
         //payments

@@ -1,12 +1,11 @@
 import schemaFinancialInformation from '../schemas/financialInformation.mjs';
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
-import { pathEnv } from '../../middleware/dontenv.mjs';
-let env = dotenv.config({ path: pathEnv });
-env = env.parsed;
+/* import { pathEnv } from '../../middleware/dontenv.mjs';
 
-const { TIMEZONE } = env;
-import { zonedTimeToUtc } from 'date-fns-tz';
+let env = dotenv.config({ path: pathEnv });
+env = env.parsed; */
+
 
 export class ModelFinancialInformation {
     //El método `getAllFinancialInformation` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
@@ -36,7 +35,6 @@ export class ModelFinancialInformation {
     static async createFinancialInformation(input) {
         if (!input) throw new ValidationError('the information query parameters were not sent.');
         let today = new Date();
-        today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
         today.setUTCHours(today.getUTCHours() - 5);
         input.created_at = today;
         let newFinancialInformation;
@@ -65,7 +63,6 @@ export class ModelFinancialInformation {
     static async updateFinancialInformation(financialInformation, input) {
         if (!financialInformation) throw new ValidationError('the information query parameters were not sent.');
         let today = new Date();
-        today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
         today.setUTCHours(today.getUTCHours() - 5);
         input.update_at = today;
         const updateFinancialInformation = Object.assign(financialInformation, input);

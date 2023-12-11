@@ -1,7 +1,5 @@
 import * as schemaSubCategory from '../schemas.mjs';
-import * as modules from '../modules.mjs';
-const { TIMEZONE, dateFns, QueryErrors, ValidationError } = modules;
-
+import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
 export class ModelSubCategory {
     //El método `getAllSubCategory` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
     static async getAllSubCategory(parameters) {
@@ -29,8 +27,8 @@ export class ModelSubCategory {
     //El método `createSubCategory` es una función estática asincrónica que crea una nueva categoría.
     static async createSubCategory(input) {
         if (!input) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
+        let today = new Date();
+        today.setUTCHours(today.getUTCHours() - 5);
         input.created_at = today;
         let newSubCategory;
         try {
@@ -56,8 +54,8 @@ export class ModelSubCategory {
     //El método `updateSubCategory` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: 'categoría' y 'entrada'.
     static async updateSubCategory(subCategory, input) {
         if (!subCategory) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
+        let today = new Date();
+        today.setUTCHours(today.getUTCHours() - 5);
         input.update_at = today;
         const updateSubCategory = Object.assign(subCategory, input);
         let saveUpdateSubCategory;

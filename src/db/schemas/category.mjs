@@ -23,6 +23,10 @@ const categorySchema = new Schema({
         type: Number,
         default: 0,
     },
+    //methods of dine administration
+    methods:{
+        type:String,
+    },
     created_at: {
         type: Date,
         default: today

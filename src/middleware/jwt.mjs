@@ -13,7 +13,7 @@ const { HASH_KEY_JWT, TIMEZONE } = env;
 const validateToken = (req, res = response, next) => {
     const { headers } = req;
     const TOKEN = headers['x-access-token'];
-    let tokenWeb =HASH_KEY_JWT;
+    let tokenWeb = HASH_KEY_JWT;
     const ValidationErrorTokenExists = new ResourceNotFoundError('token does not exist in the header');
     if (!TOKEN) return res.status(400).send(Responses.Error(ValidationErrorTokenExists, 'token does not exist in the header'));
     let verfyToken
@@ -36,7 +36,6 @@ const validateToken = (req, res = response, next) => {
         expiresIn,
         iat
     };
-   
     let newToken;
     try {
         newToken = jwt.sign(charge, tokenWeb);

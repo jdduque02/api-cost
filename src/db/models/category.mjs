@@ -1,6 +1,5 @@
-import * as schemaCategory from '../schemas.mjs';
-import * as modules from '../modules.mjs';
-const { TIMEZONE, dateFns, QueryErrors, ValidationError } = modules;
+import schemaCategory from '../schemas/category.mjs';
+import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
 export class ModelCategory {
     //El método `getAllCategory` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.
     static async getAllCategory(parameters) {
@@ -28,8 +27,8 @@ export class ModelCategory {
     //El método `createCategory` es una función estática asincrónica que crea una nueva categoría.
     static async createCategory(input) {
         if (!input) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
+        let today = new Date();
+        today.setUTCHours(today.getUTCHours() - 5);
         input.created_at = today;
         let newCategory;
         try {
@@ -56,8 +55,8 @@ export class ModelCategory {
     //El método `updateCategory` es una función asíncrona estática que actualiza una categoría en la base de datos. Se necesitan dos parámetros: 'categoría' y 'entrada'.
     static async updateCategory(category, input) {
         if (!category) throw new ValidationError('the information query parameters were not sent.');
-        const today = new Date();
-        dateFns.setZone(today, TIMEZONE);
+        let today = new Date();
+        today.setUTCHours(today.getUTCHours() - 5);
         input.update_at = today;
         const updateCategory = Object.assign(category, input);
         let saveUpdateCategory;
