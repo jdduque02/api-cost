@@ -82,6 +82,7 @@ export const validateFinancialObjective = async (req, res = response, next) => {
  * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los Informacion Financiera en la base de datos.
  */
 export const showFinancialObjective = async (req, res = response) => {
-    const { financialObjective } = req.body;
-    return res.status(200).send(Responses.Successful(financialObjective, 'show FinancialObjective success'));
+    const {body, token} = req;
+    const { financialObjective } = body;
+    return res.status(200).send(Responses.Successful({financialObjective, token}, 'show FinancialObjective success'));
 }

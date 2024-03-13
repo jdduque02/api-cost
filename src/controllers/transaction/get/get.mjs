@@ -14,7 +14,7 @@ const { response } = modules;
  * @throws {ValidationError, ServerError, ResourceNotFoundError, AuthorizationError, QueryErrors} Error al obtener todos las informaciones financieras.
  */
 export const getAllTransaction = async (req, res = response) => {
-    let { charge: { data } } = req;
+    let { charge: { data }, token } = req;
     if (data.role !== 1) {
         const validateError = new AuthorizationError('you do not have the permissions to make this request');
         return res.status(401).send(Responses.Error(validateError.name, validateError.message));
@@ -31,7 +31,7 @@ export const getAllTransaction = async (req, res = response) => {
         let errorSearchTransaction = new ResourceNotFoundError('sub Category not found');
         return res.status(400).send(Responses.Error(errorSearchTransaction.name, errorSearchTransaction.message));
     }
-    return res.status(200).send(Responses.Successful(getAllTransaction, 'get all sub Category success'));
+    return res.status(200).send(Responses.Successful({transaction:getAllTransaction, token}, 'get all sub Category success'));
 }
 /**
  * Consultar informacion financiera en base el query
@@ -83,6 +83,7 @@ export const validateTransaction = async (req, res = response, next) => {
  * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los Informacion Financiera en la base de datos.
  */
 export const showTransaction = async (req, res = response) => {
-    const { Transaction } = req.body;
-    return res.status(200).send(Responses.Successful(Transaction, 'show Transaction success'));
+    const { body, token } = req;
+    const { Transaction } = body;
+    return res.status(200).send(Responses.Successful({transaction: Transaction, token}, 'show Transaction success'));
 }

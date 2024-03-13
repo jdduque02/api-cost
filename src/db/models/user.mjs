@@ -7,7 +7,7 @@ import { pathEnv } from '../../middleware/dontenv.mjs';
 let env = dotenv.config({ path: pathEnv });
 env = env.parsed;
 
-const {  HASH_KEY_USER } = env;
+const { HASH_KEY_USER } = env;
 //El código anterior define una clase llamada "ModelUser" que contiene varios métodos estáticos para interactuar con un modelo de usuario en una base de datos.
 export class ModelUser {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.
@@ -64,7 +64,7 @@ export class ModelUser {
         return saveNewUser;
     }
     //La función `deleteUser` es una función asíncrona estática que elimina un usuario de la base de datos según el `user` proporcionado.
-    static async deleteUser( username) {
+    static async deleteUser(username) {
         if (!username) throw new ValidationError('the information query parameters were not sent.');
         try {
             await schemaUser.deleteOne({ username })

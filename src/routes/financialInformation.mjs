@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import {  getAllFinancialInformation , validateFinancialInformation ,showFinancialInformation  } from '../controllers/financialInformation/get/get.mjs';
-import { createFinancialInformation  } from '../controllers/financialInformation/create/create.mjs';
-import { updateFinancialInformation  } from '../controllers/financialInformation/update/update.mjs';
-import { deleteFinancialInformation  } from '../controllers/financialInformation/delete/delete.mjs';
+import { getAllFinancialInformation, validateFinancialInformation, showFinancialInformation } from '../controllers/financialInformation/get/get.mjs';
+import { createFinancialInformation } from '../controllers/financialInformation/create/create.mjs';
+import { updateFinancialInformation } from '../controllers/financialInformation/update/update.mjs';
+import { deleteFinancialInformation } from '../controllers/financialInformation/delete/delete.mjs';
 export const financialInformationRouter = Router();
 /**
  * @openapi
@@ -11,26 +11,26 @@ export const financialInformationRouter = Router();
  *     FinancialInformation:
  *       type: object
  *       required:
- *         - name
- *         - group
- *         - description
- *         - percentageOptimum
- *         - methods
+ *         - userId
  *       properties:
- *         name: 
+ *         userId: 
  *           type: string
- *           example: savings
- *         group: 
- *           type: string
- *           example: savings
- *         description:
- *           type: string
- *           example: savings group required
- *         percentageOptimum:
+ *           example: uidd
+ *         monthlyIncome: 
  *           type: number
- *           example: 11
- *         methods:
- *           type: string 
+ *           example: 2
+ *         maxAllowableExpenses:
+ *           type: number
+ *           example: 2
+ *         openingBalances:
+ *           type: number
+ *           example: 2
+ *         initialDebts:
+ *           type: number
+ *           example: 3 
+ *         savingsGoal:
+ *           type: number
+ *           example: 3  
  * /api/v0.10.0/financialInformation/create:
  *   post:
  *     summary: Returns a financialInformation create.
@@ -90,7 +90,7 @@ export const financialInformationRouter = Router();
  *                 body:    
  *                   type: object
  */
-financialInformationRouter.post('/financialInformation/create', createFinancialInformation );
+financialInformationRouter.post('/financialInformation/create', createFinancialInformation);
 /**
  * @openapi
  * /api/v0.10.0/financialInformation/delete:
@@ -152,7 +152,7 @@ financialInformationRouter.post('/financialInformation/create', createFinancialI
  *                 body:    
  *                   type: object
  */
-financialInformationRouter.delete('/financialInformation/delete', deleteFinancialInformation );
+financialInformationRouter.delete('/financialInformation/delete', deleteFinancialInformation);
 /**
  * @openapi
  * /api/v0.10.0/financialInformation/all:
@@ -212,7 +212,7 @@ financialInformationRouter.delete('/financialInformation/delete', deleteFinancia
  *                 body:    
  *                   type: object
  */
-financialInformationRouter.post('/financialInformation/all', getAllFinancialInformation );
+financialInformationRouter.post('/financialInformation/all', getAllFinancialInformation);
 /**
  * @openapi
  * /api/v0.10.0/financialInformation/get/{key}/{value}:
@@ -282,7 +282,7 @@ financialInformationRouter.post('/financialInformation/all', getAllFinancialInfo
  *                 body:    
  *                   type: object
  */
-financialInformationRouter.post('/financialInformation/get/:key?/:value?', validateFinancialInformation , showFinancialInformation );
+financialInformationRouter.post('/financialInformation/get/:key?/:value?', validateFinancialInformation, showFinancialInformation);
 /**
  * @openapi
  * /api/v0.10.0/financialInformation/update/{key}/{value}:
@@ -352,5 +352,5 @@ financialInformationRouter.post('/financialInformation/get/:key?/:value?', valid
  *                 body:    
  *                   type: object
  */
-financialInformationRouter.patch('/financialInformation/update/:key?/:value?', validateFinancialInformation , updateFinancialInformation );
+financialInformationRouter.patch('/financialInformation/update/:key?/:value?', validateFinancialInformation, updateFinancialInformation);
 export default financialInformationRouter;

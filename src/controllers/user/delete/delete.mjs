@@ -18,7 +18,7 @@ export const deleteUser = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
     today.setUTCHours(today.getUTCHours() - 5);
-    const { body } = req;
+    const { body, token } = req;
     //La declaración `if` verifica si el objeto `body` está vacío. Si está vacío, significa que el cuerpo de la solicitud no contiene ningún dato. En este caso, genera un `ResourceNotFoundError` con el mensaje 'cuerpo de petición vacío', registra el error usando `CustomLogger.error` y envía una respuesta con un código de estado de 400 y un mensaje de error usando `Responses.Error`.
     if (Object.keys(body).length === 0) {
         const err = new ResourceNotFoundError('empty petition body');
@@ -35,5 +35,5 @@ export const deleteUser = async (req, res = response) => {
         CustomLogger.error(`error query user data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful(deleteUser, 'delete user success'));
+    return res.status(200).send(Responses.Successful({user:deleteUser, token}, 'delete user success'));
 }

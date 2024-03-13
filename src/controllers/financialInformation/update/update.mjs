@@ -24,7 +24,7 @@ export const updateFinancialInformation = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
     today.setUTCHours(today.getUTCHours() - 5);
-    const { body } = req;
+    const { body, token } = req;
     let { financialInformation } = body;
     delete body.financialInformation;
     let validateDataFinancialInformation;
@@ -55,5 +55,5 @@ export const updateFinancialInformation = async (req, res = response) => {
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful(data, 'update financialInformation success'));
+    return res.status(200).send(Responses.Successful({financialInformation:data, token}, 'update financialInformation success'));
 };

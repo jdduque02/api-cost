@@ -102,7 +102,7 @@ export const loginUser = async (req, res = response) => {
         CustomLogger.error(`error:\n ${err.stack}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.send(Responses.Successful(generateToken, 'login success'));
+    return res.send(Responses.Successful({token:generateToken}, 'login success'));
 
 }
 /**
@@ -114,7 +114,7 @@ export const loginUser = async (req, res = response) => {
  * @throws {ValidationError, ServerError, ResourceNotFoundError, AuthorizationError, QueryErrors} Error al obtener todos los usuarios.
  */
 export const getAllUser = async (req, res = response) => {
-    let { charge: { data } } = req;
+    let { charge: { data }, token } = req;
     if (data.role !== 1) {
         const validateError = new AuthorizationError('you do not have the permissions to make this request');
         return res.status(401).send(Responses.Error(validateError.name, validateError.message));
@@ -131,7 +131,7 @@ export const getAllUser = async (req, res = response) => {
         let errorSearchUser = new ResourceNotFoundError('users not found');
         return res.status(400).send(Responses.Error(errorSearchUser.name, errorSearchUser.message));
     }
-    return res.status(200).send(Responses.Successful(getAllUser, 'get all user success'));
+    return res.status(200).send(Responses.Successful({users:getAllUser, token}, 'get all user success'));
 }
 /**
  * Consultar usuarios en base el query

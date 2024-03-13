@@ -14,7 +14,7 @@ const { response } = modules;
  * @throws {ValidationError, ServerError, ResourceNotFoundError, AuthorizationError, QueryErrors} Error al obtener todos las informaciones financieras.
  */
 export const getAllSubCategory = async (req, res = response) => {
-    let { charge: { data } } = req;
+    let { charge: { data }, token } = req;
     if (data.role !== 1) {
         const validateError = new AuthorizationError('you do not have the permissions to make this request');
         return res.status(401).send(Responses.Error(validateError.name, validateError.message));
@@ -31,7 +31,7 @@ export const getAllSubCategory = async (req, res = response) => {
         let errorSearchSubCategory = new ResourceNotFoundError('sub Category not found');
         return res.status(400).send(Responses.Error(errorSearchSubCategory.name, errorSearchSubCategory.message));
     }
-    return res.status(200).send(Responses.Successful(getAllSubCategory, 'get all sub Category success'));
+    return res.status(200).send(Responses.Successful({subCategory:getAllSubCategory, token}, 'get all sub Category success'));
 }
 /**
  * Consultar informacion financiera en base el query
@@ -83,6 +83,7 @@ export const validateSubCategory = async (req, res = response, next) => {
  * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los Informacion Financiera en la base de datos.
  */
 export const showSubCategory = async (req, res = response) => {
-    const { SubCategory } = req.body;
-    return res.status(200).send(Responses.Successful(SubCategory, 'show SubCategory success'));
+    const { body, token} = req;
+    const { SubCategory } = body;
+    return res.status(200).send(Responses.Successful({subCategory:SubCategory, token}, 'show SubCategory success'));
 }

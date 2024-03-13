@@ -6,55 +6,55 @@ let today = new Date();
 today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
 
 const changeHistory = Schema({
-    modifiedVariable:{
+    modifiedVariable: {
         type: String,
-        required:true,
+        required: true,
     },
-    dateModification:{
-        type:Date,
-        required:true,
+    dateModification: {
+        type: Date,
+        required: true,
     },
-    valuePrevious:{
-        type:String,
-        required:true,
+    valuePrevious: {
+        type: String,
+        required: true,
     },
     valueNew: {
-        type : String ,
-        required : true
+        type: String,
+        required: true
     }
 });
 
 const financialInformationSchema = Schema({
     userId: {
-        type : String,
-        required : true
+        type: String,
+        required: true
     },
-    monthlyIncome:{
+    monthlyIncome: {
         type: Number,
         default: 0,
     },
-    maxAllowableExpenses:{
-        type:Number,
-        default: 0,
-    },
-    openingBalances:{
+    maxAllowableExpenses: {
         type: Number,
         default: 0,
     },
-    initialDebts:{
+    openingBalances: {
         type: Number,
         default: 0,
     },
-    savingsGoal:{
+    initialDebts: {
         type: Number,
         default: 0,
     },
-    ChangeHistory:[changeHistory],
+    savingsGoal: {
+        type: Number,
+        default: 0,
+    },
+    ChangeHistory: [changeHistory],
     created_at: {
         type: Date,
         default: today
     },
-    update_at:  {
+    update_at: {
         type: Date,
         default: today
     },

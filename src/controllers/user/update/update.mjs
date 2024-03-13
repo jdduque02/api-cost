@@ -24,7 +24,7 @@ export const updateUser = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
     today.setUTCHours(today.getUTCHours() - 5);
-    const { body } = req;
+    const { body, token } = req;
     let { user } = body;
     delete body.user;
     let validateDataUser;
@@ -55,5 +55,5 @@ export const updateUser = async (req, res = response) => {
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.send(Responses.Successful(data, 'update user success'));
+    return res.send(Responses.Successful({user:data, token}, 'update user success'));
 };

@@ -26,6 +26,7 @@ const validateToken = (req, res = response, next) => {
     let { data, iat } = verfyToken;
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
+    today.setUTCHours(today.getUTCHours() - 5);
     if (iat <= today.getTime()) {
         const tokenValidityValidationError = new AuthorizationError('token expired');
         return res.status(401).send(Responses.Error(tokenValidityValidationError.name, tokenValidityValidationError.message));

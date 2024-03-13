@@ -25,7 +25,7 @@ export const updateSubCategory = async (req, res = response) => {
     let today = new Date();
     today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
     today.setUTCHours(today.getUTCHours() - 5);
-    const { body } = req;
+    const { body, token } = req;
     let { subCategory } = body;
     delete body.subCategory;
     let validateDataSubCategory;
@@ -56,5 +56,5 @@ export const updateSubCategory = async (req, res = response) => {
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful(data, 'update subCategory success'));
+    return res.status(200).send(Responses.Successful({subCategory:data, token}, 'update subCategory success'));
 };

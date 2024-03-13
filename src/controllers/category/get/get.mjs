@@ -91,6 +91,7 @@ export const validateCategory = async (req, res = response, next) => {
  */
 export const showCategory = async (req, res = response) => {
     //category
-    const { category } = req.body;
-    return res.status(200).send(Responses.Successful(category, 'show category´s success'));
+    const { body, token } = req;
+    const { category } = body;
+    return res.status(200).send(Responses.Successful({ category, token }, 'show category´s success'));
 }
