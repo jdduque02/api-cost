@@ -1,17 +1,12 @@
-import dotenv from 'dotenv';
-import { zonedTimeToUtc } from 'date-fns-tz';
 import { randomUUID } from 'node:crypto'
-import * as modules from '../modules.mjs';
+import { response } from 'express';
 import { CustomLogger } from '../../../helpers/console.mjs';
-import { pathEnv } from '../../../middleware/dontenv.mjs';
+import { RecordLog } from '../../../helpers/logs.mjs';
 import { ValidationError, ServerError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelFinancialInformation } from '../../../db/models/financialInformation.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-let env = dotenv.config({ path: pathEnv });
-env = env.parsed;
-const { TIMEZONE } = env;
-const { response } = modules;
 import { validateSchemaPartialFinancialInformation } from '../../../dataValidations/schema/financialInformation.mjs';
+const module = 'financialInformation';
 /**
  * Actualizar la informacion financiera
  * @param {Object} req - Objeto de solicitud HTTP
@@ -22,9 +17,12 @@ import { validateSchemaPartialFinancialInformation } from '../../../dataValidati
  */
 export const updateFinancialInformation = async (req, res = response) => {
     let today = new Date();
-    today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
     today.setUTCHours(today.getUTCHours() - 5);
     const { body, token } = req;
+    if (Object.keys(body).length > 1000) {
+        RecordLog('The body of the request is too large', module);
+        return res.status(413).send(Responses.Error([], 'The body of the request is too large'));
+    }
     let { financialInformation } = body;
     delete body.financialInformation;
     let validateDataFinancialInformation;
@@ -32,12 +30,14 @@ export const updateFinancialInformation = async (req, res = response) => {
         validateDataFinancialInformation = validateSchemaPartialFinancialInformation(body);
     } catch (error) {
         const err = new ServerError(error);
+        RecordLog(err, module);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
     //La declaración "if" verifica si la propiedad "validateData.success" es "falsa". Si es "falso", significa que la validación de datos falló.
     if (!validateDataFinancialInformation.success) {
         const err = new ValidationError(validateDataFinancialInformation.error);
+        RecordLog(err, module);
         CustomLogger.error(`error validate response data:\n ${err}`);
         return res.status(422).send(Responses.Error(err.name, err.message));
     }
@@ -52,8 +52,9 @@ export const updateFinancialInformation = async (req, res = response) => {
         await ModelFinancialInformation.updateFinancialInformation(financialInformation, data);
     } catch (error) {
         const err = new QueryErrors(error);
+        RecordLog(err, module);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful({financialInformation:data, token}, 'update financialInformation success'));
+    return res.status(200).send(Responses.Successful({ financialInformation: data, token }, 'update financialInformation success'));
 };

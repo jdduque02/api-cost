@@ -1,10 +1,15 @@
 import { Schema, model } from 'mongoose';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import * as modules from '../modules.mjs';
-const { TIMEZONE } = modules;
-let today = new Date();
-today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
-
+const today = new Date();
+today.setUTCHours(today.getUTCHours() - 5);
+/* Este modelo almacena subcategorías para las transacciones financieras.
+Id: Un identificador único para la subcategoría.
+name: El nombre de la subcategoría.
+description: Una descripción opcional de la subcategoría.
+categoryId: La referencia a la categoría a la que pertenece la subcategoría.
+userId: La referencia al usuario al que pertenece la subcategoría.
+created_at: La fecha y hora en que se creó la subcategoría.
+update_at: La fecha y hora de la última actualización de la subcategoría.
+ */
 const subCategorySchema = Schema({
     name: {
         type: String,

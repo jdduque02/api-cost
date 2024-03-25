@@ -1,12 +1,9 @@
 import { Schema, model } from 'mongoose';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import * as modules from '../modules.mjs';
-const { TIMEZONE } = modules;
-let today = new Date();
-today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
+const today = new Date();
+today.setUTCHours(today.getUTCHours() - 5);
 const changeHistoryUser = Schema({
-    _id:{
-        type:String
+    _id: {
+        type: String
     },
     modifiedVariable: {
         type: String,
@@ -25,6 +22,18 @@ const changeHistoryUser = Schema({
         //required: true
     }
 });
+/* Este modelo representa la información de los usuarios de tu aplicación.
+user: El nombre de usuario o identificación del usuario.
+password: La contraseña del usuario (debe almacenarse de manera segura, preferiblemente como un hash).
+email: La dirección de correo electrónico del usuario.
+numerphone: El número de teléfono del usuario.
+created_at: La fecha y hora en que se creó la cuenta del usuario.
+update_at: La fecha y hora de la última actualización de la cuenta del usuario.
+last_conect: La fecha y hora de la última conexión del usuario.
+role: El rol o nivel de acceso del usuario (por ejemplo, administrador, usuario regular).
+imgProfile: Una ruta o enlace a la imagen de perfil del usuario.
+_id: El identificador único del usuario.
+ */
 const userSchema = Schema({
     username: {
         type: String,

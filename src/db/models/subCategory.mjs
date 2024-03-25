@@ -1,4 +1,4 @@
-import * as schemaSubCategory from '../schemas.mjs';
+import schemaSubCategory from '../schemas/subCategory.mjs';
 import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
 export class ModelSubCategory {
     //El método `getAllSubCategory` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.

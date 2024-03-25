@@ -1,11 +1,10 @@
-import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelUser } from '../../../db/models/user.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-const { response, TIMEZONE } = modules;
-import { zonedTimeToUtc } from 'date-fns-tz';
-
+import { response } from 'express';
+import { RecordLog } from '../../../helpers/logs.mjs';
+const module = 'user';
 /**
  * Eliminar un usuario en la base de datos
  * @param {Object} req - Objeto de solicitud HTTP
@@ -16,12 +15,12 @@ import { zonedTimeToUtc } from 'date-fns-tz';
  */
 export const deleteUser = async (req, res = response) => {
     let today = new Date();
-    today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
     today.setUTCHours(today.getUTCHours() - 5);
     const { body, token } = req;
     //La declaración `if` verifica si el objeto `body` está vacío. Si está vacío, significa que el cuerpo de la solicitud no contiene ningún dato. En este caso, genera un `ResourceNotFoundError` con el mensaje 'cuerpo de petición vacío', registra el error usando `CustomLogger.error` y envía una respuesta con un código de estado de 400 y un mensaje de error usando `Responses.Error`.
     if (Object.keys(body).length === 0) {
         const err = new ResourceNotFoundError('empty petition body');
+        RecordLog(err, module);
         CustomLogger.error(`error validate data:\n ${err}`);
         return res.status(400).send(Responses.Error(err.name, err.message));
     }
@@ -32,6 +31,7 @@ export const deleteUser = async (req, res = response) => {
         deleteUser = await ModelUser.deleteUser(body.username);
     } catch (error) {
         const err = new QueryErrors(error);
+        RecordLog(err, module);
         CustomLogger.error(`error query user data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }

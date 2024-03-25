@@ -1,9 +1,10 @@
-import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ResourceNotFoundError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelFinancialObjective } from '../../../db/models/financialObjective.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-const { response } = modules;
+import { RecordLog } from '../../../helpers/logs.mjs';
+import { response } from 'express';
+const module = 'financialObjective';
 /**
  * Eliminar un usuario en la base de datos
  * @param {Object} req - Objeto de solicitud HTTP
@@ -17,6 +18,7 @@ export const deleteFinancialObjective = async (req, res = response) => {
     //La declaración `if` verifica si el objeto `body` está vacío. Si está vacío, significa que el cuerpo de la solicitud no contiene ningún dato. En este caso, genera un `ResourceNotFoundError` con el mensaje 'cuerpo de petición vacío', registra el error usando `CustomLogger.error` y envía una respuesta con un código de estado de 400 y un mensaje de error usando `Responses.Error`.
     if (Object.keys(body).length === 0) {
         const err = new ResourceNotFoundError('empty petition body');
+        RecordLog(err, module);
         CustomLogger.error(`error validate data:\n ${err}`);
         return res.status(400).send(Responses.Error(err.name, err.message));
     }
@@ -27,8 +29,9 @@ export const deleteFinancialObjective = async (req, res = response) => {
         deleteFinancialObjective = await ModelFinancialObjective.deleteFinancialObjective(body.userId);
     } catch (error) {
         const err = new QueryErrors(error);
+        RecordLog(err, module);
         CustomLogger.error(`error query financialObjective data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful({financialObjective:deleteFinancialObjective, token}, 'delete financialObjective success'));
+    return res.status(200).send(Responses.Successful({ financialObjective: deleteFinancialObjective, token }, 'delete financialObjective success'));
 }

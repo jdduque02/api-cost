@@ -20,5 +20,4 @@ describe(`POST ${routeCreateUser}`, () => {
         const statusCode = queryRequest ? queryRequest.statusCode : undefined;
         expect(statusCode).toBe(200);
     })
-})
- */
+})*/

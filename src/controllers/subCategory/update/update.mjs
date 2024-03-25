@@ -1,18 +1,12 @@
-
-import dotenv from 'dotenv';
-import { zonedTimeToUtc } from 'date-fns-tz';
 import { randomUUID } from 'node:crypto'
-import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
-import { pathEnv } from '../../../middleware/dontenv.mjs';
 import { ValidationError, ServerError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelSubCategory } from '../../../db/models/subCategory.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-let env = dotenv.config({ path: pathEnv });
-env = env.parsed;
-const { TIMEZONE } = env;
-const { response } = modules;
 import { validateSchemaPartialSubCategory } from '../../../dataValidations/schema/subCategory.mjs';
+import { response } from 'express';
+import { RecordLog } from '../../../helpers/logs.mjs';
+const module = 'subCategory';
 /**
  * Actualizar la informacion financiera
  * @param {Object} req - Objeto de solicitud HTTP
@@ -23,22 +17,27 @@ import { validateSchemaPartialSubCategory } from '../../../dataValidations/schem
  */
 export const updateSubCategory = async (req, res = response) => {
     let today = new Date();
-    today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
     today.setUTCHours(today.getUTCHours() - 5);
     const { body, token } = req;
     let { subCategory } = body;
     delete body.subCategory;
+    if (Object.keys(body).length > 1000) {
+        RecordLog('The body of the request is too large', module);
+        return res.status(413).send(Responses.Error([], 'The body of the request is too large'));
+    }
     let validateDataSubCategory;
     try {
         validateDataSubCategory = validateSchemaPartialSubCategory(body);
     } catch (error) {
         const err = new ServerError(error);
+        RecordLog(err, module);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
     //La declaración "if" verifica si la propiedad "validateData.success" es "falsa". Si es "falso", significa que la validación de datos falló.
     if (!validateDataSubCategory.success) {
         const err = new ValidationError(validateDataSubCategory.error);
+        RecordLog(err, module);
         CustomLogger.error(`error validate response data:\n ${err}`);
         return res.status(422).send(Responses.Error(err.name, err.message));
     }
@@ -53,8 +52,9 @@ export const updateSubCategory = async (req, res = response) => {
         await ModelSubCategory.updateSubCategory(subCategory, data);
     } catch (error) {
         const err = new QueryErrors(error);
+        RecordLog(err, module);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful({subCategory:data, token}, 'update subCategory success'));
+    return res.status(200).send(Responses.Successful({ subCategory: data, token }, 'update subCategory success'));
 };

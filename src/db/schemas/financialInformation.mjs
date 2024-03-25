@@ -1,10 +1,6 @@
 import { Schema, model } from 'mongoose';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import * as modules from '../modules.mjs';
-const { TIMEZONE } = modules;
-let today = new Date();
-today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
-
+const today = new Date();
+today.setUTCHours(today.getUTCHours() - 5);
 const changeHistory = Schema({
     modifiedVariable: {
         type: String,
@@ -23,7 +19,18 @@ const changeHistory = Schema({
         required: true
     }
 });
-
+/* 
+Este modelo almacena información financiera específica de cada usuario.
+_id: El identificador único de la información financiera.
+userId: La referencia al usuario al que pertenece esta información financiera.
+monthlyIncome: El ingreso mensual del usuario.
+maxAllowableExpenses: El gasto máximo permitido por mes.
+openingBalances: Los saldos iniciales o saldo inicial de cuentas financieras.
+savingsGoal: La meta de ahorro establecida por el usuario.
+created_at: La fecha y hora en que se creó esta información financiera.
+update_at: La fecha y hora de la última actualización de esta información financiera.
+ChangeHistory: Un submodelo que registra cambios históricos en la información financiera, permitiendo un seguimiento de la evolución de las finanzas del usuario.
+ */
 const financialInformationSchema = Schema({
     userId: {
         type: String,

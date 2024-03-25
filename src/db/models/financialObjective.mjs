@@ -1,4 +1,4 @@
-import * as schemaFinancialObjective from '../schemas.mjs';
+import schemaFinancialObjective from '../schemas/financialObjective.mjs';
 import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
 export class ModelFinancialObjective {
     //El método `getAllFinancialObjective` es una función asincrónica estática que recupera todas las categorías según los parámetros proporcionados.

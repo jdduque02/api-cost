@@ -1,9 +1,15 @@
 import { Schema, model } from 'mongoose';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import * as modules from '../modules.mjs';
-const { TIMEZONE } = modules;
-let today = new Date();
-today = zonedTimeToUtc(today, TIMEZONE, 'yyyy-MM-dd HH:mm:ss zzz');
+const today = new Date();
+today.setUTCHours(today.getUTCHours() - 5);
+/* _id: Identificador único del objetivo financiero.
+userId: La referencia al usuario al que pertenece este objetivo financiero.
+name: Nombre o descripción del objetivo financiero (por ejemplo, "Vacaciones", "Fondo de emergencia").
+type: Tipo de objetivo financiero (por ejemplo, "Deuda" o "Ahorro").
+totalAmount: El monto total necesario para alcanzar el objetivo financiero.
+currentBalance: El saldo actual acumulado para el objetivo financiero (inicialmente igual al monto total).
+created_at: La fecha y hora en que se creó este objetivo financiero.
+update_at: La fecha y hora de la última actualización de este objetivo financiero.
+ */
 const financialObjectiveSchema = Schema({
     groupId: {
         type: String,

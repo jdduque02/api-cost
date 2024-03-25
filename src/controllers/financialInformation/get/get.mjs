@@ -1,9 +1,8 @@
-import * as modules from '../modules.mjs';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ResourceNotFoundError, QueryErrors, AuthorizationError } from '../../../helpers/errors.mjs';
 import { ModelFinancialInformation } from '../../../db/models/financialInformation.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-const { response } = modules;
+import { response } from 'express';
 /**
  * Obtener todos las informaciones financieras
  * @param {Object} req - Objeto de solicitud HTTP
@@ -82,7 +81,7 @@ export const validateFinancialInformation = async (req, res = response, next) =>
  * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los Informacion Financiera en la base de datos.
  */
 export const showFinancialInformation = async (req, res = response) => {
-    const {body, token} = req;
+    const { body, token } = req;
     const { financialInformation } = body;
-    return res.status(200).send(Responses.Successful({financialInformation, token}, 'show FinancialInformation success'));
+    return res.status(200).send(Responses.Successful({ financialInformation, token }, 'show FinancialInformation success'));
 }
