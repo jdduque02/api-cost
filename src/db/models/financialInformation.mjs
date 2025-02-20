@@ -1,5 +1,5 @@
 import schemaFinancialInformation from '../schemas/financialInformation.mjs';
-//import dotenv from 'dotenv';
+//
 import { QueryErrors, ValidationError } from '../../helpers/errors.mjs';
 /* import { pathEnv } from '../../middleware/dontenv.mjs';
 

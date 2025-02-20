@@ -1,15 +1,12 @@
-import dotenv from 'dotenv';
+
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { response } from 'express';
 import { CustomLogger } from '../../../helpers/console.mjs';
-import { pathEnv } from '../../../middleware/dontenv.mjs';
 import { ValidationError, ServerError, ResourceNotFoundError, AuthenticationError, AuthorizationError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelUser } from '../../../db/models/user.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-let env = dotenv.config({ path: pathEnv });
-env = env.parsed;
-const { HASH_KEY_JWT } = env;
+const { HASH_KEY_JWT } = process.env;
 import { RecordLog } from '../../../helpers/logs.mjs';
 const module = 'user';
 import { validateSchemaPartialUser } from '../../../dataValidations/schema/user.mjs';
@@ -108,7 +105,7 @@ export const loginUser = async (req, res = response) => {
         CustomLogger.error(`error:\n ${err.stack}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.send(Responses.Successful({token:generateToken}, 'login success'));
+    return res.send(Responses.Successful({ token: generateToken }, 'login success'));
 
 }
 /**
@@ -139,7 +136,7 @@ export const getAllUser = async (req, res = response) => {
         RecordLog(errorSearchUser, module);
         return res.status(400).send(Responses.Error(errorSearchUser.name, errorSearchUser.message));
     }
-    return res.status(200).send(Responses.Successful({users:getAllUser, token}, 'get all user success'));
+    return res.status(200).send(Responses.Successful({ users: getAllUser, token }, 'get all user success'));
 }
 /**
  * Consultar usuarios en base el query

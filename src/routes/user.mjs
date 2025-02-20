@@ -3,7 +3,7 @@ import { createUser } from '../controllers/user/create/create.mjs';
 import { loginUser, getAllUser, validateUser } from '../controllers/user/get/get.mjs';
 import { updateUser } from '../controllers/user/update/update.mjs';
 import { deleteUser } from '../controllers/user/delete/delete.mjs';
-import validateToken from '../middleware/jwt.mjs';
+import {validateToken} from '../middleware/jwt.mjs';
 export const userRouter = Router();
 /**
  * @openapi

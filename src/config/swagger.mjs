@@ -1,5 +1,5 @@
 //import path from 'node:path';
-const options = {
+export const swaggerConfig = {
     definition: {
         openapi: '3.0.0',
         info: {
@@ -25,4 +25,3 @@ const options = {
     // looks for configuration in specified directories
     apis: ['./src/routes/*.mjs'],
 }
-export default options

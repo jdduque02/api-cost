@@ -1,13 +1,9 @@
 import schemaUser from '../schemas/user.mjs';
 import bcrypt from 'bcrypt';
-
-import dotenv from 'dotenv';
 import { QueryErrors, ValidationError, ResourceNotFoundError } from '../../helpers/errors.mjs';
-import { pathEnv } from '../../middleware/dontenv.mjs';
-let env = dotenv.config({ path: pathEnv });
-env = env.parsed;
 
-const { HASH_KEY_USER } = env;
+
+const { HASH_KEY_USER } = process.env;
 //El código anterior define una clase llamada "ModelUser" que contiene varios métodos estáticos para interactuar con un modelo de usuario en una base de datos.
 export class ModelUser {
     // es una función asincrónica estática que recupera todos los usuarios de la base de datos según los parámetros proporcionados.

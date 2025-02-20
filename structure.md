@@ -1,57 +1,55 @@
 project/
 │
 ├── src/
-│   ├── app.js                 # Punto de entrada de la aplicación
+│   ├── app.mjs                 # Punto de configuracion de la aplicación
+│   ├── index.mjs               # Punto de entrada de la aplicación
 │   ├── routes/                # Carpeta para definir rutas de la API
-│   │   ├── index.js           # Archivo de enrutador principal
-│   │   ├── users.js           # Rutas relacionadas con usuarios
-│   │   ├── products.js        # Rutas relacionadas con productos
+│   │   ├── index.mjs           # Archivo de enrutador principal
+│   │   ├── users.mjs           # Rutas relacionadas con usuarios
+│   │   ├── products.mjs        # Rutas relacionadas con productos
 │   │   └── ...
 │   ├── controllers/           # Carpeta para controladores de la API
-│   │   ├── usersController.js # Controladores relacionados con usuarios
-│   │   ├── productsController.js # Controladores relacionados con productos
+│   │   ├── usersController.mjs # Controladores relacionados con usuarios
+│   │   ├── productsController.mjs # Controladores relacionados con productos
 │   │   └── ...
 │   ├── models/                # Carpeta para definir modelos de datos
-│   │   ├── user.js            # Modelo de usuario
-│   │   ├── product.js         # Modelo de producto
+│   │   ├── user.mjs            # Modelo de usuario
+│   │   ├── product.mjs         # Modelo de producto
 │   │   └── ...
 │   ├── middleware/            # Carpeta para middleware personalizado
-│   │   ├── authentication.js  # Middleware de autenticación
-│   │   ├── authorization.js   # Middleware de autorización
+│   │   ├── authentication.mjs  # Middleware de autenticación
+│   │   ├── authorization.mjs   # Middleware de autorización
 │   │   └── ...
 │   ├── config/                # Carpeta para configuraciones de la aplicación
-│   │   ├── database.js        # Configuración de la base de datos
-│   │   ├── appConfig.js       # Configuración de la aplicación
-│   │   └── ...
+│   │   ├── database.mjs        # Configuración de la base de datos
+│   │   ├── helmet.mjs          # Configuración de la seguiridad de la API REST
+│   │   └── swagger.mjs         # Archivo .mjs con la especificación de Swagger
 │   ├── helpers/               # Carpeta para funciones de ayuda (helpers)
-│   │   ├── utility.js         # Funciones de utilidad
-│   │   ├── validation.js      # Funciones de validación
+│   │   ├── utility.mjs         # Funciones de utilidad
+│   │   ├── validation.mjs      # Funciones de validación
 │   │   └── ...
 │   ├── businessRules/        # Carpeta para reglas de negocio
-│   │   ├── userRules.js       # Reglas de negocio relacionadas con usuarios
-│   │   ├── productRules.js    # Reglas de negocio relacionadas con productos
+│   │   ├── userRules.mjs       # Reglas de negocio relacionadas con usuarios
+│   │   ├── productRules.mjs    # Reglas de negocio relacionadas con productos
 │   │   └── ...
 │   ├── logs/                  # Carpeta para archivos de registro
 │   │   ├── error.log          # Registro de errores
 │   │   ├── access.log         # Registro de acceso
 │   │   └── ...
 │   ├── scripts/               # Carpeta para scripts personalizados
-│   │   ├── db-migration.js    # Script de migración de base de datos
-│   │   ├── data-import.js     # Script para importar datos
+│   │   ├── db-migration.mjs    # Script de migración de base de datos
+│   │   ├── data-import.mjs     # Script para importar datos
 │   │   └── ...
 │   ├── public/                # Carpeta para archivos estáticos
 │   │   ├── images/            # Imágenes
 │   │   ├── css/               # Hojas de estilo
 │   │   ├── js/                # Scripts de cliente
 │   │   └── ...
-│   ├── tests/                 # Carpeta para pruebas
-│   │   ├── unit/              # Pruebas unitarias
-│   │   ├── integration/       # Pruebas de integración
-│   │   └── ...
-│   └── swagger/               # Carpeta para la documentación de Swagger
-│       ├── swagger.yaml      # Archivo YAML o JSON con la especificación de Swagger
+│   └── tests/                 # Carpeta para pruebas
+│       ├── unit/              # Pruebas unitarias
+│       ├── integration/       # Pruebas de integración
 │       └── ...
-│
-├── package.json               # Archivo de configuración de npm
+│   
+├── package.mjson               # Archivo de configuración de npm
 ├── README.md                  # Documentación general del proyecto
 └── .gitignore                 # Archivo de configuración de gitignore

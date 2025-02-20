@@ -4,6 +4,7 @@
         "es2021": true,
         "commonjs": true
     },
+    "files": ["**/*.{js,jsx,ts,tsx}"],
     "extends": "eslint:recommended",
     "overrides": [
     ],
@@ -12,5 +13,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "no-unused-vars": "warn",
+        "no-console": "warn"
     }
 }

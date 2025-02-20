@@ -1,8 +1,5 @@
-import dotenv from 'dotenv';
+
 import pc from 'picocolors';
-import { pathEnv } from '../middleware/dontenv.mjs';
-let env = dotenv.config({ path: pathEnv });
-env = env.parsed;
 export class CustomLogger {
     //La función `static async log(message)` es un método de la clase `CustomLogger`. Se utiliza para registrar un mensaje en la consola si el entorno actual está configurado en 'DEV'.
     static log(message) {
@@ -32,6 +29,6 @@ export class CustomLogger {
     }
     // Función privada para verificar el entorno de desarrollo
     static isDev() {
-        return env.APP_ENV === 'DEV';
+        return process.env.APP_ENV === 'DEV';
     }
 }

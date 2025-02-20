@@ -1,50 +1,72 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import { format } from 'date-fns';
+import path from 'path';
+import fs from 'fs/promises';
+/**
+ * Registra logs en archivos diarios por módulo
+ * @param {string} data - Contenido a registrar
+ * @param {string} module - Nombre del módulo
+ * @returns {Promise<string>} Nombre del archivo generado
+ * @throws {Error} Si hay errores de lectura/escritura
+ */
+export const RecordLog = async (data, module) => {
+    try {
+        const fechaRegistro = new Date();
+        fechaRegistro.setUTCDate(fechaRegistro.getUTCHours() - 5)
+        // Generar nombre de archivo usando date-fns
+        const fileName = `${format(fechaRegistro, 'yyyy-MM-dd')}.txt`;
+        
+        // Construir ruta del archivo usando path.resolve para rutas absolutas
+        const logPath = path.resolve(
+            __dirname,
+            '..',
+            'src',
+            'logs',
+            module,
+            fileName
+        );
 
-const validateFileExistence = (pathFile) => {
-    try {
-        return fs.statSync(pathFile).isFile();
-    } catch (e) {
-        return false;
-    }
-}
-const typeFile = (route, text) => {
-    fs.writeFile(route, text, (err) => {
-        if (err) return err;
-        return;
-    })
-}
-const seeFile = (route) => {
-    let file = '';
-    if (!validateFileExistence(route)) {
-        fs.writeFile(route, '', (err) => {
-            if (err) return err;
-            return
-        });
-    } else {
-        file = fs.readFileSync(route, 'utf8');
-    }
-    return file;
-}
-export const RecordLog = (data, module) => {
-    const dateFile = new Date();
-    let day = dateFile.getUTCDate();
-    if (day < 10) day = '0' + day;
-    let month = dateFile.getUTCMonth() + 1;
-    if (month < 10) month = '0' + month;
-    const nameFile = `${dateFile.getFullYear()}-${month}-${day}.txt`;
-    const route = path.join(`../src/logs/${module}/${nameFile}`);
-    let SeeFile;
-    try {
-        SeeFile = seeFile(route);
+        // Leer contenido existente y agregar nuevo registro
+        const existingContent = await seeFile(logPath);
+        const newContent = `${existingContent}\n${data}`.trim();
+        
+        // Escribir contenido actualizado
+        await typeFile(logPath, newContent);
+        
+        return fileName;
     } catch (error) {
-        return error;
+        const errorMessage = `Error en RecordLog: ${error.message}`;
+        console.error(errorMessage);
+        throw new Error(errorMessage);
     }
-    SeeFile = `${SeeFile}\n${data}`;
-    try {
-        typeFile(route, SeeFile);
-    } catch (error) {
-        return error;
-    }
-    return nameFile;
 }
+/**
+ * Lee el contenido de un archivo
+ * @param {string} filePath - Ruta del archivo
+ * @returns {Promise<string>} Contenido del archivo
+ */
+const seeFile = async (filePath) => {
+    try {
+        const content = await fs.promises.readFile(filePath, 'utf-8');
+        return content;
+    } catch (error) {
+        // Si el archivo no existe, retornar string vacío
+        if (error.code === 'ENOENT') {
+            return '';
+        }
+        throw error;
+    }
+};
+/**
+ * Escribe contenido en un archivo
+ * @param {string} filePath - Ruta del archivo
+ * @param {string} content - Contenido a escribir
+ */
+const typeFile = async (filePath, content) => {
+    try {
+        // Asegurar que el directorio existe
+        await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
+        await fs.promises.writeFile(filePath, content, 'utf-8');
+    } catch (error) {
+        throw new Error(`Error al escribir archivo: ${error.message}`);
+    }
+};

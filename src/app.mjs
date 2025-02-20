@@ -1,71 +1,148 @@
-
-import express, { json } from 'express';
+import express from 'express';
 import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import helmet from 'helmet';
+import compression from 'compression';
 
-import swaggerJsdoc from 'swagger-jsdoc'
-import swaggerUi from 'swagger-ui-express'
-//import {swaggerUiMiddleware} from 'swagger-ui-express';
-import { corsMiddleware } from './middleware/cors.mjs';
-import { pathEnv } from './middleware/dontenv.mjs';
+// Helpers y middlewares
 import { CustomLogger } from './helpers/console.mjs';
-import { ConnectionError } from './helpers/errors.mjs';
-//import swagger from './swagger/swagger.mjs';
-import validateToken from './middleware/jwt.mjs';
-import swaggerDocs from './swagger/swagger.mjs'
-const app = express();
-
-// Define una variable SwaggerUiMiddleware y asigna la función swaggerUiMiddleware a la variable
-const swaggerSpec = swaggerJsdoc(swaggerDocs)
-const env = dotenv.config({ path: pathEnv });
-const { NAMEDB, USERDB, PASSDB, NAMECLUSTER, VERSION, PORT, TIMEZONE } = env.parsed;
-const BASEURL = `/api/v${VERSION}`;
-//El fragmento de código configura y configura varios middleware para la aplicación Express.
-app.disable('x-powered-by'); // Disable x-powered-by express
-app.use(json());
-app.use(corsMiddleware()); //está configurando el middleware CORS para solucion del conflicto de los cors.
-app.use(morgan('dev')); //está configurando el middleware Morgan para registrar solicitudes HTTP.
-app.use(bodyParser.urlencoded({ extended: false })); // La línea está configurando el middleware del analizador corporal para analizar datos codificados en URL.
-app.use(bodyParser.json());
-
+import { corsMiddleware } from './middleware/cors.mjs';
+import { validateToken } from './middleware/jwt.mjs';
+import { RateLimit } from './middleware/rateLimit.mjs';
+import { errorHandler } from './middleware/errorHandler.mjs';
+// config files
+import { swaggerConfig } from './config/swagger.mjs';
+import { dbConfig } from './config/database.mjs';
+import { configHelmet } from './config/helmet.mjs';
+//routes system
 import routesCategory from './routes/category.mjs';
 import routesUser from './routes/user.mjs';
 import routesFinancialInformation from './routes/financialInformation.mjs';
 import routesFinancialObjective from './routes/financialObjective.mjs';
 import routesSubCategory from './routes/subCategory.mjs';
 import routesTransaction from './routes/transaction.mjs';
-// Agrega el middleware de Swagger
-app.use(`${BASEURL}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec))
-app.use(`${BASEURL}/category/*`, validateToken);
-app.use(`${BASEURL}/financialInformation/*`, validateToken);
-app.use(`${BASEURL}/financialObjective/*`, validateToken);
-app.use(`${BASEURL}/subCategory/*`, validateToken);
-app.use(`${BASEURL}/transaction/*`, validateToken);
 
-app.use(BASEURL, routesUser, routesCategory, routesFinancialObjective, routesFinancialInformation, routesSubCategory, routesTransaction);
+class App {
+    constructor() {
+        this.app = express();
+        this.env = process.env.NODE_ENV || 'development';
+        this.port = process.env.PORT || 3000;
+        this.baseUrl = `/api/v${process.env.VERSION || '1'}`;
+        this.initializeMiddlewares();
+        this.initializeRoutes();
+        this.initializeErrorHandling();
+        this.configureMorganLogger();
+    }
 
-app.set('timezone', TIMEZONE);
-mongoose.Promise = global.Promise;
-const URLDB = `mongodb+srv://${USERDB}:${PASSDB}${NAMECLUSTER}/?retryWrites=true&w=majority`;
-mongoose.connect(URLDB, {
-    dbName: NAMEDB,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-// uso de la BD
-//const db = mongoose.connection;
-// BD error de conexion
+    /**
+     * Inicializa los middlewares principales
+     */
+    initializeMiddlewares() {
+        // Seguridad
+        this.app.use(helmet(configHelmet));
+        this.app.use(corsMiddleware());
+
+        // Parsers y compresión
+        this.app.use(express.json({ limit: '10kb' }));
+        this.app.use(express.urlencoded({ extended: false }));
+        this.app.use(compression());
+        this.app.use(morgan('dev'));
+
+        // Rate limiting
+        this.app.use(`${this.baseUrl}/*`, RateLimit);
+    }
+
+    /**
+     * Configura las rutas protegidas y públicas
+     */
+    initializeRoutes() {
+        // Documentación Swagger
+        const swaggerSpec = swaggerJsdoc(swaggerConfig);
+        this.app.use(
+            `${this.baseUrl}/docs`,
+            swaggerUi.serve,
+            swaggerUi.setup(swaggerSpec)
+        );
+
+        // Rutas protegidas
+        const protectedPaths = [
+            'category',
+            'financialInformation',
+            'financialObjective',
+            'subCategory',
+            'transaction'
+        ];
+
+        protectedPaths.forEach(path => {
+            this.app.use(`${this.baseUrl}/${path}/*`, validateToken);
+        });
+        const configureRoutes = (app, baseUrl) => {
+            app.use(baseUrl, [
+                routesUser,
+                routesCategory,
+                routesFinancialObjective,
+                routesFinancialInformation,
+                routesSubCategory,
+                routesTransaction
+            ]);
+        };
+        // Configurar todas las rutas
+        configureRoutes(this.app, this.baseUrl);
+    }
+    /**
+     * Configura el manejador de errores global
+     */
+    initializeErrorHandling() {
+        this.app.use(errorHandler);
+    }
+
+    /**
+     * Conecta a MongoDB y inicia el servidor
+     */
+    async connectToDatabase() {
+        try {
+            await mongoose.connect(dbConfig.url, dbConfig.options);
+            CustomLogger.log(`MongoDB connected successfully ${dbConfig.options.dbName}`);
+
+            return this.listen();
+        } catch (error) {
+            CustomLogger.error('MongoDB connection error:', error);
+            process.exit(1);
+        }
+    }
+    configureMorganLogger() {
+        // Configurar Morgan para todos los entornos
+        this.app.use(morgan('dev'));
+
+        // Log de errores
+        this.app.use(morgan('dev', {
+            skip: (req, res) => res.statusCode < 400,
+            stream: {
+                write: (message) => CustomLogger.error(message.trim())
+            }
+        }));
+    }
+    /**
+     * Inicia el servidor
+     */
+    listen() {
+        return this.app.listen(this.port, () => {
+            CustomLogger.log(
+                `\nServer running in ${this.env} http://localhost:${this.port}${this.baseUrl}/ \n`
+            );
+            CustomLogger.log(
+                `API Documentation available at http://localhost:${this.port}${this.baseUrl}/docs`
+            );
+        });
+    }
+}
+
+// Configuración de Mongoose
 mongoose.set('strictQuery', false);
-// uso de la BD
-const db = mongoose.connection;
-// BD error de conexion
-db.on('error', (err) => CustomLogger.err(err instanceof ConnectionError));
-// BD conectado, retornando mensaje por consola
-db.on('connected', () => {
-    // asignando el puesto de escucha de la API
-    app.listen(PORT, () => {
-        CustomLogger.log(`Server listening in port ${PORT} and version is v${VERSION}:  [http://localhost:${PORT}${BASEURL}]`);
-    });
-});
+mongoose.Promise = global.Promise;
+
+// Crear y exportar la instancia de la aplicación
+const server = new App();
+export default server;
