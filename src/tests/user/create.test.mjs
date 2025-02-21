@@ -1,4 +1,4 @@
-/* import * as modules from '../modules.mjs';
+import * as modules from '../modules.mjs';
 import express from 'express';
 import request from 'supertest';
 const app = express();
@@ -20,4 +20,4 @@ describe(`POST ${routeCreateUser}`, () => {
         const statusCode = queryRequest ? queryRequest.statusCode : undefined;
         expect(statusCode).toBe(200);
     })
-})*/
+})

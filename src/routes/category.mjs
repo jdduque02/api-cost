@@ -31,7 +31,7 @@ export const categoryRouter = Router();
  *           example: 11
  *         methods:
  *           type: string 
- * /api/v0.10.0/category/create:
+ * /api/v1/category/create:
  *   post:
  *     summary: Returns a category create.
  *     description: Create a new category in the database. 
@@ -93,7 +93,7 @@ export const categoryRouter = Router();
 categoryRouter.post('/category/create', createCategory);
 /**
  * @openapi
- * /api/v0.10.0/category/delete:
+ * /api/v1/category/delete:
  *   delete:
  *     summary: Returns a category delete.
  *     description: Delete category in the database. 
@@ -155,7 +155,7 @@ categoryRouter.post('/category/create', createCategory);
 categoryRouter.delete('/category/delete', deleteCategory);
 /**
  * @openapi
- * /api/v0.10.0/category/all:
+ * /api/v1/category/all:
  *   post:
  *     summary: Returns all categorys in database.
  *     description: all category api.
@@ -215,7 +215,7 @@ categoryRouter.delete('/category/delete', deleteCategory);
 categoryRouter.post('/category/all', getAllCategory);
 /**
  * @openapi
- * /api/v0.10.0/category/get/{key}/{value}:
+ * /api/v1/category/get/{key}/{value}:
  *   post:
  *     summary: Returns all categorys in database.
  *     description: all category api.
@@ -285,7 +285,7 @@ categoryRouter.post('/category/all', getAllCategory);
 categoryRouter.post('/category/get/:key?/:value?', validateCategory, showCategory);
 /**
  * @openapi
- * /api/v0.10.0/category/update/{key}/{value}:
+ * /api/v1/category/update/{key}/{value}:
  *   patch:
  *     summary: Return update category in database.
  *     description: update category in database.
