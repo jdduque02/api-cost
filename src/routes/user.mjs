@@ -3,7 +3,7 @@ import { createUser } from '../controllers/user/create/create.mjs';
 import { loginUser, getAllUser, validateUser } from '../controllers/user/get/get.mjs';
 import { updateUser } from '../controllers/user/update/update.mjs';
 import { deleteUser } from '../controllers/user/delete/delete.mjs';
-import {validateToken} from '../middleware/jwt.mjs';
+import { validateToken } from '../middleware/jwt.mjs';
 export const userRouter = Router();
 /**
  * @openapi
@@ -25,47 +25,77 @@ export const userRouter = Router();
  *           type: string
  *           example: password123
  *         email:
- *           type: email
+ *           type: string
+ *           format: email
  *           example: textExample@example.com
  *         numberPhone:
- *           type: number
- *           example: 1111111111
+ *           type: string
+ *           example: "1111111111"
  *         role:
- *           type: number
- *           example: 1
- * /api/v0.10.0/user/create:
+ *           type: string
+ *           example: "1"
+ * 
+ * /api/v1/user/create:
  *   post:
- *     summary: Returns a user create.
- *     description: Create a new user in the database. 
+ *     summary: Create a new user
+ *     description: Adds a new user to the database.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: johndoe
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: P@ssw0rd!
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: 5Tt2o@example.com
+ *               numberPhone:
+ *                 type: number
+ *                 example: 1234567890
+ *               role:
+ *                 type: number
+ *                 example: 1
  *     tags:
  *       - User
  *     responses:
  *       201:
- *         description: true
+ *         description: User created successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 status:
- *                   type: string
+ *                   type: boolean
  *                   example: true
  *                 message:
  *                   type: string 
+ *                   example: "User created successfully"
  *                 body:
- *                   type: array 
- *                   items:
- *                     $ref: "#/components/schemas/User"
+ *                   type: object 
+ *                   properties:
+ *                     user:
+ *                       $ref: "#/components/schemas/User"
  *       500:
- *          description:
- *          content:
+ *         description: Internal server error
+ *         content:
  *           application/json:
  *             schema:
  *               type: object
@@ -75,11 +105,10 @@ export const userRouter = Router();
  *                   example: false
  *                 message:
  *                   type: string 
- *                 body:    
- *                   type: object
+ *                   example: "Internal server error"
  *       401:
- *          description:
- *          content:
+ *         description: Unauthorized - Invalid or missing token
+ *         content:
  *           application/json:
  *             schema:
  *               type: object
@@ -89,36 +118,68 @@ export const userRouter = Router();
  *                   example: false
  *                 message:
  *                   type: string 
- *                 body:    
- *                   type: object
+ *                   example: "Unauthorized - Invalid token"
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
+
 userRouter.post('/user/create', createUser);
 /**
  * @openapi
- * /api/v0.10.0/user/login:
+ * /api/v1/user/login:
  *   post:
- *     summary: Returns a token user.
- *     description: login user api. 
+ *     summary: Authenticate user and return a token.
+ *     description: This API allows a user to log in by providing credentials.
  *     tags:
  *       - User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: johndoe
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: P@ssw0rd!
  *     responses:
  *       200:
- *         description: true
+ *         description: Successful login
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 status:
- *                   type: string
+ *                   type: boolean
  *                   example: true
  *                 message:
- *                   type: string 
+ *                   type: string
+ *                   example: "Login successful"
  *                 body:
  *                   type: object
- *       500:
- *          description:
- *          content:
+ *                   properties:
+ *                     token:
+ *                       type: string
+ *                       example: "eyJhbGciOiJIUzI1NiIsInR..."
+ *       401:
+ *         description: Unauthorized - Invalid credentials
+ *         content:
  *           application/json:
  *             schema:
  *               type: object
@@ -127,46 +188,89 @@ userRouter.post('/user/create', createUser);
  *                   type: boolean
  *                   example: false
  *                 message:
- *                   type: string 
+ *                   type: string
+ *                   example: "Invalid username or password"
+ *       400:
+ *         description: error on data base query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "error on data base query"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Server error"
  *                 body:    
  *                   type: object
  */
 userRouter.post('/user/login', loginUser);
 /**
  * @openapi
- * /api/v0.10.0/user/delete:
+ * /api/v1/user/delete:
  *   delete:
- *     summary: Returns a user delete.
- *     description: Delete user in the database. 
+ *     summary: Deletes a user
+ *     description: Deletes a user from the database.
+ *     security:
+ *       - BearerAuth: [] # Para autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               parameter:
+ *                 type: string
+ *                 example: "id"
+ *               value:
+ *                 type: string
+ *                 example: "1"
  *     tags:
  *       - User
  *     responses:
  *       200:
- *         description: true
+ *         description: User deleted successfully
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 status:
- *                   type: string
+ *                   type: boolean
  *                   example: true
  *                 message:
  *                   type: string 
+ *                   example: "User deleted successfully"
  *                 body:
  *                   type: array 
  *                   items:
  *                     $ref: "#/components/schemas/User"
- *       500:
- *          description:
- *          content:
+ *       400:
+ *         description: Error in database query
+ *         content:
  *           application/json:
  *             schema:
  *               type: object
@@ -175,12 +279,11 @@ userRouter.post('/user/login', loginUser);
  *                   type: boolean
  *                   example: false
  *                 message:
- *                   type: string 
- *                 body:    
- *                   type: object
+ *                   type: string
+ *                   example: "Error in database query"
  *       401:
- *          description:
- *          content:
+ *         description: Unauthorized - Invalid or missing token
+ *         content:
  *           application/json:
  *             schema:
  *               type: object
@@ -190,23 +293,37 @@ userRouter.post('/user/login', loginUser);
  *                   example: false
  *                 message:
  *                   type: string 
- *                 body:    
- *                   type: object
+ *                   example: "Unauthorized - Invalid token"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string 
+ *                   example: "Internal server error"
  */
 userRouter.delete('/user/delete', validateToken, deleteUser);
 /**
  * @openapi
- * /api/v0.10.0/user/all:
+ * /api/v1/user/all:
  *   post:
  *     summary: Returns all users in database.
  *     description: all user api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - User
  *     responses:
@@ -238,6 +355,19 @@ userRouter.delete('/user/delete', validateToken, deleteUser);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  *       401:
  *          description:
  *          content:
@@ -256,17 +386,19 @@ userRouter.delete('/user/delete', validateToken, deleteUser);
 userRouter.post('/user/all', validateToken, getAllUser);
 /**
  * @openapi
- * /api/v0.10.0/user/update/{key}/{value}:
+ * /api/v1/user/update/{key}/{value}:
  *   patch:
  *     summary: Return update user in database.
  *     description: update user in database.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -277,6 +409,19 @@ userRouter.post('/user/all', validateToken, getAllUser);
  *         schema:
  *           type: string
  *         required: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               numberPhone:
+ *                 type: number
+ *                 example: 1234567890
+ *               email:
+ *                 type: string
+ *                 example: "5Tt2o@example.com"
  *     tags:
  *       - User
  *     responses:
@@ -308,6 +453,19 @@ userRouter.post('/user/all', validateToken, getAllUser);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  *       401:
  *          description:
  *          content:

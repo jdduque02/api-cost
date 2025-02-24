@@ -32,13 +32,15 @@ export const subCategoryRouter = Router();
  *   post:
  *     summary: Returns a subCategory create.
  *     description: Create a new subCategory in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - subCategory
  *     responses:
@@ -86,6 +88,19 @@ export const subCategoryRouter = Router();
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 subCategoryRouter.post('/subCategory/create', createSubCategory);
 /**
@@ -94,13 +109,15 @@ subCategoryRouter.post('/subCategory/create', createSubCategory);
  *   delete:
  *     summary: Returns a subCategory delete.
  *     description: Delete subCategory in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - subCategory
  *     responses:
@@ -148,6 +165,19 @@ subCategoryRouter.post('/subCategory/create', createSubCategory);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 subCategoryRouter.delete('/subCategory/delete', deleteSubCategory);
 /**
@@ -156,13 +186,15 @@ subCategoryRouter.delete('/subCategory/delete', deleteSubCategory);
  *   post:
  *     summary: Returns all subCategorys in database.
  *     description: all subCategory api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - subCategory
  *     responses:
@@ -208,6 +240,19 @@ subCategoryRouter.delete('/subCategory/delete', deleteSubCategory);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 subCategoryRouter.post('/subCategory/all', getAllSubCategory);
 /**
@@ -216,13 +261,15 @@ subCategoryRouter.post('/subCategory/all', getAllSubCategory);
  *   post:
  *     summary: Returns all subCategorys in database.
  *     description: all subCategory api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -278,6 +325,19 @@ subCategoryRouter.post('/subCategory/all', getAllSubCategory);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 subCategoryRouter.post('/subCategory/get/:key?/:value?', validateSubCategory, showSubCategory);
 /**
@@ -286,13 +346,15 @@ subCategoryRouter.post('/subCategory/get/:key?/:value?', validateSubCategory, sh
  *   patch:
  *     summary: Return update subCategory in database.
  *     description: update subCategory in database.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -348,6 +410,19 @@ subCategoryRouter.post('/subCategory/get/:key?/:value?', validateSubCategory, sh
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 subCategoryRouter.patch('/subCategory/update/:key?/:value?', validateSubCategory, updateSubCategory);
 export default subCategoryRouter;

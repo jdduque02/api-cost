@@ -70,17 +70,19 @@ export const financialObjectiveRouter = Router();
  *         valueMonthlyFee:
  *           type: number
  *           example: 2    
- * /api/v0.10.0/financialObjective/create:
+ * /api/v1/financialObjective/create:
  *   post:
  *     summary: Returns a financialObjective create.
  *     description: Create a new financialObjective in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - FinancialObjetive
  *     responses:
@@ -128,21 +130,36 @@ export const financialObjectiveRouter = Router();
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialObjectiveRouter.post('/financialObjective/create', createFinancialObjective);
 /**
  * @openapi
- * /api/v0.10.0/financialObjetive/delete:
+ * /api/v1/financialObjetive/delete:
  *   delete:
  *     summary: Returns a financialObjetive delete.
  *     description: Delete financialObjetive in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - FinancialObjetive
  *     responses:
@@ -190,21 +207,36 @@ financialObjectiveRouter.post('/financialObjective/create', createFinancialObjec
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialObjectiveRouter.delete('/financialObjective/delete', deleteFinancialObjective);
 /**
  * @openapi
- * /api/v0.10.0/financialObjetive/all:
+ * /api/v1/financialObjetive/all:
  *   post:
  *     summary: Returns all financialInformations in database.
  *     description: all financialObjetive api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - FinancialObjetive
  *     responses:
@@ -250,21 +282,36 @@ financialObjectiveRouter.delete('/financialObjective/delete', deleteFinancialObj
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialObjectiveRouter.post('/financialObjective/all', getAllFinancialObjective);
 /**
  * @openapi
- * /api/v0.10.0/financialObjetive/get/{key}/{value}:
+ * /api/v1/financialObjetive/get/{key}/{value}:
  *   post:
  *     summary: Returns all financialInformations in database.
  *     description: all financialObjetive api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -320,21 +367,36 @@ financialObjectiveRouter.post('/financialObjective/all', getAllFinancialObjectiv
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialObjectiveRouter.post('/financialObjective/get/:key?/:value?', validateFinancialObjective, showFinancialObjective);
 /**
  * @openapi
- * /api/v0.10.0/financialObjetive/update/{key}/{value}:
+ * /api/v1/financialObjetive/update/{key}/{value}:
  *   patch:
  *     summary: Return update financialObjetive in database.
  *     description: update financialObjetive in database.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -390,6 +452,19 @@ financialObjectiveRouter.post('/financialObjective/get/:key?/:value?', validateF
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialObjectiveRouter.patch('/financialObjective/update/:key?/:value?', validateFinancialObjective, updateFinancialObjective);
 export default financialObjectiveRouter;

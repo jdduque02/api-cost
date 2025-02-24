@@ -4,7 +4,7 @@ export const swaggerConfig = {
         openapi: '3.0.0',
         info: {
             title: 'Management Expenditure Income',
-            version: '0.10.0',
+            version: '1.0.0',
             description: 'The project will be developed in phases, starting with building a robust API-REST using Node.js and Express.js for the server logic and MongoDB for the database. API documentation will be managed using Swagger. In addition, extensive testing will be applied to ensure the quality and security of the system.',
             contact: {
                 name: 'API Support',

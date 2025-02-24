@@ -32,17 +32,19 @@ export const transactionRouter = Router();
  *         annotation:
  *           type: string
  *           example: savings group required
- * /api/v0.10.0/transaction/create:
+ * /api/v1/transaction/create:
  *   post:
  *     summary: Returns a transaction create.
  *     description: Create a new transaction in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - transaction
  *     responses:
@@ -90,21 +92,36 @@ export const transactionRouter = Router();
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 transactionRouter.post('/transaction/create', createTransaction);
 /**
  * @openapi
- * /api/v0.10.0/transaction/delete:
+ * /api/v1/transaction/delete:
  *   delete:
  *     summary: Returns a transaction delete.
  *     description: Delete transaction in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - transaction
  *     responses:
@@ -152,21 +169,36 @@ transactionRouter.post('/transaction/create', createTransaction);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 transactionRouter.delete('/transaction/delete', deleteTransaction);
 /**
  * @openapi
- * /api/v0.10.0/transaction/all:
+ * /api/v1/transaction/all:
  *   post:
  *     summary: Returns all transactions in database.
  *     description: all transaction api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - transaction
  *     responses:
@@ -212,21 +244,36 @@ transactionRouter.delete('/transaction/delete', deleteTransaction);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 transactionRouter.post('/transaction/all', getAllTransaction);
 /**
  * @openapi
- * /api/v0.10.0/transaction/get/{key}/{value}:
+ * /api/v1/transaction/get/{key}/{value}:
  *   post:
  *     summary: Returns all transactions in database.
  *     description: all transaction api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -282,21 +329,36 @@ transactionRouter.post('/transaction/all', getAllTransaction);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 transactionRouter.post('/transaction/get/:key?/:value?', validateTransaction, showTransaction);
 /**
  * @openapi
- * /api/v0.10.0/transaction/update/{key}/{value}:
+ * /api/v1/transaction/update/{key}/{value}:
  *   patch:
  *     summary: Return update transaction in database.
  *     description: update transaction in database.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -352,6 +414,19 @@ transactionRouter.post('/transaction/get/:key?/:value?', validateTransaction, sh
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 transactionRouter.patch('/transaction/update/:key?/:value?', validateTransaction, updateTransaction);
 export default transactionRouter;

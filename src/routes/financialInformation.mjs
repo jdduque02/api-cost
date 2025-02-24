@@ -31,17 +31,19 @@ export const financialInformationRouter = Router();
  *         savingsGoal:
  *           type: number
  *           example: 3  
- * /api/v0.10.0/financialInformation/create:
+ * /api/v1/financialInformation/create:
  *   post:
  *     summary: Returns a financialInformation create.
  *     description: Create a new financialInformation in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - FinancialInformation
  *     responses:
@@ -89,21 +91,36 @@ export const financialInformationRouter = Router();
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialInformationRouter.post('/financialInformation/create', createFinancialInformation);
 /**
  * @openapi
- * /api/v0.10.0/financialInformation/delete:
+ * /api/v1/financialInformation/delete:
  *   delete:
  *     summary: Returns a financialInformation delete.
  *     description: Delete financialInformation in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - FinancialInformation
  *     responses:
@@ -151,21 +168,36 @@ financialInformationRouter.post('/financialInformation/create', createFinancialI
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialInformationRouter.delete('/financialInformation/delete', deleteFinancialInformation);
 /**
  * @openapi
- * /api/v0.10.0/financialInformation/all:
+ * /api/v1/financialInformation/all:
  *   post:
  *     summary: Returns all financialInformations in database.
  *     description: all financialInformation api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - FinancialInformation
  *     responses:
@@ -211,21 +243,36 @@ financialInformationRouter.delete('/financialInformation/delete', deleteFinancia
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialInformationRouter.post('/financialInformation/all', getAllFinancialInformation);
 /**
  * @openapi
- * /api/v0.10.0/financialInformation/get/{key}/{value}:
+ * /api/v1/financialInformation/get/{key}/{value}:
  *   post:
  *     summary: Returns all financialInformations in database.
  *     description: all financialInformation api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -281,21 +328,36 @@ financialInformationRouter.post('/financialInformation/all', getAllFinancialInfo
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialInformationRouter.post('/financialInformation/get/:key?/:value?', validateFinancialInformation, showFinancialInformation);
 /**
  * @openapi
- * /api/v0.10.0/financialInformation/update/{key}/{value}:
+ * /api/v1/financialInformation/update/{key}/{value}:
  *   patch:
  *     summary: Return update financialInformation in database.
  *     description: update financialInformation in database.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -351,6 +413,19 @@ financialInformationRouter.post('/financialInformation/get/:key?/:value?', valid
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 financialInformationRouter.patch('/financialInformation/update/:key?/:value?', validateFinancialInformation, updateFinancialInformation);
 export default financialInformationRouter;

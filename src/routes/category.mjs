@@ -35,13 +35,15 @@ export const categoryRouter = Router();
  *   post:
  *     summary: Returns a category create.
  *     description: Create a new category in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - Category
  *     responses:
@@ -89,6 +91,19 @@ export const categoryRouter = Router();
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 categoryRouter.post('/category/create', createCategory);
 /**
@@ -97,13 +112,15 @@ categoryRouter.post('/category/create', createCategory);
  *   delete:
  *     summary: Returns a category delete.
  *     description: Delete category in the database. 
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - Category
  *     responses:
@@ -151,6 +168,19 @@ categoryRouter.post('/category/create', createCategory);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 categoryRouter.delete('/category/delete', deleteCategory);
 /**
@@ -159,13 +189,15 @@ categoryRouter.delete('/category/delete', deleteCategory);
  *   post:
  *     summary: Returns all categorys in database.
  *     description: all category api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *     tags:
  *       - Category
  *     responses:
@@ -211,6 +243,19 @@ categoryRouter.delete('/category/delete', deleteCategory);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 categoryRouter.post('/category/all', getAllCategory);
 /**
@@ -219,13 +264,15 @@ categoryRouter.post('/category/all', getAllCategory);
  *   post:
  *     summary: Returns all categorys in database.
  *     description: all category api.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -281,6 +328,19 @@ categoryRouter.post('/category/all', getAllCategory);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 categoryRouter.post('/category/get/:key?/:value?', validateCategory, showCategory);
 /**
@@ -289,13 +349,15 @@ categoryRouter.post('/category/get/:key?/:value?', validateCategory, showCategor
  *   patch:
  *     summary: Return update category in database.
  *     description: update category in database.
+ *     security:
+ *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
  *       - in: header
  *         name: x-access-token
  *         schema:
  *           type: string
- *           format: uuid
  *         required: true
+ *         description: JWT token for authentication
  *       - in: path
  *         name: key
  *         schema:
@@ -351,6 +413,19 @@ categoryRouter.post('/category/get/:key?/:value?', validateCategory, showCategor
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
  */
 categoryRouter.patch('/category/update/:key?/:value?', validateCategory, updateCategory);
 export default categoryRouter;

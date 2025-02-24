@@ -1,5 +1,5 @@
 import server from './app.mjs';
-
+import { CustomLogger } from './helpers/console.mjs';
 process.on('uncaughtException', (err) => {
     CustomLogger.error('UNCAUGHT EXCEPTION! Shutting down...');
     CustomLogger.error(err.name, err.message);
