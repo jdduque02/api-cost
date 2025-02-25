@@ -8,6 +8,7 @@ import compression from 'compression';
 
 // Helpers y middlewares
 import { CustomLogger } from './helpers/console.mjs';
+import ValidateBody from './middleware/validateBody.mjs';
 import { corsMiddleware } from './middleware/cors.mjs';
 import { validateToken } from './middleware/jwt.mjs';
 import { RateLimit } from './middleware/rateLimit.mjs';
@@ -23,7 +24,7 @@ import routesFinancialInformation from './routes/financialInformation.mjs';
 import routesFinancialObjective from './routes/financialObjective.mjs';
 import routesSubCategory from './routes/subCategory.mjs';
 import routesTransaction from './routes/transaction.mjs';
-
+import routesNotification from './routes/notification.mjs'
 class App {
     constructor() {
         this.app = express();
@@ -65,7 +66,10 @@ class App {
             swaggerUi.serve,
             swaggerUi.setup(swaggerSpec)
         );
-
+        this.app.use(
+            `${this.baseUrl}/*`,
+            ValidateBody
+        );
         // Rutas protegidas
         const protectedPaths = [
             'category',
@@ -85,7 +89,8 @@ class App {
                 routesFinancialObjective,
                 routesFinancialInformation,
                 routesSubCategory,
-                routesTransaction
+                routesTransaction,
+                routesNotification
             ]);
         };
         // Configurar todas las rutas
@@ -109,7 +114,7 @@ class App {
             return this.listen();
         } catch (error) {
             CustomLogger.error('MongoDB connection error:', error);
-            process.exit(1);
+            return
         }
     }
     configureMorganLogger() {

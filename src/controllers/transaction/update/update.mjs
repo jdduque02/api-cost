@@ -21,10 +21,6 @@ export const updateTransaction = async (req, res = response) => {
     const { body, token } = req;
     let { transaction } = body;
     delete body.transaction;
-    if (Object.keys(body).length > 1000) {
-        RecordLog('The body of the request is too large', module);
-        return res.status(413).send(Responses.Error([], 'The body of the request is too large'));
-    }
     let validateDataTransaction;
     try {
         validateDataTransaction = validateSchemaPartialTransaction(body);

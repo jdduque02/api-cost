@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import { getAllCategory, validateCategory, showCategory } from '../controllers/category/get/get.mjs';
-import { createCategory } from '../controllers/category/create/create.mjs';
-import { updateCategory } from '../controllers/category/update/update.mjs';
-import { deleteCategory } from '../controllers/category/delete/delete.mjs';
-export const categoryRouter = Router();
+import { getAllNotification, validateNotification, showNotification } from '../controllers/notification/get/get.mjs';
+import { createNotification } from '../controllers/notification/create/create.mjs';
+import { updateNotification } from '../controllers/notification/update/update.mjs';
+import { deleteNotification } from '../controllers/notification/delete/delete.mjs';
+export const notificationRouter = Router();
 /**
  * @openapi
  * components:
  *   schemas:
- *     Category:
+ *     Notification:
  *       type: object
  *       required:
  *         - name
@@ -31,10 +31,10 @@ export const categoryRouter = Router();
  *           example: 11
  *         methods:
  *           type: string 
- * /api/v1/category/create:
+ * /api/v1/notification/create:
  *   post:
- *     summary: Returns a category create.
- *     description: Create a new category in the database. 
+ *     summary: Returns a notification create.
+ *     description: Create a new notification in the database. 
  *     security:
  *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
@@ -45,7 +45,7 @@ export const categoryRouter = Router();
  *         required: true
  *         description: JWT token for authentication
  *     tags:
- *       - Category
+ *       - Notification
  *     responses:
  *       201:
  *         description: true
@@ -62,7 +62,7 @@ export const categoryRouter = Router();
  *                 body:
  *                   type: array 
  *                   items:
- *                     $ref: "#/components/schemas/Category"
+ *                     $ref: "#/components/schemas/Notification"
  *       500:
  *          description:
  *          content:
@@ -118,13 +118,13 @@ export const categoryRouter = Router();
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-categoryRouter.post('/category/create', createCategory);
+notificationRouter.post('/notification/create', createNotification);
 /**
  * @openapi
- * /api/v1/category/delete:
+ * /api/v1/notification/delete:
  *   delete:
- *     summary: Returns a category delete.
- *     description: Delete category in the database. 
+ *     summary: Returns a notification delete.
+ *     description: Delete notification in the database. 
  *     security:
  *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
@@ -135,7 +135,7 @@ categoryRouter.post('/category/create', createCategory);
  *         required: true
  *         description: JWT token for authentication
  *     tags:
- *       - Category
+ *       - Notification
  *     responses:
  *       200:
  *         description: true
@@ -152,7 +152,7 @@ categoryRouter.post('/category/create', createCategory);
  *                 body:
  *                   type: array 
  *                   items:
- *                     $ref: "#/components/schemas/Category"
+ *                     $ref: "#/components/schemas/Notification"
  *       500:
  *          description:
  *          content:
@@ -208,101 +208,13 @@ categoryRouter.post('/category/create', createCategory);
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-categoryRouter.delete('/category/delete', deleteCategory);
+notificationRouter.delete('/notification/delete', deleteNotification);
 /**
  * @openapi
- * /api/v1/category/all:
+ * /api/v1/notification/get/{key}/{value}:
  *   post:
- *     summary: Returns all categorys in database.
- *     description: all category api.
- *     security:
- *       - BearerAuth: [] # Si usas autenticación con JWT
- *     parameters:
- *       - in: header
- *         name: x-access-token
- *         schema:
- *           type: string
- *         required: true
- *         description: JWT token for authentication
- *     tags:
- *       - Category
- *     responses:
- *       200:
- *         description: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: true
- *                 message:
- *                   type: string 
- *                 body:
- *                   type: object
- *       500:
- *          description:
- *          content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string 
- *                 body:    
- *                   type: object
- *       401:
- *          description:
- *          content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string 
- *                 body:    
- *                   type: object
- *       400:
- *         description: Error in database query
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string
- *                   example: "Error in database query"
- *       413:
- *         description: The body of the request is too large
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string
- *                   example: "The body of the request is too large BODY LENGHT >1000"
- */
-categoryRouter.get('/category/all', getAllCategory);
-/**
- * @openapi
- * /api/v1/category/get/{key}/{value}:
- *   post:
- *     summary: Returns all categorys in database.
- *     description: all category api.
+ *     summary: Returns all notifications in database.
+ *     description: all notification api.
  *     security:
  *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
@@ -323,7 +235,7 @@ categoryRouter.get('/category/all', getAllCategory);
  *           type: string
  *         required: true
  *     tags:
- *       - Category
+ *       - Notification
  *     responses:
  *       200:
  *         description: true
@@ -394,13 +306,13 @@ categoryRouter.get('/category/all', getAllCategory);
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-categoryRouter.get('/category/get/:key?/:value?', validateCategory, showCategory);
+notificationRouter.get('/notification/get/:key?/:value?', validateNotification, showNotification);
 /**
  * @openapi
- * /api/v1/category/update/{key}/{value}:
+ * /api/v1/notification/update/{key}/{value}:
  *   patch:
- *     summary: Return update category in database.
- *     description: update category in database.
+ *     summary: Return update notification in database.
+ *     description: update notification in database.
  *     security:
  *       - BearerAuth: [] # Si usas autenticación con JWT
  *     parameters:
@@ -421,7 +333,7 @@ categoryRouter.get('/category/get/:key?/:value?', validateCategory, showCategory
  *           type: string
  *         required: true
  *     tags:
- *       - Category
+ *       - Notification
  *     responses:
  *       200:
  *         description: true
@@ -492,5 +404,5 @@ categoryRouter.get('/category/get/:key?/:value?', validateCategory, showCategory
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-categoryRouter.patch('/category/update/:key?/:value?', validateCategory, updateCategory);
-export default categoryRouter;
+notificationRouter.patch('/notification/update/:key?/:value?', validateNotification, updateNotification);
+export default notificationRouter;

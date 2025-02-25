@@ -22,19 +22,6 @@ export const loginUser = async (req, res = response) => {
     let today = new Date();
     today.setUTCHours(today.getUTCHours() - 5);
     const { body } = req;
-    //La declaración `if` verifica si el objeto `body` está vacío. Si está vacío, significa que el cuerpo de la solicitud no contiene ningún dato. En este caso, genera un `ResourceNotFoundError` con el mensaje 'cuerpo de petición vacío', registra el error usando `CustomLogger.error` y envía una respuesta con un código de estado de 400 y un mensaje de error usando `Responses.Error`.
-    if (Object.keys(body).length === 0) {
-        const err = new ResourceNotFoundError('empty petition body');
-        RecordLog(err, module);
-        CustomLogger.error(`error validate data:\n ${err}`);
-        return res.status(400).send(Responses.Error(err.name, err.message));
-    }
-    //La declaración "if" verifica si el número de claves en el objeto "cuerpo" es mayor que 1000. Si es así, significa que el cuerpo de la solicitud es demasiado grande. En este caso, devuelve inmediatamente una respuesta con un código de estado de 413 (Entidad de solicitud demasiado grande) y un mensaje de error que indica que el cuerpo de la solicitud es demasiado grande.
-    if (Object.keys(body).length > 1000) {
-        const err = new AuthorizationError('The body of the request is too large');
-        RecordLog(err, module);
-        return res.status(413).send(Responses.Error(err.name, err.message));
-    }
     //  El bloque de código intenta validar los datos recibidos en el cuerpo de la solicitud utilizando la función `validateSchemaUser`.
     let validateData;
     try {
@@ -154,16 +141,6 @@ export const validateUser = async (req, res = response, next) => {
         return res.status(400).send(Responses.Error(err.name, err.message));
     }
     const { body, params: { key, value } } = req;
-    if (Object.keys(body).length === 0) {
-        const err = new ResourceNotFoundError('empty petition body');
-        RecordLog(err, module);
-        return res.status(400).send(Responses.Error(err.name, err.message));
-    }
-    if (Object.keys(body).length > 1000) {
-        const err = new AuthorizationError('The body of the request is too large');
-        RecordLog(err, module);
-        return res.status(413).send(Responses.Error(err.name, err.message));
-    }
     const searchParams = {};
     searchParams[key] = value;
     let findUser;
@@ -181,4 +158,20 @@ export const validateUser = async (req, res = response, next) => {
     }
     req.body.user = findUser;
     next();
+}
+/**
+ * Mostrar user en base el query
+ * @param {Object} req - Objeto de solicitud HTTP
+ * @param {Object} res - Objeto de respuesta HTTP
+ * @param {Object} next - Objeto next HTTP
+ * @returns {Object} - Objeto de respuesta HTTP con los user.
+ * 
+ * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los user en la base de datos.
+ */
+export const showUser = async (req, res = response) => {
+    //category
+    const { body, token } = req;
+    const { user } = body;
+    delete user.password;
+    return res.status(200).send(Responses.Successful({ user, token }, 'show user success'));
 }

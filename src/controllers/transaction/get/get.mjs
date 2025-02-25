@@ -53,16 +53,6 @@ export const validateTransaction = async (req, res = response, next) => {
         return res.status(400).send(Responses.Error(err.name, err.message));
     }
     const { body, params: { key, value } } = req;
-    if (Object.keys(body).length === 0) {
-        const err = new ResourceNotFoundError('empty petition body');
-        RecordLog(err, module);
-        return res.status(400).send(Responses.Error(err.name, err.message));
-    }
-    if (Object.keys(body).length > 1000) {
-        const err = new AuthorizationError('The body of the request is too large');
-        RecordLog(err, module);
-        return res.status(413).send(Responses.Error(err.name, err.message));
-    }
     const searchParams = {};
     searchParams[key] = value;
     let findTransaction;

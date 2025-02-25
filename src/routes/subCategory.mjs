@@ -101,6 +101,19 @@ export const subCategoryRouter = Router();
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 subCategoryRouter.post('/subCategory/create', createSubCategory);
 /**
@@ -178,6 +191,19 @@ subCategoryRouter.post('/subCategory/create', createSubCategory);
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 subCategoryRouter.delete('/subCategory/delete', deleteSubCategory);
 /**
@@ -253,8 +279,21 @@ subCategoryRouter.delete('/subCategory/delete', deleteSubCategory);
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-subCategoryRouter.post('/subCategory/all', getAllSubCategory);
+subCategoryRouter.get('/subCategory/all', getAllSubCategory);
 /**
  * @openapi
  * /api/v0.10.0/subCategory/get/{key}/{value}:
@@ -338,8 +377,21 @@ subCategoryRouter.post('/subCategory/all', getAllSubCategory);
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-subCategoryRouter.post('/subCategory/get/:key?/:value?', validateSubCategory, showSubCategory);
+subCategoryRouter.get('/subCategory/get/:key?/:value?', validateSubCategory, showSubCategory);
 /**
  * @openapi
  * /api/v0.10.0/subCategory/update/{key}/{value}:
@@ -423,6 +475,19 @@ subCategoryRouter.post('/subCategory/get/:key?/:value?', validateSubCategory, sh
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 subCategoryRouter.patch('/subCategory/update/:key?/:value?', validateSubCategory, updateSubCategory);
 export default subCategoryRouter;

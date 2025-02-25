@@ -3,7 +3,7 @@ import { validateSchemaFinancialInformation, validateSchemaPartialFinancialInfor
 import { validateSchemaFinancialObjective, validateSchemaPartialFinancialObjective } from './schema/financialObjective.mjs';
 import { validateSchemaSubCategory, validateSchemaPartialSubCategory } from './schema/subCategory.mjs';
 import { validateSchemaTransaction, validateSchemaPartialTransaction } from './schema/transaction.mjs';
-
+import { validateSchemaNotification, validateSchemaPartialNotification } from './schema/notification.mjs';
 
 export default {
     validateSchemaCategory,
@@ -16,6 +16,8 @@ export default {
     validateSchemaPartialSubCategory,
     validateSchemaTransaction,
     validateSchemaPartialTransaction,
+    validateSchemaNotification,
+    validateSchemaPartialNotification
     /* validateSchemaUser,
     validateSchemaPartialUser, */
 }

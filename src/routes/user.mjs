@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createUser } from '../controllers/user/create/create.mjs';
-import { loginUser, getAllUser, validateUser } from '../controllers/user/get/get.mjs';
+import { loginUser, showUser, validateUser } from '../controllers/user/get/get.mjs';
 import { updateUser } from '../controllers/user/update/update.mjs';
 import { deleteUser } from '../controllers/user/delete/delete.mjs';
 import { validateToken } from '../middleware/jwt.mjs';
@@ -132,6 +132,19 @@ export const userRouter = Router();
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 
 userRouter.post('/user/create', createUser);
@@ -218,6 +231,19 @@ userRouter.post('/user/create', createUser);
  *                   example: "Server error"
  *                 body:    
  *                   type: object
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 userRouter.post('/user/login', loginUser);
 /**
@@ -307,11 +333,24 @@ userRouter.post('/user/login', loginUser);
  *                 message:
  *                   type: string 
  *                   example: "Internal server error"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 userRouter.delete('/user/delete', validateToken, deleteUser);
 /**
  * @openapi
- * /api/v1/user/all:
+ * /api/v1/user/get/{key}/{value}:
  *   post:
  *     summary: Returns all users in database.
  *     description: all user api.
@@ -324,8 +363,18 @@ userRouter.delete('/user/delete', validateToken, deleteUser);
  *           type: string
  *         required: true
  *         description: JWT token for authentication
+ *       - in: path
+ *         name: key
+ *         schema:
+ *           type: string
+ *         required: true
+ *       - in: path
+ *         name: value
+ *         schema:
+ *           type: string
+ *         required: true
  *     tags:
- *       - User
+ *       - user
  *     responses:
  *       200:
  *         description: true
@@ -355,19 +404,6 @@ userRouter.delete('/user/delete', validateToken, deleteUser);
  *                   type: string 
  *                 body:    
  *                   type: object
- *       400:
- *         description: Error in database query
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string
- *                   example: "Error in database query"
  *       401:
  *          description:
  *          content:
@@ -382,8 +418,34 @@ userRouter.delete('/user/delete', validateToken, deleteUser);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       400:
+ *         description: Error in database query
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-userRouter.post('/user/all', validateToken, getAllUser);
+userRouter.get('/user/get/:key?/:value?', validateUser, showUser);
 /**
  * @openapi
  * /api/v1/user/update/{key}/{value}:
@@ -480,6 +542,19 @@ userRouter.post('/user/all', validateToken, getAllUser);
  *                   type: string 
  *                 body:    
  *                   type: object
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 userRouter.patch('/user/update/:key?/:value?', validateToken, validateUser, updateUser);
 export default userRouter;

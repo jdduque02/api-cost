@@ -1,29 +1,28 @@
-import { randomUUID } from 'node:crypto'
 import { CustomLogger } from '../../../helpers/console.mjs';
-import { ValidationError, ServerError, QueryErrors } from '../../../helpers/errors.mjs';
-import { ModelSubCategory } from '../../../db/models/subCategory.mjs';
+import { QueryErrors, ValidationError, ServerError } from '../../../helpers/errors.mjs';
+import { ModelNotification } from '../../../db/models/notification.mjs';
 import { Responses } from '../../../helpers/response.mjs';
-import { validateSchemaPartialSubCategory } from '../../../dataValidations/schema/subCategory.mjs';
 import { response } from 'express';
 import { RecordLog } from '../../../helpers/logs.mjs';
-const module = 'subCategory';
+const module = 'notification';
+import { validatePartialSchemaNotification } from '../../../dataValidations/schema/notification.mjs';
 /**
- * Actualizar la informacion financiera
+ * Actualizar la categoria
  * @param {Object} req - Objeto de solicitud HTTP
  * @param {Object} res - Objeto de respuesta HTTP
  * @returns {Object} - Objeto de respuesta HTTP con la respuesta de la actualizacion.
  * 
- * @throws {ValidationError, QueryErrors, ServerError} Error al actualizar la informacion financiera.
+ * @throws {ValidationError, QueryErrors, ServerError} Error al actualizar la categoria.
  */
-export const updateSubCategory = async (req, res = response) => {
+export const updateNotification = async (req, res = response) => {
     let today = new Date();
     today.setUTCHours(today.getUTCHours() - 5);
     const { body, token } = req;
-    let { subCategory } = body;
-    delete body.subCategory;
-    let validateDataSubCategory;
+    let { notification } = body;
+    delete body.notification;
+    let validateDataNotification;
     try {
-        validateDataSubCategory = validateSchemaPartialSubCategory(body);
+        validateDataNotification = validatePartialSchemaNotification(body);
     } catch (error) {
         const err = new ServerError(error);
         RecordLog(err, module);
@@ -31,26 +30,21 @@ export const updateSubCategory = async (req, res = response) => {
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
     //La declaración "if" verifica si la propiedad "validateData.success" es "falsa". Si es "falso", significa que la validación de datos falló.
-    if (!validateDataSubCategory.success) {
-        const err = new ValidationError(validateDataSubCategory.error);
+    if (!validateDataNotification.success) {
+        const err = new ValidationError(validateDataNotification.error);
         RecordLog(err, module);
         CustomLogger.error(`error validate response data:\n ${err}`);
         return res.status(422).send(Responses.Error(err.name, err.message));
     }
-    let { data } = validateDataSubCategory;
+    let { data } = validateDataNotification;
     body.update_at = today;
-    let change = [];
-    Object.entries(data).forEach(([key, value]) => {
-        change.push({ _id: randomUUID(), modifiedVariable: key, dateModification: today, valuePrevious: subCategory[key], valueNew: value });
-    });
-    data.changeData = change;
     try {
-        await ModelSubCategory.updateSubCategory(subCategory, data);
+        await ModelNotification.updateNotification(notification, data);
     } catch (error) {
         const err = new QueryErrors(error);
         RecordLog(err, module);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful({ subCategory: data, token }, 'update subCategory success'));
+    return res.status(200).send(Responses.Successful({ notification: data, token }, 'update notification success'));
 };

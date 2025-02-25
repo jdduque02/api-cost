@@ -19,10 +19,6 @@ export const updateFinancialObjective = async (req, res = response) => {
     let today = new Date();
     today.setUTCHours(today.getUTCHours() - 5);
     const { body, token } = req;
-    if (Object.keys(body).length > 1000) {
-        RecordLog('The body of the request is too large', module);
-        return res.status(413).send(Responses.Error([], 'The body of the request is too large'));
-    }
     let { financialObjective } = body;
     delete body.financialObjective;
     let validateDataFinancialObjective;

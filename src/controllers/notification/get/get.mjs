@@ -1,11 +1,12 @@
+import { response } from 'express';
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ResourceNotFoundError, QueryErrors, ValidationError, AuthorizationError } from '../../../helpers/errors.mjs';
-import { ModelCategory } from '../../../db/models/category.mjs';
+import { ModelNotification } from '../../../db/models/notification.mjs';
 import { Responses } from '../../../helpers/response.mjs';
 import { RecordLog } from '../../../helpers/logs.mjs';
-import { response } from 'express';
-import { validatePartialSchemaCategory } from '../../../dataValidations/schema/category.mjs';
-const module = 'category';
+
+import { validatePartialSchemaNotification } from '../../../dataValidations/schema/notification.mjs';
+const module = 'notification';
 /**
  * Obtener todas los categorias
  * @param {Object} req - Objeto de solicitud HTTP
@@ -14,27 +15,27 @@ const module = 'category';
  * 
  * @throws {ValidationError, ServerError, ResourceNotFoundError, AuthorizationError, QueryErrors} Error al obtener todos los categorias.
  */
-export const getAllCategory = async (req, res = response) => {
-    if(req.charge.role!==1) {
+export const getAllNotification = async (req, res = response) => {
+    if (req.charge.role !== 1) {
         const AuthorizationNotValide = new AuthorizationError('you do not have permissions');
         RecordLog(AuthorizationNotValide, module);
         return res.status(401).send(Responses.Error(AuthorizationNotValide.name, AuthorizationNotValide.message));
     }
-    let getAllCategory;
+    let getAllNotification;
     try {
-        getAllCategory = await ModelCategory.getAllCategory({});
+        getAllNotification = await ModelNotification.getAllNotification({});
     } catch (error) {
-        let errorSearchCategory = new QueryErrors(error);
-        RecordLog(errorSearchCategory, module);
-        CustomLogger.error(`error:\n ${errorSearchCategory.stack}`);
-        return res.status(400).send(Responses.Error(errorSearchCategory.name, errorSearchCategory.message));
+        let errorSearchNotification = new QueryErrors(error);
+        RecordLog(errorSearchNotification, module);
+        CustomLogger.error(`error:\n ${errorSearchNotification.stack}`);
+        return res.status(400).send(Responses.Error(errorSearchNotification.name, errorSearchNotification.message));
     }
-    if (getAllCategory.length === 0) {
-        let errorSearchCategory = new ResourceNotFoundError('categorys not found');
-        RecordLog(errorSearchCategory, module);
-        return res.status(400).send(Responses.Error(errorSearchCategory.name, errorSearchCategory.message));
+    if (getAllNotification.length === 0) {
+        let errorSearchNotification = new ResourceNotFoundError('notifications not found');
+        RecordLog(errorSearchNotification, module);
+        return res.status(400).send(Responses.Error(errorSearchNotification.name, errorSearchNotification.message));
     }
-    return res.status(200).send(Responses.Successful(getAllCategory, 'get all category success'));
+    return res.status(200).send(Responses.Successful(getAllNotification, 'get all notification success'));
 }
 /**
  * Consultar categorias en base el query
@@ -45,7 +46,7 @@ export const getAllCategory = async (req, res = response) => {
  * 
  * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los categorias en la base de datos.
  */
-export const validateCategory = async (req, res = response, next) => {
+export const validateNotification = async (req, res = response, next) => {
     if (!req.params.key || !req.params.value) {
         const err = new ResourceNotFoundError('empty params');
         RecordLog(err, module);
@@ -58,7 +59,7 @@ export const validateCategory = async (req, res = response, next) => {
     try {
         validateData = (searchParams);
     } catch (error) {
-        const err = new validatePartialSchemaCategory(error);
+        const err = new validatePartialSchemaNotification(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         RecordLog(err, module);
         return res.status(500).send(Responses.Error(err.name, err.message));
@@ -69,21 +70,21 @@ export const validateCategory = async (req, res = response, next) => {
         CustomLogger.error(`error validate response data:\n ${err}`);
         return res.status(422).send(Responses.Error(err.name, err.message));
     }
-    let findCategory;
+    let findNotification;
     try {
-        findCategory = await ModelCategory.getOneCategory(searchParams);
+        findNotification = await ModelNotification.getOneNotification(searchParams);
     } catch (error) {
-        let errorSearchCategory = new QueryErrors(error);
-        CustomLogger.error(`error:\n ${errorSearchCategory.stack}`);
-        RecordLog(errorSearchCategory, module);
-        return res.status(400).send(Responses.Error(errorSearchCategory.name, errorSearchCategory.message));
+        let errorSearchNotification = new QueryErrors(error);
+        CustomLogger.error(`error:\n ${errorSearchNotification.stack}`);
+        RecordLog(errorSearchNotification, module);
+        return res.status(400).send(Responses.Error(errorSearchNotification.name, errorSearchNotification.message));
     }
-    if (findCategory.length === 0) {
-        let errorSearchCategory = new ResourceNotFoundError('categorys not found');
-        RecordLog(errorSearchCategory, module);
-        return res.status(400).send(Responses.Error(errorSearchCategory.name, errorSearchCategory.message));
+    if (findNotification.length === 0) {
+        let errorSearchNotification = new ResourceNotFoundError('notifications not found');
+        RecordLog(errorSearchNotification, module);
+        return res.status(400).send(Responses.Error(errorSearchNotification.name, errorSearchNotification.message));
     }
-    req.body.category = findCategory;
+    req.body.notification = findNotification;
     next();
 }
 /**
@@ -95,9 +96,9 @@ export const validateCategory = async (req, res = response, next) => {
  * 
  * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los categorias en la base de datos.
  */
-export const showCategory = async (req, res = response) => {
-    //category
+export const showNotification = async (req, res = response) => {
+    //notification
     const { body, token } = req;
-    const { category } = body;
-    return res.status(200).send(Responses.Successful({ category, token }, 'show category´s success'));
+    const { notification } = body;
+    return res.status(200).send(Responses.Successful({ notification, token }, 'show notification´s success'));
 }

@@ -105,6 +105,19 @@ export const transactionRouter = Router();
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 transactionRouter.post('/transaction/create', createTransaction);
 /**
@@ -182,83 +195,21 @@ transactionRouter.post('/transaction/create', createTransaction);
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 transactionRouter.delete('/transaction/delete', deleteTransaction);
-/**
- * @openapi
- * /api/v1/transaction/all:
- *   post:
- *     summary: Returns all transactions in database.
- *     description: all transaction api.
- *     security:
- *       - BearerAuth: [] # Si usas autenticación con JWT
- *     parameters:
- *       - in: header
- *         name: x-access-token
- *         schema:
- *           type: string
- *         required: true
- *         description: JWT token for authentication
- *     tags:
- *       - transaction
- *     responses:
- *       200:
- *         description: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: true
- *                 message:
- *                   type: string 
- *                 body:
- *                   type: object
- *       500:
- *          description:
- *          content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string 
- *                 body:    
- *                   type: object
- *       401:
- *          description:
- *          content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string 
- *                 body:    
- *                   type: object
- *       400:
- *         description: Error in database query
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string
- *                   example: "Error in database query"
- */
-transactionRouter.post('/transaction/all', getAllTransaction);
 /**
  * @openapi
  * /api/v1/transaction/get/{key}/{value}:
@@ -342,8 +293,21 @@ transactionRouter.post('/transaction/all', getAllTransaction);
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-transactionRouter.post('/transaction/get/:key?/:value?', validateTransaction, showTransaction);
+transactionRouter.get('/transaction/get/:key?/:value?', validateTransaction, showTransaction);
 /**
  * @openapi
  * /api/v1/transaction/update/{key}/{value}:
@@ -427,6 +391,19 @@ transactionRouter.post('/transaction/get/:key?/:value?', validateTransaction, sh
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 transactionRouter.patch('/transaction/update/:key?/:value?', validateTransaction, updateTransaction);
 export default transactionRouter;

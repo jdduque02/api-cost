@@ -143,6 +143,19 @@ export const financialObjectiveRouter = Router();
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 financialObjectiveRouter.post('/financialObjective/create', createFinancialObjective);
 /**
@@ -220,83 +233,21 @@ financialObjectiveRouter.post('/financialObjective/create', createFinancialObjec
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 financialObjectiveRouter.delete('/financialObjective/delete', deleteFinancialObjective);
-/**
- * @openapi
- * /api/v1/financialObjetive/all:
- *   post:
- *     summary: Returns all financialInformations in database.
- *     description: all financialObjetive api.
- *     security:
- *       - BearerAuth: [] # Si usas autenticación con JWT
- *     parameters:
- *       - in: header
- *         name: x-access-token
- *         schema:
- *           type: string
- *         required: true
- *         description: JWT token for authentication
- *     tags:
- *       - FinancialObjetive
- *     responses:
- *       200:
- *         description: true
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: true
- *                 message:
- *                   type: string 
- *                 body:
- *                   type: object
- *       500:
- *          description:
- *          content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string 
- *                 body:    
- *                   type: object
- *       401:
- *          description:
- *          content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string 
- *                 body:    
- *                   type: object
- *       400:
- *         description: Error in database query
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string
- *                   example: "Error in database query"
- */
-financialObjectiveRouter.post('/financialObjective/all', getAllFinancialObjective);
 /**
  * @openapi
  * /api/v1/financialObjetive/get/{key}/{value}:
@@ -380,8 +331,21 @@ financialObjectiveRouter.post('/financialObjective/all', getAllFinancialObjectiv
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-financialObjectiveRouter.post('/financialObjective/get/:key?/:value?', validateFinancialObjective, showFinancialObjective);
+financialObjectiveRouter.get('/financialObjective/get/:key?/:value?', validateFinancialObjective, showFinancialObjective);
 /**
  * @openapi
  * /api/v1/financialObjetive/update/{key}/{value}:
@@ -465,6 +429,19 @@ financialObjectiveRouter.post('/financialObjective/get/:key?/:value?', validateF
  *                 message:
  *                   type: string
  *                   example: "Error in database query"
+ *       413:
+ *         description: The body of the request is too large
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 financialObjectiveRouter.patch('/financialObjective/update/:key?/:value?', validateFinancialObjective, updateFinancialObjective);
 export default financialObjectiveRouter;
