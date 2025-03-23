@@ -13,7 +13,7 @@ server.connectToDatabase().catch((err) => {
 
 process.on('unhandledRejection', (err) => {
     CustomLogger.error('UNHANDLED REJECTION! Shutting down...');
-    CustomLogger.error(err.name, err.message);
+    CustomLogger.error(err.name, err.message, err);
     server.close(() => {
         process.exit(1);
     });

@@ -30,13 +30,20 @@ export class ModelNotification {
         let today = new Date();
         today.setUTCHours(today.getUTCHours() - 5);
         input.created_at = today;
-        let newNotification;
+        let newNotificacion;
         try {
-            newNotification = await newNotification.save();
+            newNotificacion = new schemaNotification(input);
         } catch (error) {
-            throw new QueryErrors(`Error in the query detail: ${error}`);
+            return new QueryErrors(`Error in the query detail: ${error}`);
         }
-        return newNotification;
+        let savenewNotificacion;
+        try {
+            savenewNotificacion = await newNotificacion.save();
+        } catch (error) {
+            console.log(`Error in the query detail save category: ${error}`)
+            return error
+        }
+        return savenewNotificacion;
     }
     //El método `deleteNotification` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad 'categoría'. Si no se proporciona la propiedad 'categoría', devuelve 'falso'.
     static async deleteNotification(subCategory) {

@@ -50,7 +50,10 @@ class App {
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(compression());
         this.app.use(morgan('dev'));
-
+        this.app.use((err, req, res, next) => {
+            CustomLogger.error('Error en la aplicación:', err.stack);
+            res.status(500).json({ message: 'Algo salió mal' });
+        });
         // Rate limiting
         this.app.use(`${this.baseUrl}/*`, RateLimit);
     }

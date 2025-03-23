@@ -38,7 +38,7 @@ export const createCategory = async (req, res = response) => {
     }
     let newCategory;
     try {
-        newCategory = await ModelCategory.createCategory(validateData);
+        newCategory = await ModelCategory.createCategory(validateData.data);
     } catch (error) {
         const err = new QueryErrors(error);
         CustomLogger.error(`error create category:\n ${err}`);

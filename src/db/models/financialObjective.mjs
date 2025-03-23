@@ -32,7 +32,7 @@ export class ModelFinancialObjective {
         input.created_at = today;
         let newFinancialObjective;
         try {
-            newFinancialObjective = await newFinancialObjective.save();
+            newFinancialObjective = new schemaFinancialObjective(input);
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }

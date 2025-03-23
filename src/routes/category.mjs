@@ -22,7 +22,7 @@ export const categoryRouter = Router();
  *           example: savings
  *         group: 
  *           type: string
- *           example: savings
+ *           example: ["income", "egress"]
  *         description:
  *           type: string
  *           example: savings group required
@@ -30,7 +30,8 @@ export const categoryRouter = Router();
  *           type: number
  *           example: 11
  *         methods:
- *           type: string 
+ *           type: string
+ *           example: ["Bank Transfers","Cash", "Card", "Digital Payments", "Mobile Payments", "Online Payments", "Checks", "Cryptocurrency Payments"]
  * /api/v1/category/create:
  *   post:
  *     summary: Returns a category create.

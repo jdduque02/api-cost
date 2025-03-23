@@ -374,7 +374,7 @@ userRouter.delete('/user/delete', validateToken, deleteUser);
  *           type: string
  *         required: true
  *     tags:
- *       - user
+ *       - User
  *     responses:
  *       200:
  *         description: true

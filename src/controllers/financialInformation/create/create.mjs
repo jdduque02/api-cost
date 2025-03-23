@@ -21,6 +21,7 @@ export const createFinancialInformation = async (req, res = response) => {
     const { body, token } = req;
     body.created_at = today;
     body.update_at = today;
+    body.changeHistory = [];
     //  El bloque de código intenta validar los datos recibidos en el cuerpo de la solicitud utilizando la función `validateSchemaFinancialInformation`.
     let validateData;
     try {

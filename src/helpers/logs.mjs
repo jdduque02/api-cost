@@ -14,29 +14,33 @@ export const RecordLog = async (data, module) => {
         fechaRegistro.setUTCDate(fechaRegistro.getUTCHours() - 5)
         // Generar nombre de archivo usando date-fns
         const fileName = `${format(fechaRegistro, 'yyyy-MM-dd')}.txt`;
-        
+
         // Construir ruta del archivo usando path.resolve para rutas absolutas
-        const logPath = path.resolve(
-            __dirname,
-            '..',
-            'src',
-            'logs',
-            module,
-            fileName
-        );
+        try {
+            const logPath = path.resolve(
+                path.dirname,
+                '..',
+                'src',
+                'logs',
+                module,
+                fileName
+            );
+        } catch (error) {
+            return error
+        }
 
         // Leer contenido existente y agregar nuevo registro
         const existingContent = await seeFile(logPath);
         const newContent = `${existingContent}\n${data}`.trim();
-        
+
         // Escribir contenido actualizado
         await typeFile(logPath, newContent);
-        
+
         return fileName;
     } catch (error) {
         const errorMessage = `Error en RecordLog: ${error.message}`;
         console.error(errorMessage);
-        throw new Error(errorMessage);
+        return error
     }
 }
 /**
@@ -67,6 +71,8 @@ const typeFile = async (filePath, content) => {
         await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
         await fs.promises.writeFile(filePath, content, 'utf-8');
     } catch (error) {
-        throw new Error(`Error al escribir archivo: ${error.message}`);
+        const errorMessage = `Error en RecordLog: ${error.message}`;
+        console.error(errorMessage);
+        return error
     }
 };

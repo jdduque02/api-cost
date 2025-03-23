@@ -11,24 +11,39 @@ percentageOptimum: Un porcentaje óptimo (opcional) asociado a la categoría par
 const categorySchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, 'name category required'],
         unique: true
     },
+    /* 
+        ingreso 
+        egreso
+    */
     group: {
         type: String,
-        required: true,
+        required: [true, 'group category required'],
+        options: []
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'description category required']
     },
     percentageOptimum: {
         type: Number,
         default: 0,
     },
-    //methods of dine administration
+    /*
+        Transferencias Bancarias
+        efectivo
+        tarjeta
+        Pagos Digitales
+        Pagos Móviles
+        Pagos Online
+        Cheques
+        Pagos con Criptomonedas 
+    */
     methods: {
         type: String,
+        options: ['Bank Transfers', 'Cash', 'Card', 'Digital Payments', 'Mobile Payments', 'Online Payments', 'Checks', 'Cryptocurrency Payments']
     },
     created_at: {
         type: Date,

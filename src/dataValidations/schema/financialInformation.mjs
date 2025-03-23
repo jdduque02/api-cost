@@ -27,7 +27,7 @@ const schemaFinancialInformation = zod.object({
     userId: zod.string({
         invalid_type_error: 'userId must be a string',
         required_error: 'userId is required',
-    }).uuid({ message: 'must be an id of a user' }),
+    }),
 
     monthlyIncome: zod.number({
         invalid_type_error: 'monthlyIncome must be a number',
@@ -40,7 +40,7 @@ const schemaFinancialInformation = zod.object({
     openingBalances: zod.number({
         invalid_type_error: 'openingBalances must be a number',
     }).positive(),
-    ChangeHistory: schemaChangeHistoryInformation,
+
     initialDebts: zod.number({
         invalid_type_error: 'initialDebts must be a number',
     }).positive(),

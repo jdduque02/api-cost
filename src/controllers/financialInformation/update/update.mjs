@@ -43,7 +43,7 @@ export const updateFinancialInformation = async (req, res = response) => {
     Object.entries(data).forEach(([key, value]) => {
         change.push({ _id: randomUUID(), modifiedVariable: key, dateModification: today, valuePrevious: financialInformation[key], valueNew: value });
     });
-    data.changeData = change;
+    data.ChangeHistory = change;
     try {
         await ModelFinancialInformation.updateFinancialInformation(financialInformation, data);
     } catch (error) {

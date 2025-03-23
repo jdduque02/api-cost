@@ -45,7 +45,8 @@ export const validateFinancialInformation = async (req, res = response, next) =>
         const err = new ResourceNotFoundError('empty params');
         return res.status(400).send(Responses.Error(err.name, err.message));
     }
-    const { body, params: { key, value } } = req;
+    console.log({ key, value });
+    const { params: { key, value } } = req;
     const searchParams = {};
     searchParams[key] = value;
     let findFinancialInformation;

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllFinancialInformation, validateFinancialInformation, showFinancialInformation } from '../controllers/financialInformation/get/get.mjs';
+import { validateFinancialInformation, showFinancialInformation } from '../controllers/financialInformation/get/get.mjs';
 import { createFinancialInformation } from '../controllers/financialInformation/create/create.mjs';
 import { updateFinancialInformation } from '../controllers/financialInformation/update/update.mjs';
 import { deleteFinancialInformation } from '../controllers/financialInformation/delete/delete.mjs';
@@ -30,7 +30,10 @@ export const financialInformationRouter = Router();
  *           example: 3 
  *         savingsGoal:
  *           type: number
- *           example: 3  
+ *           example: 3
+ *         percentageOptimum:
+ *           type: number
+ *           example: 3
  * /api/v1/financialInformation/create:
  *   post:
  *     summary: Returns a financialInformation create.

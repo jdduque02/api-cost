@@ -15,7 +15,7 @@ const module = 'category';
  * @throws {ValidationError, ServerError, ResourceNotFoundError, AuthorizationError, QueryErrors} Error al obtener todos los categorias.
  */
 export const getAllCategory = async (req, res = response) => {
-    if(req.charge.role!==1) {
+    if (req.charge.role !== 1) {
         const AuthorizationNotValide = new AuthorizationError('you do not have permissions');
         RecordLog(AuthorizationNotValide, module);
         return res.status(401).send(Responses.Error(AuthorizationNotValide.name, AuthorizationNotValide.message));
@@ -56,9 +56,9 @@ export const validateCategory = async (req, res = response, next) => {
     searchParams[key] = value;
     let validateData;
     try {
-        validateData = (searchParams);
+        validateData = validatePartialSchemaCategory(searchParams);
     } catch (error) {
-        const err = new validatePartialSchemaCategory(error);
+        const err = new ValidationError(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);
         RecordLog(err, module);
         return res.status(500).send(Responses.Error(err.name, err.message));
@@ -71,7 +71,7 @@ export const validateCategory = async (req, res = response, next) => {
     }
     let findCategory;
     try {
-        findCategory = await ModelCategory.getOneCategory(searchParams);
+        findCategory = await ModelCategory.getByIdCategory(searchParams);
     } catch (error) {
         let errorSearchCategory = new QueryErrors(error);
         CustomLogger.error(`error:\n ${errorSearchCategory.stack}`);
