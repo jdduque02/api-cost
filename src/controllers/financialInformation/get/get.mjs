@@ -41,12 +41,12 @@ export const getAllFinancialInformation = async (req, res = response) => {
  * @throws { ResourceNotFoundError, AuthorizationError, QueryErrors} Error al consultar los informacion financiera en la base de datos.
  */
 export const validateFinancialInformation = async (req, res = response, next) => {
-    if (!req.params.key || !req.params.value) {
+    const { params } = req;
+    if (!params.key || !params.value) {
         const err = new ResourceNotFoundError('empty params');
         return res.status(400).send(Responses.Error(err.name, err.message));
     }
-    console.log({ key, value });
-    const { params: { key, value } } = req;
+    const { key, value } = params;
     const searchParams = {};
     searchParams[key] = value;
     let findFinancialInformation;
@@ -57,7 +57,7 @@ export const validateFinancialInformation = async (req, res = response, next) =>
         CustomLogger.error(`error:\n ${errorSearchFinancialInformation.stack}`);
         return res.status(400).send(Responses.Error(errorSearchFinancialInformation.name, errorSearchFinancialInformation.message));
     }
-    if (Object.keys(findFinancialInformation).length === 0) {
+    if (findFinancialInformation?.length === 0 || !findFinancialInformation) {
         let errorSearchFinancialInformation = new ResourceNotFoundError('financial Information not found');
         return res.status(400).send(Responses.Error(errorSearchFinancialInformation.name, errorSearchFinancialInformation.message));
     }

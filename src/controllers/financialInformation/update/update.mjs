@@ -15,11 +15,11 @@ const module = 'financialInformation';
  * 
  * @throws {ValidationError, QueryErrors, ServerError} Error al actualizar la informacion financiera.
  */
-export const updateFinancialInformation = async (req, res = response) => {
+export const putFinancialInformation = async (req, res = response) => {
     let today = new Date();
     today.setUTCHours(today.getUTCHours() - 5);
     const { body, token } = req;
-    let { financialInformation } = body;
+    const { financialInformation } = body;
     delete body.financialInformation;
     let validateDataFinancialInformation;
     try {
@@ -40,9 +40,13 @@ export const updateFinancialInformation = async (req, res = response) => {
     let { data } = validateDataFinancialInformation;
     body.update_at = today;
     let change = [];
-    Object.entries(data).forEach(([key, value]) => {
-        change.push({ _id: randomUUID(), modifiedVariable: key, dateModification: today, valuePrevious: financialInformation[key], valueNew: value });
-    });
+    try {
+        Object.entries(data).forEach(([key, value]) => {
+            change.push({ _id: randomUUID(), modifiedVariable: key, dateModification: today, valuePrevious: financialInformation[key], valueNew: value });
+        });
+    } catch (error) {
+        return res.status(500).send(Responses.Error(error.name, error.message));
+    }
     data.ChangeHistory = change;
     try {
         await ModelFinancialInformation.updateFinancialInformation(financialInformation, data);
