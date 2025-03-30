@@ -15,7 +15,6 @@ const module = 'financialInformation';
  */
 export const removeFinancialInformation = async (req, res = response) => {
     let today = new Date();
-    console.log({ today });
     today.setUTCHours(today.getUTCHours() - 5);
     const { params, token } = req;
     const { key, value } = params;
