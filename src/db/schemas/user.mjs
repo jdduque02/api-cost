@@ -37,24 +37,24 @@ _id: El identificador único del usuario.
 const userSchema = Schema({
     username: {
         type: String,
-        required: true,
+        required: [true, 'El usuario es necesario'],
         unique: true
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'La contraseña es necesario'],
     },
     email: {
         type: String,
-        required: true,
+        required: [true, 'El correo es necesario'],
     },
     numberPhone: {
         type: Number,
-        required: true
+        required: [true, 'El telefono es necesario'],
     },
     role: {
         type: Number,
-        required: true
+        required: [true, 'El rol es necesario'],
     },
     imgProfile: {
         type: String,
@@ -67,6 +67,7 @@ const userSchema = Schema({
     update_at: {
         type: Date,
         default: today
+
     },
     state: {
         type: Boolean,

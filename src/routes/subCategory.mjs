@@ -115,7 +115,7 @@ export const subCategoryRouter = Router();
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-subCategoryRouter.post('/subCategory/create', createSubCategory);
+subCategoryRouter.post('/subCategory/', createSubCategory);
 /**
  * @openapi
  * /api/v0.10.0/subCategory/delete:
@@ -205,7 +205,7 @@ subCategoryRouter.post('/subCategory/create', createSubCategory);
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-subCategoryRouter.delete('/subCategory/delete', deleteSubCategory);
+subCategoryRouter.delete('/subCategory/delete/:key?/:value?', validateSubCategory, deleteSubCategory);
 /**
  * @openapi
  * /api/v0.10.0/subCategory/all:
@@ -293,7 +293,7 @@ subCategoryRouter.delete('/subCategory/delete', deleteSubCategory);
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-subCategoryRouter.get('/subCategory/all', getAllSubCategory);
+//subCategoryRouter.get('/subCategory/all', getAllSubCategory);
 /**
  * @openapi
  * /api/v0.10.0/subCategory/get/{key}/{value}:
@@ -490,4 +490,4 @@ subCategoryRouter.get('/subCategory/get/:key?/:value?', validateSubCategory, sho
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 subCategoryRouter.patch('/subCategory/update/:key?/:value?', validateSubCategory, updateSubCategory);
-export default subCategoryRouter;
+export default subCategoryRouter;   

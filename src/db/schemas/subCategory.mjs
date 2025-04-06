@@ -13,19 +13,19 @@ update_at: La fecha y hora de la última actualización de la subcategoría.
 const subCategorySchema = Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, 'El nombre es necesario'],
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'La descripcion es necesario'],
     },
     categoryId: {
         type: String,
-        required: true
+        required: [true, 'La categoria es necesario'],
     },
     userId: {
         type: String,
-        required: true
+        required: [true, 'El usuario es necesario'],
     },
     created_at: {
         type: Date,

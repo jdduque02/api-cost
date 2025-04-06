@@ -18,23 +18,23 @@ update_at: La fecha y hora de la última actualización de la transacción.
 const transactionSchema = Schema({
     groupId: {
         type: String,
-        required: true,
+        required: [true, 'El grupo es necesario'],
     },
     categoryId: {
         type: String,
-        required: true,
+        required: [true, 'La categoria es necesario'],
     },
     subcategoryId: {
         type: String,
-        required: true,
+        required: [true, 'La subcategoria es necesario'],
     },
     name: {
         type: String,
-        required: true,
+        required: [true, 'El nombre es necesario'],
     },
     userId: {
         type: String,
-        required: true,
+        required: [true, 'El usuario es necesario'],
     },
     annotation: {
         type: String,

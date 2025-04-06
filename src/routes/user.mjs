@@ -147,7 +147,7 @@ export const userRouter = Router();
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
 
-userRouter.post('/user/create', createUser);
+userRouter.post('/user/', createUser);
 /**
  * @openapi
  * /api/v1/user/login:
@@ -347,7 +347,7 @@ userRouter.post('/user/login', loginUser);
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-userRouter.delete('/user/delete', validateToken, deleteUser);
+userRouter.delete('/user/delete/:key?/:value?', validateToken, deleteUser);
 /**
  * @openapi
  * /api/v1/user/get/{key}/{value}:

@@ -14,12 +14,12 @@ const schemaSubCategory = zod.object({
     categoryId: zod.string({
         invalid_type_error: 'categoryId must be a string',
         required_error: 'categoryId is required',
-    }).uuid({ message: 'must be an id of a category' }),
+    }),
 
     userId: zod.string({
         invalid_type_error: 'userId must be a string',
         required_error: 'userId is required',
-    }).uuid({ message: 'must be an id of a user' }),
+    }),
 
     created_at: zod.date({
         invalid_type_error: 'created_at must be a date',
@@ -37,6 +37,6 @@ export function validateSchemaPartialSubCategory(input) {
     try {
         return schemaSubCategory.partial().safeParse(input)
     } catch (error) {
-        return { error }
+        return error
     }
 }

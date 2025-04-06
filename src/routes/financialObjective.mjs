@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getAllFinancialObjective, validateFinancialObjective, showFinancialObjective } from '../controllers/financialObjective/get/get.mjs';
+import {  validateFinancialObjective, showFinancialObjective } from '../controllers/financialObjective/get/get.mjs';
 import { createFinancialObjective } from '../controllers/financialObjective/create/create.mjs';
 import { updateFinancialObjective } from '../controllers/financialObjective/update/update.mjs';
-import { deleteFinancialObjective } from '../controllers/financialObjective/delete/delete.mjs';
+import { removeFinancialObjective } from '../controllers/financialObjective/delete/delete.mjs';
 export const financialObjectiveRouter = Router();
 /**
  * @openapi
@@ -157,7 +157,7 @@ export const financialObjectiveRouter = Router();
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-financialObjectiveRouter.post('/financialObjective/create', createFinancialObjective);
+financialObjectiveRouter.post('/financialObjective/', createFinancialObjective);
 /**
  * @openapi
  * /api/v1/financialObjetive/delete:
@@ -247,7 +247,7 @@ financialObjectiveRouter.post('/financialObjective/create', createFinancialObjec
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-financialObjectiveRouter.delete('/financialObjective/delete', deleteFinancialObjective);
+financialObjectiveRouter.delete('/financialObjective/delete/:key?/:value?',validateFinancialObjective, removeFinancialObjective);
 /**
  * @openapi
  * /api/v1/financialObjetive/get/{key}/{value}:

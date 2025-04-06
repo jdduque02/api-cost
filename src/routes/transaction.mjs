@@ -119,7 +119,7 @@ export const transactionRouter = Router();
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-transactionRouter.post('/transaction/create', createTransaction);
+transactionRouter.post('/transaction/', createTransaction);
 /**
  * @openapi
  * /api/v1/transaction/delete:

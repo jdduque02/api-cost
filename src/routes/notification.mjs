@@ -118,7 +118,7 @@ export const notificationRouter = Router();
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-notificationRouter.post('/notification/create', createNotification);
+notificationRouter.post('/notification/', createNotification);
 /**
  * @openapi
  * /api/v1/notification/delete:

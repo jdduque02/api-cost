@@ -47,14 +47,12 @@ export class ModelFinancialInformation {
         return saveNewFinancialInformation;
     }
     //El método `deleteFinancialInformation` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad 'categoría'. Si no se proporciona la propiedad 'categoría', devuelve 'falso'.
-    static async deleteFinancialInformation(financialInformation) {
-        if (!financialInformation) return new ValidationError('the information query parameters were not sent.');
-        const { _id } = financialInformation;
-        if (!_id) return new ValidationError('the information query parameters were not sent.');
+    static async deleteFinancialInformation(searchParams) {
+        if (!searchParams) return new ValidationError('the information query parameters were not sent.');
         let deletedFinancialInformation;
         try {
             // eslint-disable-next-line no-unused-vars
-            deletedFinancialInformation = await schemaFinancialInformation.deleteOne({ _id });
+            deletedFinancialInformation = await schemaFinancialInformation.deleteOne(searchParams);
         } catch (error) {
             return new QueryErrors(`Error in the query detail: ${error}`);
         }
@@ -67,6 +65,7 @@ export class ModelFinancialInformation {
         today.setUTCHours(today.getUTCHours() - 5);
         input.update_at = today;
         const updateFinancialInformation = Object.assign(financialInformation, input);
+        console.log({ updateFinancialInformation });
         let saveUpdateFinancialInformation;
         try {
             saveUpdateFinancialInformation = updateFinancialInformation.save();

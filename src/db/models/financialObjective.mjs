@@ -36,17 +36,20 @@ export class ModelFinancialObjective {
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }
+        let saveFinancialObjective;
+        try {
+            saveFinancialObjective = await newFinancialObjective.save();
+        } catch (error) {
+            throw new QueryErrors(`Error in the query detail save category: ${error}`);
+        }
         return newFinancialObjective;
     }
     //El método `deleteFinancialObjective` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad 'categoría'. Si no se proporciona la propiedad 'categoría', devuelve 'falso'.
-    static async deleteFinancialObjective(financialObjective) {
-        if (!financialObjective) throw new ValidationError('the information query parameters were not sent.');
-        let { _id } = financialObjective;
-        if (!_id) throw new ValidationError('the information query parameters were not sent.');
+    static async deleteFinancialObjective(searchParams) {
         let deletedFinancialObjective;
         try {
             // eslint-disable-next-line no-unused-vars
-            deletedFinancialObjective = await schemaFinancialObjective.deleteOne({ _id });
+            deletedFinancialObjective = await schemaFinancialObjective.deleteOne(searchParams);
         } catch (error) {
             throw new QueryErrors(`Error in the query detail: ${error}`);
         }

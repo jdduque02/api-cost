@@ -13,16 +13,19 @@ const module = 'financialObjective';
  * 
  * @throws {ValidationError, ResourceNotFoundError, QueryErrors} Error al eliminar el usuario.
  */
-export const deleteFinancialObjective = async (req, res = response) => {
-    const { body, token } = req;
-    let deleteFinancialObjective;
+export const removeFinancialObjective = async (req, res = response) => {
+    const { params, token } = req;
+    const { key, value } = params;
+    const searchParams = {};
+    searchParams[key] = value;
+    let deleteFinancialObjectives;
     try {
-        deleteFinancialObjective = await ModelFinancialObjective.deleteFinancialObjective(body.userId);
+        deleteFinancialObjectives = await ModelFinancialObjective.deleteFinancialObjective(searchParams);
     } catch (error) {
         const err = new QueryErrors(error);
         RecordLog(err, module);
         CustomLogger.error(`error query financialObjective data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful({ financialObjective: deleteFinancialObjective, token }, 'delete financialObjective success'));
+    return res.status(200).send(Responses.Successful({ financialObjective: deleteFinancialObjectives, token }, 'delete financialObjective success'));
 }

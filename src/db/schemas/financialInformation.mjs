@@ -2,21 +2,20 @@ import { Schema, model } from 'mongoose';
 const today = new Date();
 today.setUTCHours(today.getUTCHours() - 5);
 const changeHistory = Schema({
+    _id: {
+        type: String
+    },
     modifiedVariable: {
         type: String,
-        required: true,
     },
     dateModification: {
         type: Date,
-        required: true,
     },
     valuePrevious: {
         type: String,
-        required: true,
     },
     valueNew: {
         type: String,
-        required: true
     }
 });
 /* 
@@ -34,7 +33,7 @@ ChangeHistory: Un submodelo que registra cambios históricos en la información 
 const financialInformationSchema = Schema({
     userId: {
         type: String,
-        required: true
+        required: [true, 'El id del usuario es necesario']
     },
     monthlyIncome: {
         type: Number,

@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { validateFinancialInformation, showFinancialInformation } from '../controllers/financialInformation/get/get.mjs';
 import { createFinancialInformation } from '../controllers/financialInformation/create/create.mjs';
-import { updateFinancialInformation } from '../controllers/financialInformation/update/update.mjs';
-import { deleteFinancialInformation } from '../controllers/financialInformation/delete/delete.mjs';
+import { putFinancialInformation } from '../controllers/financialInformation/update/update.mjs';
+import { removeFinancialInformation } from '../controllers/financialInformation/delete/delete.mjs';
 export const financialInformationRouter = Router();
 /**
  * @openapi
@@ -121,7 +121,7 @@ export const financialInformationRouter = Router();
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-financialInformationRouter.post('/financialInformation/create', createFinancialInformation);
+financialInformationRouter.post('/financialInformation/', createFinancialInformation);
 /**
  * @openapi
  * /api/v1/financialInformation/delete:
@@ -211,7 +211,7 @@ financialInformationRouter.post('/financialInformation/create', createFinancialI
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-financialInformationRouter.delete('/financialInformation/delete', deleteFinancialInformation);
+financialInformationRouter.delete('/financialInformation/delete/:key?/:value?',validateFinancialInformation, removeFinancialInformation);
 /**
  * @openapi
  * /api/v1/financialInformation/get/{key}/{value}:
@@ -407,5 +407,5 @@ financialInformationRouter.get('/financialInformation/get/:key?/:value?', valida
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-financialInformationRouter.patch('/financialInformation/update/:key?/:value?', validateFinancialInformation, updateFinancialInformation);
+financialInformationRouter.patch('/financialInformation/update/:key?/:value?', validateFinancialInformation, putFinancialInformation);
 export default financialInformationRouter;

@@ -6,7 +6,7 @@ import { RecordLog } from '../helpers/logs.mjs'
 import { ResourceNotFoundError } from '../helpers/errors.mjs';
 
 export default (req, res = response, next) => {
-    if (req.method === 'GET' || req.method === 'PATCH') return next();
+    if (req.method === 'GET' || req.method === 'PATCH' || req.method === 'DELETE') return next();
     if (Object.keys(req.body).length === 0) {
         const err = new ResourceNotFoundError('empty petition body');
         CustomLogger.error(`error validate data:\n ${err}`);

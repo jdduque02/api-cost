@@ -6,27 +6,27 @@ today.setUTCHours(today.getUTCHours() - 5);
 const notificationSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: [true, 'El titulo es necesario']
     },
     userId: {
         type: String,
-        required: true
+        required: [true, 'El usuario es necesario']
     },
     value: {
         type: Number,
-        required: true
+        required: [true, 'El valor es necesario']
     },
     completed: {
         type: Boolean,
-        default: false
+        default: [false, 'completado es necesario']
     },
     remember: {
         type: Boolean,
-        default: false
+        default: [false, 'recordar es necesario']
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'La descripcion es necesario']
     },
     created_at: {
         type: Date,

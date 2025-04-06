@@ -19,8 +19,8 @@ export const updateSubCategory = async (req, res = response) => {
     let today = new Date();
     today.setUTCHours(today.getUTCHours() - 5);
     const { body, token } = req;
-    let { subCategory } = body;
-    delete body.subCategory;
+    const { SubCategory } = body;
+    delete body.SubCategory;
     let validateDataSubCategory;
     try {
         validateDataSubCategory = validateSchemaPartialSubCategory(body);
@@ -41,11 +41,11 @@ export const updateSubCategory = async (req, res = response) => {
     body.update_at = today;
     let change = [];
     Object.entries(data).forEach(([key, value]) => {
-        change.push({ _id: randomUUID(), modifiedVariable: key, dateModification: today, valuePrevious: subCategory[key], valueNew: value });
+        change.push({ _id: randomUUID(), modifiedVariable: key, dateModification: today, valuePrevious: SubCategory[key], valueNew: value });
     });
     data.changeData = change;
     try {
-        await ModelSubCategory.updateSubCategory(subCategory, data);
+        await ModelSubCategory.updateSubCategory(SubCategory, data);
     } catch (error) {
         const err = new QueryErrors(error);
         RecordLog(err, module);

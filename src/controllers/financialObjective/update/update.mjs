@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto'
 import { CustomLogger } from '../../../helpers/console.mjs';
 import { ValidationError, ServerError, QueryErrors } from '../../../helpers/errors.mjs';
 import { ModelFinancialObjective } from '../../../db/models/financialObjective.mjs';
@@ -39,9 +38,11 @@ export const updateFinancialObjective = async (req, res = response) => {
     }
     let { data } = validateDataFinancialObjective;
     body.update_at = today;
-    let change = [];
-    change.push({ _id: randomUUID(), daypayment:body.daypayment, amountPaid:body.amountPaid });
-    data.payments = change;
+    if (data.payments)  {
+        let change = [];
+        change.push({daypayment: body.daypayment, amountPaid: body.amountPaid });
+        data.payments = change;
+    }
     try {
         await ModelFinancialObjective.updateFinancialObjective(financialObjective, data);
     } catch (error) {
@@ -50,6 +51,6 @@ export const updateFinancialObjective = async (req, res = response) => {
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful({financialObjective:data, token}, 'update financialObjective success'));
+    return res.status(200).send(Responses.Successful({ financialObjective: data, token }, 'update financialObjective success'));
 };
 

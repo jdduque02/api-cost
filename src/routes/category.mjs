@@ -119,7 +119,7 @@ export const categoryRouter = Router();
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-categoryRouter.post('/category/create', createCategory);
+categoryRouter.post('/category/', createCategory);
 /**
  * @openapi
  * /api/v1/category/delete:
@@ -209,7 +209,7 @@ categoryRouter.post('/category/create', createCategory);
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-categoryRouter.delete('/category/delete', deleteCategory);
+categoryRouter.delete('/category/delete/:key?/:value?', deleteCategory);
 /**
  * @openapi
  * /api/v1/category/all:

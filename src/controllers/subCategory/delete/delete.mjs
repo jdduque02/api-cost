@@ -17,9 +17,16 @@ export const deleteSubCategory = async (req, res = response) => {
     let today = new Date();
     today.setUTCHours(today.getUTCHours() - 5);
     const { body, token } = req;
+    if (!req.params.key || !req.params.value) {
+        const err = new ResourceNotFoundError('empty params');
+        RecordLog(err, module);
+        return res.status(400).send(Responses.Error(err.name, err.message));
+    }
+    const searchParams = {};
+    searchParams[req.params.key] = req.params.value;
     let deleteSubCategory;
     try {
-        deleteSubCategory = await ModelSubCategory.deleteSubCategory(body.userId);
+        deleteSubCategory = await ModelSubCategory.deleteSubCategory(searchParams);
     } catch (error) {
         const err = new QueryErrors(error);
         RecordLog(err, module);
