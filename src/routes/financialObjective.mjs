@@ -11,7 +11,6 @@ export const financialObjectiveRouter = Router();
  *     FinancialObjetive:
  *       type: object
  *       required:
- *         - groupId
  *         - categoryId
  *         - subcategoryId
  *         - name
@@ -21,9 +20,6 @@ export const financialObjectiveRouter = Router();
  *         - payments
  *         - owner 
  *       properties:
- *         groupId: 
- *           type: string
- *           example: uidd
  *         categoryId: 
  *           type: string
  *           example: uidd

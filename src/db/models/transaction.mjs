@@ -15,11 +15,11 @@ export class ModelTransaction {
     }
 
     //El método `getByIdTransaction` es una función asincrónica estática que recupera una categoría por su ID.
-    static async getByIdTransaction(parameters) {
+    static async getTransaction(parameters) {
         if (!parameters) return new ValidationError('the information query parameters were not sent.');
         let findOneTransaction;
         try {
-            findOneTransaction = await schemaTransaction.findOne(parameters);
+            findOneTransaction = await schemaTransaction.find(parameters);
         } catch (error) {
             return new QueryErrors(`Error in the query detail: ${error}`);
         }
@@ -27,25 +27,30 @@ export class ModelTransaction {
     }
     //El método `createTransaction` es una función estática asincrónica que crea una nueva categoría.
     static async createTransaction(input) {
+        if (!input) return new ValidationError('the information query parameters were not sent.');
         let today = new Date();
         today.setUTCHours(today.getUTCHours() - 5);
         input.created_at = today;
         let newTransaction;
         try {
-            newTransaction = await newTransaction.save();
+            newTransaction = new schemaTransaction(input);
         } catch (error) {
             return new QueryErrors(`Error in the query detail: ${error}`);
         }
-        return newTransaction;
+        let saveTransaction;
+        try {
+            saveTransaction = await newTransaction.save();
+        } catch (error) {
+            return new QueryErrors(`Error in the query detail save category: ${error}`);
+        }
+        return saveTransaction;
     }
     //El método `deleteTransaction` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad 'categoría'. Si no se proporciona la propiedad 'categoría', devuelve 'falso'.
-    static async deleteTransaction(transaction) {
-        if (!transaction) return new ValidationError('the information query parameters were not sent.');
-        let { _id } = transaction;
+    static async deleteTransaction(searchParams) {
         let deletedTransaction;
         try {
             // eslint-disable-next-line no-unused-vars
-            deletedTransaction = await schemaTransaction.deleteOne({ _id });
+            deletedTransaction = await schemaTransaction.deleteOne(searchParams);
         } catch (error) {
             return new QueryErrors(`Error in the query detail: ${error}`);
         }

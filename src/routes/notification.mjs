@@ -208,7 +208,7 @@ notificationRouter.post('/notification/', createNotification);
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-notificationRouter.delete('/notification/delete', deleteNotification);
+notificationRouter.delete('/notification/delete/:key?/:value?', validateNotification, deleteNotification);
 /**
  * @openapi
  * /api/v1/notification/get/{key}/{value}:

@@ -42,8 +42,8 @@ class App {
      */
     initializeMiddlewares() {
         // Seguridad
-       /*  this.app.use(helmet(configHelmet));
-        this.app.use(corsMiddleware()); */
+        this.app.use(helmet(configHelmet));
+        this.app.use(corsMiddleware());
 
         // Parsers y compresión
         this.app.use(express.json({ limit: '10kb' }));

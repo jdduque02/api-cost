@@ -5,26 +5,38 @@ const schemaTransaction = zod.object({
         invalid_type_error: 'name must be a string',
         required_error: 'name is required',
     }),
-
-    description: zod.string({
-        invalid_type_error: 'description must be a string',
-        required_error: 'description is required',
+    valueTransaction: zod.number({
+        invalid_type_error: 'valueTransaction must be a number',
+        required_error: 'valueTransaction is required',
     }),
-
+    addressee: zod.string({
+        invalid_type_error: 'addressee must be a string',
+    }),
+    sourceBank: zod.string({
+        invalid_type_error: 'sourceBank must be a string',
+    }),
+    sourceAccount: zod.string({
+        invalid_type_error: 'sourceAccount must be a string',
+    }),
+    destinationAccount: zod.string({
+        invalid_type_error: 'destinationAccount must be a string',
+    }),
+    destinationBank: zod.string({
+        invalid_type_error: 'destinationBank must be a string',
+    }),
     categoryId: zod.string({
         invalid_type_error: 'categoryId must be a string',
         required_error: 'categoryId is required',
-    }).uuid({ message: 'must be an id of a category' }),
-
+    }),
     subcategoryId: zod.string({
         invalid_type_error: 'subcategoryId must be a string',
         required_error: 'subcategoryId is required',
-    }).uuid({ message: 'must be an id of a sub category' }),
+    }),
 
     userId: zod.string({
         invalid_type_error: 'userId must be a string',
         required_error: 'userId is required',
-    }).uuid({ message: 'must be an id of a user' }),
+    }),
 
     annotation: zod.string({
         invalid_type_error: 'annotation must be a string',

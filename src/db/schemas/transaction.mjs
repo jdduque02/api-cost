@@ -2,7 +2,6 @@ import { Schema, model } from 'mongoose';
 const today = new Date();
 today.setUTCHours(today.getUTCHours() - 5);
 /* Este modelo almacena detalles de las transacciones financieras realizadas por el usuario.
-groupId: Un identificador único para agrupar transacciones relacionadas (opcional).
 categoryId: La categoría de la transacción (por ejemplo, alimentos, alquiler, ingresos).
 Subcategory: La subcategoría de la transacción (opcional).
 Name: El nombre o descripción de la transacción.
@@ -16,10 +15,6 @@ created_at: La fecha y hora en que se creó la transacción.
 update_at: La fecha y hora de la última actualización de la transacción.
  */
 const transactionSchema = Schema({
-    groupId: {
-        type: String,
-        required: [true, 'El grupo es necesario'],
-    },
     categoryId: {
         type: String,
         required: [true, 'La categoria es necesario'],
@@ -35,6 +30,31 @@ const transactionSchema = Schema({
     userId: {
         type: String,
         required: [true, 'El usuario es necesario'],
+    },
+    // valor de la transaccion
+    valueTransaction: {
+        type: Number,
+        required: [true, 'El valor es necesario'],
+    },
+    // destinatario
+    addressee: {
+        type: String,
+    },
+    // cuenta de origen
+    sourceAccount: {
+        type: String,
+    },
+    // cuenta de destino
+    destinationAccount: {
+        type: String,
+    },
+    // banco de destino
+    destinationBank: {
+        type: String,
+    },
+    // banco de origen
+    sourceBank: {
+        type: String,
     },
     annotation: {
         type: String,

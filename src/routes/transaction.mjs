@@ -12,7 +12,6 @@ export const transactionRouter = Router();
  *       type: object
  *       required:
  *         - name
- *         - groupId
  *         - categoryId
  *         - subcategoryId
  *         - userId
@@ -28,7 +27,25 @@ export const transactionRouter = Router();
  *           example: uidd
  *         userId: 
  *           type: string
- *           example: uidd  
+ *           example: uidd 
+ *         valueTransaction:
+ *           type: number
+ *           example: 20000
+ *         addressee:
+ *           type: string
+ *           example: user200
+ *         sourceAccount:
+ *           type: string
+ *           example: idBank
+ *         sourceBank:
+ *           type: string
+ *           example: bank200
+ *         destinationAccount:
+ *           type: string
+ *           example: idBank
+ *         destinationBank:
+ *           type: string
+ *           example: bank201
  *         annotation:
  *           type: string
  *           example: savings group required
@@ -209,7 +226,7 @@ transactionRouter.post('/transaction/', createTransaction);
  *                   type: string
  *                   example: "The body of the request is too large BODY LENGHT >1000"
  */
-transactionRouter.delete('/transaction/delete', deleteTransaction);
+transactionRouter.delete('/transaction/delete/:key?/:value?', validateTransaction, deleteTransaction);
 /**
  * @openapi
  * /api/v1/transaction/get/{key}/{value}:

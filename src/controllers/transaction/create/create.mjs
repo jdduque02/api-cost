@@ -8,10 +8,10 @@ import { RecordLog } from '../../../helpers/logs.mjs';
 const module = 'transaction';
 
 /**
- * Registrar la informacion financiera de un usuario en la base de datos
+ * Registrar la transaction en la base de datos
  * @param {Object} req - Objeto de solicitud HTTP
  * @param {Object} res - Objeto de respuesta HTTP
- * @returns {Object} - Objeto de respuesta HTTP con la informacion financiera de un usuario creada.
+ * @returns {Object} - Objeto de respuesta HTTP con la transaction creada.
  * 
  * @throws {ValidationError, ResourceNotFoundError, QueryErrors} Error al crear la informacion finaciera.
  */
@@ -38,15 +38,15 @@ export const createTransaction = async (req, res = response) => {
         CustomLogger.error(`error validate response data:\n ${err}`);
         return res.status(422).send(Responses.Error(err.name, err.message));
     }
-    //El bloque de código intenta crear un nuevo usuario utilizando el método `ModelUser.createUser`.
+    //El bloque de código intenta crear un nuevo transaction utilizando el método `ModelTransaction.createTransaction`.
     let newTransaction;
     try {
         newTransaction = await ModelTransaction.createTransaction(validateData.data);
     } catch (error) {
         const err = new QueryErrors(error);
         RecordLog(err, module);
-        CustomLogger.error(`error create  Financial Information:\n ${err}`);
+        CustomLogger.error(`error create Transaction:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(201).send(Responses.Successful({ trasaction: newTransaction, token }, 'create Financial Information success'));
+    return res.status(201).send(Responses.Successful({ trasaction: newTransaction, token }, 'create Transaction success'));
 }

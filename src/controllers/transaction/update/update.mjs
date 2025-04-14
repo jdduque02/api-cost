@@ -39,11 +39,6 @@ export const updateTransaction = async (req, res = response) => {
     }
     let { data } = validateDataTransaction;
     body.update_at = today;
-    let change = [];
-    Object.entries(data).forEach(([key, value]) => {
-        change.push({ _id: randomUUID(), modifiedVariable: key, dateModification: today, valuePrevious: transaction[key], valueNew: value });
-    });
-    data.changeData = change;
     try {
         await ModelTransaction.updateTransaction(transaction, data);
     } catch (error) {
@@ -52,5 +47,5 @@ export const updateTransaction = async (req, res = response) => {
         CustomLogger.error(`error validate schema data:\n ${err}`);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful({transaction:data, token}, 'update transaction success'));
+    return res.status(200).send(Responses.Successful({ transaction: data, token }, 'update transaction success'));
 };

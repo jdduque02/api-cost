@@ -57,7 +57,7 @@ export const validateTransaction = async (req, res = response, next) => {
     searchParams[key] = value;
     let findTransaction;
     try {
-        findTransaction = await ModelTransaction.getByIdTransaction(searchParams);
+        findTransaction = await ModelTransaction.getTransaction(searchParams);
     } catch (error) {
         let errorSearchTransaction = new QueryErrors(error);
         RecordLog(errorSearchTransaction, module);
