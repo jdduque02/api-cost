@@ -1,5 +1,6 @@
 ## 💴 Assistant Cost Manager
-El proyecto de "Plataforma de Gestión de Gastos e Ingresos Mensuales" tiene como objetivo principal proporcionar a los usuarios una herramienta web intuitiva y segura para administrar sus finanzas personales de manera eficaz. Esta plataforma permitirá a los usuarios registrar, supervisar y analizar sus gastos e ingresos mensuales, lo que les ayudará a mantener un control más sólido sobre su situación financiera.
+
+The main objective of the “Monthly Expense and Income Management Platform” project is to provide users with an intuitive and secure web-based tool to effectively manage their personal finances. This platform will allow users to record, monitor and analyze their monthly expenses and income, which will help them maintain a more solid control over their financial situation.
 ---
 ## 🛠 Tech Stack
 [![Node.js](https://img.shields.io/badge/Node.js-20.x%2B-green)](https://nodejs.org/)
@@ -92,6 +93,17 @@ Before running the project, what does the user need to install? For example:
 
 ---
 
+### 📄 **Environment Variables** (Environment variables)
+Lists the variables needed in `.env`:
+```env
+PORT=3000
+MONGODB_URI=tu_url_of_mongodb
+JWT_SECRET=your_secret_key
+EMAIL_USER=tu_correo@gmail.com
+EMAIL_PASS=your_password
+```
+---
+
 ### ⚙️ **Installation** (How to install and run)
 Step by step guide to clone and install the project:
 ```bash
@@ -108,18 +120,6 @@ npm run dev
 
 # 5. Acceder a la API (ej: http://localhost:3000)
 ```
----
-
-### 📄 **Environment Variables** (Environment variables)
-Lists the variables needed in `.env`:
-```env
-PORT=3000
-MONGODB_URI=tu_url_of_mongodb
-JWT_SECRET=your_secret_key
-EMAIL_USER=tu_correo@gmail.com
-EMAIL_PASS=your_password
-```
-
 ---
 
 ### 🧪 **Testing**
