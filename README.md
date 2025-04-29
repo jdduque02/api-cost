@@ -98,11 +98,16 @@ Before running the project, what does the user need to install? For example:
 ### 📄 **Environment Variables** (Environment variables)
 Lists the variables needed in `.env`:
 ```env
+USERDB=userdb
+PASSDB=password
+VERSION=1
 PORT=3000
-MONGODB_URI=tu_url_of_mongodb
-JWT_SECRET=your_secret_key
-EMAIL_USER=tu_correo@gmail.com
-EMAIL_PASS=your_password
+APP_ENV=DEV
+NAMEDB=nameDB
+NAMECLUSTER=@namecluster
+HASH_KEY_USER=hask
+HASH_KEY_JWT=hask
+
 ```
 ---
 
