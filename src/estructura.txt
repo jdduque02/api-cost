@@ -1,0 +1,173 @@
+Listado de rutas de carpetas
+El n£mero de serie del volumen es 7CDD-18C8
+D:.
+³   .env
+³   .lintstagedrc
+³   app.mjs
+³   estructura.txt
+³   index.mjs
+³   
+ÃÄÄÄconfig
+³       database.mjs
+³       helmet.mjs
+³       swagger.mjs
+³       
+ÃÄÄÄcontrollers
+³   ÃÄÄÄcategory
+³   ³   ÃÄÄÄcreate
+³   ³   ³       create.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄdelete
+³   ³   ³       delete.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄget
+³   ³   ³       get.mjs
+³   ³   ³       
+³   ³   ÀÄÄÄupdate
+³   ³           update.mjs
+³   ³           
+³   ÃÄÄÄfinancialInformation
+³   ³   ÃÄÄÄcreate
+³   ³   ³       create.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄdelete
+³   ³   ³       delete.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄget
+³   ³   ³       get.mjs
+³   ³   ³       
+³   ³   ÀÄÄÄupdate
+³   ³           update.mjs
+³   ³           
+³   ÃÄÄÄfinancialObjective
+³   ³   ÃÄÄÄcreate
+³   ³   ³       create.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄdelete
+³   ³   ³       delete.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄget
+³   ³   ³       get.mjs
+³   ³   ³       
+³   ³   ÀÄÄÄupdate
+³   ³           update.mjs
+³   ³           
+³   ÃÄÄÄnotification
+³   ³   ÃÄÄÄcreate
+³   ³   ³       create.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄdelete
+³   ³   ³       delete.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄget
+³   ³   ³       get.mjs
+³   ³   ³       
+³   ³   ÀÄÄÄupdate
+³   ³           update.mjs
+³   ³           
+³   ÃÄÄÄsubCategory
+³   ³   ÃÄÄÄcreate
+³   ³   ³       create.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄdelete
+³   ³   ³       delete.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄget
+³   ³   ³       get.mjs
+³   ³   ³       
+³   ³   ÀÄÄÄupdate
+³   ³           update.mjs
+³   ³           
+³   ÃÄÄÄtransaction
+³   ³   ÃÄÄÄcreate
+³   ³   ³       create.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄdelete
+³   ³   ³       delete.mjs
+³   ³   ³       
+³   ³   ÃÄÄÄget
+³   ³   ³       get.mjs
+³   ³   ³       
+³   ³   ÀÄÄÄupdate
+³   ³           update.mjs
+³   ³           
+³   ÀÄÄÄuser
+³       ÃÄÄÄcreate
+³       ³       create.mjs
+³       ³       
+³       ÃÄÄÄdelete
+³       ³       delete.mjs
+³       ³       
+³       ÃÄÄÄget
+³       ³       get.mjs
+³       ³       
+³       ÀÄÄÄupdate
+³               update.mjs
+³               
+ÃÄÄÄdataValidations
+³   ³   controllers.mjs
+³   ³   
+³   ÀÄÄÄschema
+³           category.mjs
+³           financialInformation.mjs
+³           financialObjective.mjs
+³           notification.mjs
+³           subCategory.mjs
+³           transaction.mjs
+³           user.mjs
+³           
+ÃÄÄÄdb
+³   ÃÄÄÄmodels
+³   ³       category.mjs
+³   ³       financialInformation.mjs
+³   ³       financialObjective.mjs
+³   ³       notification.mjs
+³   ³       subCategory.mjs
+³   ³       transaction.mjs
+³   ³       user.mjs
+³   ³       
+³   ÀÄÄÄschemas
+³           category.mjs
+³           financialInformation.mjs
+³           financialObjective.mjs
+³           notification.mjs
+³           subCategory.mjs
+³           transaction.mjs
+³           user.mjs
+³           
+ÃÄÄÄhelpers
+³       console.mjs
+³       errorHandler.mjs
+³       errors.mjs
+³       logs.mjs
+³       response.mjs
+³       
+ÃÄÄÄlogs
+ÃÄÄÄmiddleware
+³       cors.mjs
+³       database.mjs
+³       errorHandler.mjs
+³       jwt.mjs
+³       rateLimit.mjs
+³       validateBody.mjs
+³       
+ÃÄÄÄpublic
+ÃÄÄÄroutes
+³       category.mjs
+³       financialInformation.mjs
+³       financialObjective.mjs
+³       notification.mjs
+³       subCategory.mjs
+³       transaction.mjs
+³       user.mjs
+³       
+ÃÄÄÄscripts
+ÀÄÄÄtests
+    ³   modules.mjs
+    ³   
+    ÃÄÄÄcategory
+    ³       create.mjs
+    ³       
+    ÀÄÄÄuser
+            create.test.mjs
+            

@@ -26,7 +26,7 @@
         "superagent": "10.1.1",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.1",
-        "zod": "^3.24.2"
+        "zod": "^3.24.3"
     },
     "description": "The project will be developed in phases, starting with building a robust API-REST using Node.js and Express.js for the server logic and MongoDB for the database. API documentation will be managed using Swagger. In addition, extensive testing will be applied to ensure the quality and security of the system.",
     "devDependencies": {
@@ -82,7 +82,7 @@
         "test": "cross-env NODE_ENV=TEST npx jest --config=jest.config.cjs --detectOpenHandles"
     },
     "type": "module",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "eslintConfig": {
         "extends": [
             "semistandard"

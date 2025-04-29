@@ -1,74 +1,64 @@
-# Monthly Expense and Income Management
-
-This project is a web application that allows you to efficiently manage and track your monthly expenses and income. You can keep a close eye on your finances, set savings goals, and more.
-
-## Table of Contents
-
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API](#api)
-- [Contribution](#contribution)
-- [License](#license)
-
-## Features
-
-- Record expenses and income with details such as category, date, and amount.
-- Set payment reminders and due date alerts.
-- Generate monthly or annual reports displaying a summary of expenses and income.
-- Automatic or suggested transaction categorization.
-- Attach digital receipts or invoices.
-- Integration with bank accounts to automatically import transactions.
-- Expense analysis and recommendations for cost reduction.
-- Financial information analytics integration.
+## 💴 Assistant Cost Manager
+El proyecto de "Plataforma de Gestión de Gastos e Ingresos Mensuales" tiene como objetivo principal proporcionar a los usuarios una herramienta web intuitiva y segura para administrar sus finanzas personales de manera eficaz. Esta plataforma permitirá a los usuarios registrar, supervisar y analizar sus gastos e ingresos mensuales, lo que les ayudará a mantener un control más sólido sobre su situación financiera.
+## 🛠 Tech Stack
+[![Node.js](https://img.shields.io/badge/Node.js-20.x%2B-green)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.x-lightgrey)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-blue)](https://www.mongodb.com/atlas)
 
 
-## Installation
+# 📦 Dependencies
 
-1. Clone the repository:
+### **Core Dependencies (Production)**
+| Package | Version | Description |
+|---------|---------|-------------|
+| **`express`** | `^4.21.2` | Fast, unopinionated web framework for Node.js. |
+| **`mongodb`** | `6.13.0` | Official MongoDB driver for Node.js. |
+| **`mongoose`** | `1.0.0` | Elegant ODM for MongoDB (schema-based modeling). |
+| **`jsonwebtoken`** | `^8.5.1` | JSON Web Token implementation for authentication. |
+| **`bcrypt`** / **`bcryptjs`** | `^5.1.1` / `^3.0.2` | Password hashing libraries (security). |
+| **`passport`** | `^0.6.0` | Authentication middleware (supports JWT, OAuth, etc.). |
+| **`nodemailer`** | `^6.10.0` | Email sending library for Node.js. |
+| **`zod`** | `^3.24.3` | TypeScript-first schema validation. |
+| **`express-validator`** | `7.2.1` | Request data validation middleware. |
+| **`date-fns`** / **`date-fns-tz`** | `^4.1.0` / `3.2.0` | Modern date utilities with timezone support. |
+| **`swagger-jsdoc`** + **`swagger-ui-express`** | `^6.2.8` / `^5.0.1` | Auto-generated Swagger/OpenAPI documentation. |
 
-   ```bash
-   git clone https://github.com/yourusername/your-project.git
-Navigate to the project directory:
+### **Security & Performance**
+| Package | Version | Description |
+|---------|---------|-------------|
+| **`helmet`** | `^8.1.0` | Secures HTTP headers (XSS, CSP, etc.). |
+| **`cors`** | `2.8.5` | Enables Cross-Origin Resource Sharing. |
+| **`express-rate-limit`** | `^7.5.0` | Rate-limiting middleware (anti-DDoS). |
+| **`compression`** | `^1.8.0` | Compresses HTTP responses (Gzip/Brotli). |
 
-bash
-Copy code
-cd your-project
-Install dependencies:
+### **Utilities**
+| Package | Version | Description |
+|---------|---------|-------------|
+| **`cross-env`** | `7.0.3` | Cross-platform environment variables. |
+| **`morgan`** | `1.10.0` | HTTP request logger (dev-only). |
+| **`picocolors`** | `1.1.1` | Tiny console color formatting. |
+| **`superagent`** | `10.1.1` | Lightweight HTTP client for APIs. |
 
-bash
-Copy code
-npm install
-Configure environment variables by copying the .env.example file to .env and adjusting the necessary settings.
+### **Development Tools (DevDependencies)**
+| Package | Version | Description |
+|---------|---------|-------------|
+| **`jest`** + **`supertest`** | `29.7.0` / `7.0.0` | Testing framework + HTTP assertions. |
+| **`eslint`** + **`semistandard`** | `^9.23.0` / `17.0.0` | Linting and code style rules. |
+| **`dotenv`** | `^16.4.7` | Loads `.env` environment variables. |
+| **`husky`** + **`lint-staged`** | `^9.1.7` / `^15.5.0` | Git hooks for pre-commit checks. |
+| **`commitizen`** + **`@commitlint`** | `4.3.1` / `19.7.1` | Enforces Conventional Commits. |
+| **`semantic-release`** | `^24.2.3` | Automated versioning + changelog generation. |
 
-Start the application:
+---
 
-bash
-Copy code
-npm start
-Usage
-Access the application through your web browser at http://localhost:3000.
-Sign up or log in to begin managing your finances.
-Add expenses and income records.
-Set savings goals.
-View financial reports and track your progress.
-API
-If you wish to interact with the API directly, please refer to the API documentation for information on available routes and endpoints.
+### **Key Notes**
+- **Security**: `helmet`, `bcrypt`, and `express-rate-limit` mitigate common threats.
+- **API Docs**: Swagger integration provides interactive API documentation.
+- **Testing**: Full test coverage with `jest` and `supertest`.
 
-Contribution
-If you'd like to contribute to this project, please follow these steps:
 
-Fork the repository.
-Clone your fork to your local machine.
-Create a new branch for your changes: git checkout -b feature/new-feature.
-Make your changes and commit them with descriptive messages: git commit -m "Add new feature".
-Push your changes to your fork: git push origin feature/new-feature.
-Create a pull request through GitHub.
-License
-This project is licensed under the MIT License. See the LICENSE file for more details.
 
-vbnet
-Copy code
+## Authors
 
-Remember to replace `yourusername/your-project` with the URL of your Git
+- [@jdduque02](https://github.com/jdduque02)
+
