@@ -75,6 +75,8 @@ app.js # Main configuration
 - **API Docs**: Swagger integration provides interactive API documentation.
 - **Testing**: Full test coverage with `jest` and `supertest`.
 
+---
+
 ### 🚀 **Features** (Key features)
 List the key functionalities of your project. For example:
 - **User registration and authentication** (JWT, bcrypt).
