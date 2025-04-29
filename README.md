@@ -115,7 +115,7 @@ HASH_KEY_JWT=hask
 Step by step guide to clone and install the project:
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/tu-usuario/tu-proyecto.git
+git clone https://github.com/jdduque02/api-cost.git
 
 # 2. Instalar dependencias
 npm install
