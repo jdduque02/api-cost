@@ -1,5 +1,14 @@
 {
     "author": "jdduque07",
+    "type": "module",
+    "version": "1.2.0",
+    "scripts": {
+        "commit": "cz",
+        "dev": "cross-env NODE_ENV=DEV node --watch --env-file src/.env  src/index.mjs",
+        "prepare": "husky",
+        "start": "cross-env NODE_ENV=PROD node --watch --env-file src/.env  src/index.mjs",
+        "test": "cross-env NODE_ENV=TEST npx jest --config=jest.config.cjs --detectOpenHandles"
+    },
     "bugs": {
         "url": "https://gitlab.com/jddeveloper/api-rest/api-rest-asistent/issues"
     },
@@ -69,20 +78,11 @@
     ],
     "license": "ISC",
     "main": "app.mjs",
-    "name": "api-rest-asistent",
+    "name": "api-rest-cost",
     "repository": {
         "type": "git",
         "url": "git+https://gitlab.com/jddeveloper/api-rest/api-rest-asistent.git"
     },
-    "scripts": {
-        "commit": "cz",
-        "dev": "cross-env NODE_ENV=DEV node --watch --env-file src/.env  src/index.mjs",
-        "prepare": "husky",
-        "start": "cross-env NODE_ENV=PROD node --watch --env-file src/.env  src/index.mjs",
-        "test": "cross-env NODE_ENV=TEST npx jest --config=jest.config.cjs --detectOpenHandles"
-    },
-    "type": "module",
-    "version": "1.1.0",
     "eslintConfig": {
         "extends": [
             "semistandard"

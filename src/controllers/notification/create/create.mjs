@@ -38,7 +38,7 @@ export const createNotification = async (req, res = response) => {
     }
     let newNotification;
     try {
-        newNotification = await ModelNotification.createNotification(validateData);
+        newNotification = await ModelNotification.createNotification(validateData.data);
     } catch (error) {
         const err = new QueryErrors(error);
         CustomLogger.error(`error create notification:\n ${err}`);

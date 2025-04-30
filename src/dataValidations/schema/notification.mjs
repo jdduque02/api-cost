@@ -12,19 +12,16 @@ const schemaNotification = zod.object({
     userId: zod.string({
         invalid_type_error: 'userId must be a string',
         required_error: 'userId is required',
-    }).uuid({ message: 'must be an id of a user' }),
-    created_at: zod.date({
-        invalid_type_error: 'created_at must be a date',
     }),
-    value: zod.number({
-        invalid_type_error: 'value must be a number',
-    }).positive(),
     completed: zod.boolean({
         invalid_type_error: 'completed must be a boolean',
     }),
     remember: zod.boolean({
         invalid_type_error: 'remember must be a boolean',
     }).default(false),
+    created_at: zod.date({
+        invalid_type_error: 'created_at must be a date',
+    }),
     update_at: zod.date({
         invalid_type_error: 'update_at must be a date',
     }),

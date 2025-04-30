@@ -27,9 +27,6 @@ export class ModelNotification {
     //El método `createNotification` es una función estática asincrónica que crea una nueva categoría.
     static async createNotification(input) {
         if (!input) return new ValidationError('the information query parameters were not sent.');
-        let today = new Date();
-        today.setUTCHours(today.getUTCHours() - 5);
-        input.created_at = today;
         let newNotificacion;
         try {
             newNotificacion = new schemaNotification(input);
@@ -46,13 +43,12 @@ export class ModelNotification {
         return savenewNotificacion;
     }
     //El método `deleteNotification` es una función asíncrona estática que elimina una categoría de la base de datos. Toma un objeto como parámetro, que debe contener la propiedad 'categoría'. Si no se proporciona la propiedad 'categoría', devuelve 'falso'.
-    static async deleteNotification(subCategory) {
-        if (!subCategory) return new ValidationError('the information query parameters were not sent.');
-        let { _id } = subCategory;
+    static async deleteNotification(searchParams) {
+        if (!searchParams) return new ValidationError('the information query parameters were not sent.');
         let deletedNotification;
         try {
             // eslint-disable-next-line no-unused-vars
-            deletedNotification = await schemaNotification.deleteOne(_id);
+            deletedNotification = await schemaNotification.deleteOne(searchParams);
         } catch (error) {
             return new QueryErrors(`Error in the query detail: ${error}`);
         }

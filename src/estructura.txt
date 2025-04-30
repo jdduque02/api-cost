@@ -1,173 +1,173 @@
 Listado de rutas de carpetas
-El n£mero de serie del volumen es 7CDD-18C8
+El nï¿½mero de serie del volumen es 7CDD-18C8
 D:.
-³   .env
-³   .lintstagedrc
-³   app.mjs
-³   estructura.txt
-³   index.mjs
-³   
-ÃÄÄÄconfig
-³       database.mjs
-³       helmet.mjs
-³       swagger.mjs
-³       
-ÃÄÄÄcontrollers
-³   ÃÄÄÄcategory
-³   ³   ÃÄÄÄcreate
-³   ³   ³       create.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄdelete
-³   ³   ³       delete.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄget
-³   ³   ³       get.mjs
-³   ³   ³       
-³   ³   ÀÄÄÄupdate
-³   ³           update.mjs
-³   ³           
-³   ÃÄÄÄfinancialInformation
-³   ³   ÃÄÄÄcreate
-³   ³   ³       create.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄdelete
-³   ³   ³       delete.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄget
-³   ³   ³       get.mjs
-³   ³   ³       
-³   ³   ÀÄÄÄupdate
-³   ³           update.mjs
-³   ³           
-³   ÃÄÄÄfinancialObjective
-³   ³   ÃÄÄÄcreate
-³   ³   ³       create.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄdelete
-³   ³   ³       delete.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄget
-³   ³   ³       get.mjs
-³   ³   ³       
-³   ³   ÀÄÄÄupdate
-³   ³           update.mjs
-³   ³           
-³   ÃÄÄÄnotification
-³   ³   ÃÄÄÄcreate
-³   ³   ³       create.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄdelete
-³   ³   ³       delete.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄget
-³   ³   ³       get.mjs
-³   ³   ³       
-³   ³   ÀÄÄÄupdate
-³   ³           update.mjs
-³   ³           
-³   ÃÄÄÄsubCategory
-³   ³   ÃÄÄÄcreate
-³   ³   ³       create.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄdelete
-³   ³   ³       delete.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄget
-³   ³   ³       get.mjs
-³   ³   ³       
-³   ³   ÀÄÄÄupdate
-³   ³           update.mjs
-³   ³           
-³   ÃÄÄÄtransaction
-³   ³   ÃÄÄÄcreate
-³   ³   ³       create.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄdelete
-³   ³   ³       delete.mjs
-³   ³   ³       
-³   ³   ÃÄÄÄget
-³   ³   ³       get.mjs
-³   ³   ³       
-³   ³   ÀÄÄÄupdate
-³   ³           update.mjs
-³   ³           
-³   ÀÄÄÄuser
-³       ÃÄÄÄcreate
-³       ³       create.mjs
-³       ³       
-³       ÃÄÄÄdelete
-³       ³       delete.mjs
-³       ³       
-³       ÃÄÄÄget
-³       ³       get.mjs
-³       ³       
-³       ÀÄÄÄupdate
-³               update.mjs
-³               
-ÃÄÄÄdataValidations
-³   ³   controllers.mjs
-³   ³   
-³   ÀÄÄÄschema
-³           category.mjs
-³           financialInformation.mjs
-³           financialObjective.mjs
-³           notification.mjs
-³           subCategory.mjs
-³           transaction.mjs
-³           user.mjs
-³           
-ÃÄÄÄdb
-³   ÃÄÄÄmodels
-³   ³       category.mjs
-³   ³       financialInformation.mjs
-³   ³       financialObjective.mjs
-³   ³       notification.mjs
-³   ³       subCategory.mjs
-³   ³       transaction.mjs
-³   ³       user.mjs
-³   ³       
-³   ÀÄÄÄschemas
-³           category.mjs
-³           financialInformation.mjs
-³           financialObjective.mjs
-³           notification.mjs
-³           subCategory.mjs
-³           transaction.mjs
-³           user.mjs
-³           
-ÃÄÄÄhelpers
-³       console.mjs
-³       errorHandler.mjs
-³       errors.mjs
-³       logs.mjs
-³       response.mjs
-³       
-ÃÄÄÄlogs
-ÃÄÄÄmiddleware
-³       cors.mjs
-³       database.mjs
-³       errorHandler.mjs
-³       jwt.mjs
-³       rateLimit.mjs
-³       validateBody.mjs
-³       
-ÃÄÄÄpublic
-ÃÄÄÄroutes
-³       category.mjs
-³       financialInformation.mjs
-³       financialObjective.mjs
-³       notification.mjs
-³       subCategory.mjs
-³       transaction.mjs
-³       user.mjs
-³       
-ÃÄÄÄscripts
-ÀÄÄÄtests
-    ³   modules.mjs
-    ³   
-    ÃÄÄÄcategory
-    ³       create.mjs
-    ³       
-    ÀÄÄÄuser
+ï¿½   .env
+ï¿½   .lintstagedrc
+ï¿½   app.mjs
+ï¿½   estructura.txt
+ï¿½   index.mjs
+ï¿½   
+ï¿½ï¿½ï¿½ï¿½config
+ï¿½       database.mjs
+ï¿½       helmet.mjs
+ï¿½       swagger.mjs
+ï¿½       
+ï¿½ï¿½ï¿½ï¿½controllers
+ï¿½   ï¿½ï¿½ï¿½ï¿½category
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½create
+ï¿½   ï¿½   ï¿½       create.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½delete
+ï¿½   ï¿½   ï¿½       delete.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½get
+ï¿½   ï¿½   ï¿½       get.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½update
+ï¿½   ï¿½           update.mjs
+ï¿½   ï¿½           
+ï¿½   ï¿½ï¿½ï¿½ï¿½financialInformation
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½create
+ï¿½   ï¿½   ï¿½       create.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½delete
+ï¿½   ï¿½   ï¿½       delete.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½get
+ï¿½   ï¿½   ï¿½       get.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½update
+ï¿½   ï¿½           update.mjs
+ï¿½   ï¿½           
+ï¿½   ï¿½ï¿½ï¿½ï¿½financialObjective
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½create
+ï¿½   ï¿½   ï¿½       create.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½delete
+ï¿½   ï¿½   ï¿½       delete.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½get
+ï¿½   ï¿½   ï¿½       get.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½update
+ï¿½   ï¿½           update.mjs
+ï¿½   ï¿½           
+ï¿½   ï¿½ï¿½ï¿½ï¿½notification
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½create
+ï¿½   ï¿½   ï¿½       create.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½delete
+ï¿½   ï¿½   ï¿½       delete.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½get
+ï¿½   ï¿½   ï¿½       get.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½update
+ï¿½   ï¿½           update.mjs
+ï¿½   ï¿½           
+ï¿½   ï¿½ï¿½ï¿½ï¿½subCategory
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½create
+ï¿½   ï¿½   ï¿½       create.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½delete
+ï¿½   ï¿½   ï¿½       delete.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½get
+ï¿½   ï¿½   ï¿½       get.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½update
+ï¿½   ï¿½           update.mjs
+ï¿½   ï¿½           
+ï¿½   ï¿½ï¿½ï¿½ï¿½transaction
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½create
+ï¿½   ï¿½   ï¿½       create.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½delete
+ï¿½   ï¿½   ï¿½       delete.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½get
+ï¿½   ï¿½   ï¿½       get.mjs
+ï¿½   ï¿½   ï¿½       
+ï¿½   ï¿½   ï¿½ï¿½ï¿½ï¿½update
+ï¿½   ï¿½           update.mjs
+ï¿½   ï¿½           
+ï¿½   ï¿½ï¿½ï¿½ï¿½user
+ï¿½       ï¿½ï¿½ï¿½ï¿½create
+ï¿½       ï¿½       create.mjs
+ï¿½       ï¿½       
+ï¿½       ï¿½ï¿½ï¿½ï¿½delete
+ï¿½       ï¿½       delete.mjs
+ï¿½       ï¿½       
+ï¿½       ï¿½ï¿½ï¿½ï¿½get
+ï¿½       ï¿½       get.mjs
+ï¿½       ï¿½       
+ï¿½       ï¿½ï¿½ï¿½ï¿½update
+ï¿½               update.mjs
+ï¿½               
+ï¿½ï¿½ï¿½ï¿½dataValidations
+ï¿½   ï¿½   controllers.mjs
+ï¿½   ï¿½   
+ï¿½   ï¿½ï¿½ï¿½ï¿½schema
+ï¿½           category.mjs
+ï¿½           financialInformation.mjs
+ï¿½           financialObjective.mjs
+ï¿½           notification.mjs
+ï¿½           subCategory.mjs
+ï¿½           transaction.mjs
+ï¿½           user.mjs
+ï¿½           
+ï¿½ï¿½ï¿½ï¿½db
+ï¿½   ï¿½ï¿½ï¿½ï¿½models
+ï¿½   ï¿½       category.mjs
+ï¿½   ï¿½       financialInformation.mjs
+ï¿½   ï¿½       financialObjective.mjs
+ï¿½   ï¿½       notification.mjs
+ï¿½   ï¿½       subCategory.mjs
+ï¿½   ï¿½       transaction.mjs
+ï¿½   ï¿½       user.mjs
+ï¿½   ï¿½       
+ï¿½   ï¿½ï¿½ï¿½ï¿½schemas
+ï¿½           category.mjs
+ï¿½           financialInformation.mjs
+ï¿½           financialObjective.mjs
+ï¿½           notification.mjs
+ï¿½           subCategory.mjs
+ï¿½           transaction.mjs
+ï¿½           user.mjs
+ï¿½           
+ï¿½ï¿½ï¿½ï¿½helpers
+ï¿½       console.mjs
+ï¿½       errorHandler.mjs
+ï¿½       errors.mjs
+ï¿½       logs.mjs
+ï¿½       response.mjs
+ï¿½       
+ï¿½ï¿½ï¿½ï¿½logs
+ï¿½ï¿½ï¿½ï¿½middleware
+ï¿½       cors.mjs
+ï¿½       database.mjs
+ï¿½       errorHandler.mjs
+ï¿½       jwt.mjs
+ï¿½       rateLimit.mjs
+ï¿½       validateBody.mjs
+ï¿½       
+ï¿½ï¿½ï¿½ï¿½public
+ï¿½ï¿½ï¿½ï¿½routes
+ï¿½       category.mjs
+ï¿½       financialInformation.mjs
+ï¿½       financialObjective.mjs
+ï¿½       notification.mjs
+ï¿½       subCategory.mjs
+ï¿½       transaction.mjs
+ï¿½       user.mjs
+ï¿½       
+ï¿½ï¿½ï¿½ï¿½scripts
+ï¿½ï¿½ï¿½ï¿½tests
+    ï¿½   modules.mjs
+    ï¿½   
+    ï¿½ï¿½ï¿½ï¿½category
+    ï¿½       create.mjs
+    ï¿½       
+    ï¿½ï¿½ï¿½ï¿½user
             create.test.mjs
             

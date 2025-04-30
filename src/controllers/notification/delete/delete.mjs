@@ -17,20 +17,23 @@ const module = 'notification';
 export const deleteNotification = async (req, res = response) => {
     let today = new Date();
     today.setUTCHours(today.getUTCHours() - 5);
-    const { body, token } = req;
     if (!req.params.key || !req.params.value) {
         const err = new ResourceNotFoundError('empty params');
         RecordLog(err, module);
         return res.status(400).send(Responses.Error(err.name, err.message));
     }
+    const { body, token, params: { key, value } } = req;
+    const searchParams = {};
+    searchParams[key] = value;
     let deleteNotification;
     try {
-        deleteNotification = await ModelNotification.deleteNotification(body.name);
+        deleteNotification = await ModelNotification.deleteNotification(searchParams);
     } catch (error) {
         const err = new QueryErrors(error);
         CustomLogger.error(`error query notification data:\n ${err}`);
         RecordLog(err, module);
         return res.status(500).send(Responses.Error(err.name, err.message));
     }
-    return res.status(200).send(Responses.Successful({notification:deleteNotification, token}, 'delete notification success'));
+    console.log(deleteNotification);
+    return res.status(200).send(Responses.Successful({ notification: deleteNotification, token }, 'delete notification success'));
 }

@@ -1,4 +1,4 @@
-import {Schema, model} from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const today = new Date();
 today.setUTCHours(today.getUTCHours() - 5);
@@ -12,17 +12,13 @@ const notificationSchema = new Schema({
         type: String,
         required: [true, 'El usuario es necesario']
     },
-    value: {
-        type: Number,
-        required: [true, 'El valor es necesario']
-    },
     completed: {
         type: Boolean,
-        default: [false, 'completado es necesario']
+        required: [false, 'completado es necesario']
     },
     remember: {
         type: Boolean,
-        default: [false, 'recordar es necesario']
+        required: [false, 'recordar es necesario']
     },
     description: {
         type: String,
@@ -36,5 +32,7 @@ const notificationSchema = new Schema({
         type: Date,
         default: today
     }
+}, {
+    versionKey: false
 });
 export default model('Notification', notificationSchema);

@@ -57,7 +57,7 @@ export const validateNotification = async (req, res = response, next) => {
     searchParams[key] = value;
     let validateData;
     try {
-        validateData = (searchParams);
+        validateData = validatePartialSchemaNotification(searchParams);
     } catch (error) {
         const err = new validatePartialSchemaNotification(error);
         CustomLogger.error(`error validate schema data:\n ${err}`);
@@ -72,7 +72,7 @@ export const validateNotification = async (req, res = response, next) => {
     }
     let findNotification;
     try {
-        findNotification = await ModelNotification.getOneNotification(searchParams);
+        findNotification = await ModelNotification.getAllNotification(searchParams);
     } catch (error) {
         let errorSearchNotification = new QueryErrors(error);
         CustomLogger.error(`error:\n ${errorSearchNotification.stack}`);
